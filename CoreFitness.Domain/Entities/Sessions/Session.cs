@@ -1,6 +1,6 @@
-﻿namespace CoreFitness.Domain.Entities.Classes;
+﻿namespace CoreFitness.Domain.Entities.Sessions;
 
-public class Class
+public class Session
 {
     // Display list of available classes
 
