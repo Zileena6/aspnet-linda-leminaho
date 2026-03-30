@@ -1,52 +1,97 @@
-@import "tailwindcss";
-    /* import fonts */
+@import 'tailwindcss';
 
-@theme {
-    /* add fonts; poppins & dm-sans:
-    --font-poppins: "Poppins", sans-serif;
-    --font-dm-sans: "DM Sans", sans-serif;
-    */
+@layer theme {
+  :root,
+  :host {
+    --font-poppins: 'Poppins', sans-serif;
+    --font-dm-sans: 'DM Sans', sans-serif;
 
     --text-heading-1: clamp(2rem, 1.8rem + 1vw, 3rem);
-    --color-background: #f7f7f7;
-    --color-primary: #27252F;
-    --color-secondary: #080517;
-    --color-accent: #D6EB31;
-    --color-gray-light: #E6E6E6;
-    --color-gray: #6F6F6F;
-    --color-white: #FFFFFF;
+
+    --color-primary: #27252f;
+    --color-surface: #080517;
+    --color-accent: #d6eb31;
+
+    --color-gray-light: #e6e6e6;
+    --color-gray: #575757;
+    --color-white: #ffffff;
     --color-black: #000000;
-    --danger: #E50004; /* red */
+    --color-remove: #e50004; /* red */
+
+    --color-background: #f7f7f7;
+    --color-background-dark: #131020;
+
+    --bg-img-section: url('/CoreFitness.web/wwwroot/images/dark-section-img.png');
+    --bg-img-header: url('/CoreFitness.web/wwwroot/images/dark-header-img.png');
+    --header-height: 96px;
+  }
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/poppins/Poppins-Medium.ttf');
+}
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins/Poppins-SemiBold.ttf');
+}
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/poppins/Poppins-Bold.ttf');
+}
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/poppins/Poppins-ExtraBold.ttf');
+}
+@font-face {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/dm-sans/DMSans-Regular.ttf');
+}
+@font-face {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/dm-sans/DMSans-Medium.ttf');
 }
 
 @layer base {
-
-    /*body {
-        background-color: var(--color-background);
-    }
-
-    p {
-        font-family: var(--font-dm-sans);
-        font-size: var(--text-base);
-        font-weight: 400;
-        color: var(--color-gray);
-    }
-
-    h1 {
-        font-family: var(--font-poppins);
-        font-weight: 500;
-        font-size: var(--text-heading-1);
-    }
-
-    h2 {
-        font-family: var(--font-poppins);
-        font-weight: 600;
-        font-size: 1.125rem;
-    }
-
-    h3 {
-        font-family: var(--font-poppins);
-        font-weight: 800;
-        font-size: 1.25rem;
-    }*/
+  body {
+    background-color: var(--color-background);
+  }
+  p {
+    font-family: var(--font-dm-sans);
+    font-weight: 400;
+    color: var(--color-gray);
+  }
+  h1 {
+    font-family: var(--font-poppins);
+    font-weight: 500;
+    font-size: var(--text-heading-1);
+  }
+  h2 {
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+  h3 {
+    font-family: var(--font-poppins);
+    font-weight: 800;
+    font-size: 1.25rem;
+  }
 }

@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="">
+    <partial name="Header/_Header" />
+    @* <header class="">
                 <a class="" asp-area="" asp-controller="Home" asp-action="Index">CoreFitness</a>
         <nav class="pt-2">
             <div class="">
@@ -28,18 +29,18 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header> *@
     <div class="">
         <main role="main" class="p-4">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="">
+    @* <footer class="">
         <div class="">
             &copy; 2026 Core Fitness Group. All Rights Reserved. - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
