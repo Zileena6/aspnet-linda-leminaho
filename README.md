@@ -1,4 +1,4 @@
-![CoreFitness GymPortal](CoreFitness.web\wwwroot\images\CoreFitnessLogo.png)
+![CoreFitness GymPortal](CoreFitness.web/wwwroot/images/CoreFitnessLogo.png)
 
 ---
 
