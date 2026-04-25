@@ -1,4 +1,5 @@
-﻿using CoreFitness.Domain.Entities.Users.ValueObjects;
+﻿using CoreFitness.Domain.Entities.TrainingSessions.ValueObjects;
+using CoreFitness.Domain.Entities.Users.ValueObjects;
 
 namespace CoreFitness.Domain.Exceptions;
 
