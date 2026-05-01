@@ -1,0 +1,35 @@
+﻿@model VerifyExternalLogInViewModel
+
+<section>
+    <div>
+        <div>
+            <h2>Verify your email</h2>
+            <p>
+                A verification code has been sent to <string>@Model.Email</string>.
+                Enter the code below to continue
+            </p>
+            <p>Demo code: <strong>123456</strong></p>
+        </div>
+        <hr />
+        <form asp-controller="Auth" asp-action="VerifyExternalLogIn" method="post" class="flex flex-col gap-4">
+            <input asp-for="Email" type="hidden" />
+            <input asp-for="ReturnUrl" type="hidden" />
+
+            <div>
+                <label asp-for="Code">Verification code: </label>
+                <input asp-for="Code" class="border border-gray-light rounded-[10px] p-2" />
+                <span asp-validation-for="Code" class="text-red-500 text-sm"></span>
+            </div>
+
+            <p class="text-sm text-gray-500">
+                By verifying, you agree to our
+                <a href="/terms" class="underline">terms of service</a> and
+                <a href="/privacy" class="underline">privacy policy</a>
+            </p>
+
+            <button type="submit" class="cta w.full justify-center">
+                Verify
+            </button>
+        </form>
+    </div>
+</section>
