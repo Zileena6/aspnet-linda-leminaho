@@ -35,5 +35,6 @@ public readonly partial record struct UserName
     private static partial Regex NameRegex();
 
     public string Fullname => $"{FirstName} {LastName}";
+
     public override string ToString() => Fullname;
 }

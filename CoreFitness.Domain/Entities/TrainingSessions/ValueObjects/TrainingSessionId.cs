@@ -15,5 +15,6 @@ public readonly record struct TrainingSessionId
     }
 
     public static TrainingSessionId New() => new(Guid.NewGuid());
+
     public override string ToString() => Value.ToString();
 }

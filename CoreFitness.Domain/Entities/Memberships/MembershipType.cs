@@ -27,6 +27,9 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         int sessionLimit, 
         MembershipTypeEnums type)
     {
+        if (sessionLimit <= 0)
+            throw new InvalidSessionLimitException(sessionLimit);
+
         return new(MembershipTypeId.New(), name, description, price, duration, sessionLimit, type);
     }
 
@@ -52,6 +55,8 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
 
     public void UpdatePrice(MembershipTypePrice newPrice)
     {
+        if (newPrice == Price) return;
+
         Price = newPrice;
         UpdateTimeStamp();
     }
@@ -90,6 +95,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
     public void AddBenefit(MembershipTypeBenefitDescription description)
     {
         var benefit = MembershipTypeBenefit.Create(Id, description);
+
         _benefits.Add(benefit);
         UpdateTimeStamp();
     }

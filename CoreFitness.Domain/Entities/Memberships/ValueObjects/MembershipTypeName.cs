@@ -7,6 +7,7 @@ public readonly record struct MembershipTypeName
 {
     public string Value { get; }
     public const int MaxLength = 50;
+
     private MembershipTypeName(string value)
     {
         Value = value;

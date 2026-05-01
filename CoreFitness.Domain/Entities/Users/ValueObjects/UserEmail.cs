@@ -45,6 +45,7 @@ public readonly partial record struct UserEmail
     private static string NormalizeForDomainValidation(string userEmail)
     {
         var at = userEmail.IndexOf('@');
+
         if (at <= 0 || at != userEmail.LastIndexOf('@') || at == userEmail.Length - 1)
             return userEmail;
 
@@ -64,6 +65,7 @@ public readonly partial record struct UserEmail
     private static string CreateUniqueKey(string normalizedUserEmail)
     {
         var at = normalizedUserEmail.IndexOf('@');
+
         if (at <= 0 || at != normalizedUserEmail.LastIndexOf('@') || at == normalizedUserEmail.Length - 1)
             return normalizedUserEmail.ToLowerInvariant();
 
@@ -71,6 +73,7 @@ public readonly partial record struct UserEmail
         var domain = normalizedUserEmail[(at + 1)..];
 
         var plus = local.LastIndexOf('+');
+
         if (plus >= 0) local = local[..plus];
 
         if (domain is "gmail.com" or "googlemail.com")
@@ -80,6 +83,7 @@ public readonly partial record struct UserEmail
     }
 
     public bool Equals(UserEmail other) => UniqueValue == other.UniqueValue;
+
     public override int GetHashCode() => UniqueValue.GetHashCode();
 
     public override string ToString() => Value;

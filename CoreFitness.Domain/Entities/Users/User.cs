@@ -15,6 +15,7 @@ public class User : BaseEntity<UserId>, IAggregateRoot
     public UserPhoneNumber? UserPhoneNumber { get; private set; }
     public string? PhotoUrl { get; private set; }
     public UserRole Role { get; protected set; }
+
     public decimal? CurrentWeight { get; private set; }
     public decimal? TargetWeight { get; private set; }
     public decimal? Height { get; private set; }
@@ -55,6 +56,7 @@ public class User : BaseEntity<UserId>, IAggregateRoot
 
         Email = newUserEmail;
         EmailUnique = newUserEmail.UniqueValue;
+
         UpdateTimeStamp();
     }
 
@@ -63,6 +65,7 @@ public class User : BaseEntity<UserId>, IAggregateRoot
         if (UserName == newUserName) return;
 
         UserName = newUserName;
+
         UpdateTimeStamp();
     }
 
@@ -77,6 +80,7 @@ public class User : BaseEntity<UserId>, IAggregateRoot
         if (UserPhoneNumber == newPhoneNumber) return;
 
         UserPhoneNumber = newPhoneNumber;
+
         UpdateTimeStamp();
     }
 
@@ -85,6 +89,7 @@ public class User : BaseEntity<UserId>, IAggregateRoot
         if (PhotoUrl == newPhotoUrl) return;
 
         PhotoUrl = newPhotoUrl;
+
         UpdateTimeStamp();
     }
 
@@ -97,9 +102,8 @@ public class User : BaseEntity<UserId>, IAggregateRoot
     }
 
     public decimal? BMI => CurrentWeight.HasValue && Height.HasValue ?
-        Math.Round(CurrentWeight.Value / (decimal)Math.Pow((double)(Height.Value / 100), 2), 1) :
-        null;
-
+            Math.Round(CurrentWeight.Value / (decimal)Math.Pow((double)(Height.Value / 100), 2), 1) :
+            null;
     public void UpdateWeight(decimal currentWeight, decimal height)
     {
         if (currentWeight <= 0)
@@ -110,6 +114,7 @@ public class User : BaseEntity<UserId>, IAggregateRoot
 
         CurrentWeight = currentWeight;
         Height = height;
+
         UpdateTimeStamp();
     }
 
@@ -119,6 +124,7 @@ public class User : BaseEntity<UserId>, IAggregateRoot
             throw new InvalidWeightException(targetWeight);
 
         TargetWeight = targetWeight;
+
         UpdateTimeStamp();
     }
 }

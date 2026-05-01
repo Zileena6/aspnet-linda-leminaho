@@ -1,4 +1,5 @@
-﻿using CoreFitness.Domain.Entities.Bookings;
+﻿using CoreFitness.Domain.Common;
+using CoreFitness.Domain.Entities.Bookings;
 using CoreFitness.Domain.Entities.Common;
 using CoreFitness.Domain.Entities.TrainingSessions.ValueObjects;
 using CoreFitness.Domain.Entities.Users.ValueObjects;
@@ -9,14 +10,16 @@ namespace CoreFitness.Domain.Entities.TrainingSessions;
 
 public class TrainingSession : BaseEntity<TrainingSessionId>, IAggregateRoot
 {
-    private readonly List<Booking> _bookings = new();
-    public virtual IReadOnlyCollection<Booking> Bookings => _bookings.AsReadOnly();
     public TrainingSessionName TrainingSessionName { get; private set; }
     public TrainingSessionDescription TrainingSessionDescription { get; private set; }
     public TrainingSessionCapacity Capacity { get; private set; } = null!;
+
     public DateTimeOffset StartDate { get; private set; }
     public TrainingSessionDuration Duration { get; private set; }
     public DateTimeOffset EndDate => StartDate.Add(Duration.Value);
+
+    private readonly List<Booking> _bookings = new();
+    public virtual IReadOnlyCollection<Booking> Bookings => _bookings.AsReadOnly();
     public bool IsFull => _bookings.Count >= Capacity.Value;
 
     private TrainingSession() { }
@@ -55,27 +58,35 @@ public class TrainingSession : BaseEntity<TrainingSessionId>, IAggregateRoot
             duration);
     }
 
-    public Booking Book(UserId userId)
+    public Result<Booking> Book(UserId userId)
     {
         if (IsFull)
-            throw new TrainingSessionIsFullException();
+            return Result<Booking>.Conflict("This session is full");
 
         if (_bookings.Any(b => b.UserId == userId))
-            throw new DuplicateBookingException();
+            return Result<Booking>.Conflict("User is already booked");
 
         var booking = Booking.Create(userId, Id);
+
         _bookings.Add(booking);
+
         UpdateTimeStamp();
-        return booking;
+
+        return Result<Booking>.Success(booking);
     }
 
-    public void CancelBooking(UserId userId)
+    public Result CancelBooking(UserId userId)
     {
-        var booking = _bookings.FirstOrDefault(b => b.UserId == userId) ??
-            throw new BookingNotFoundException(userId, Id);
+        var booking = _bookings.FirstOrDefault(b => b.UserId == userId);
+
+        if (booking is null)
+            return Result.NotFound("Booking", userId);
 
         _bookings.Remove(booking);
+
         UpdateTimeStamp();
+
+        return Result.Success();
     }
 
     public void UpdateName(TrainingSessionName newTrainingSessionName)
@@ -83,6 +94,7 @@ public class TrainingSession : BaseEntity<TrainingSessionId>, IAggregateRoot
         if (TrainingSessionName == newTrainingSessionName) return;
 
         TrainingSessionName = newTrainingSessionName;
+
         UpdateTimeStamp();
     }
 
@@ -91,6 +103,7 @@ public class TrainingSession : BaseEntity<TrainingSessionId>, IAggregateRoot
         if (TrainingSessionDescription == newDesctription) return;
 
         TrainingSessionDescription = newDesctription;
+
         UpdateTimeStamp();
     }
 
@@ -100,6 +113,7 @@ public class TrainingSession : BaseEntity<TrainingSessionId>, IAggregateRoot
             throw new InvalidStartDateException();
 
         StartDate = startDate;
+
         UpdateTimeStamp();
     }
 
@@ -108,14 +122,19 @@ public class TrainingSession : BaseEntity<TrainingSessionId>, IAggregateRoot
         if (Duration == newDuration) return;
 
         Duration = newDuration;
+
         UpdateTimeStamp();
     }
 
     public void UpdateCapacity(TrainingSessionCapacity newCapacity)
     {
+        if (newCapacity.Value < _bookings.Count)
+            throw new InvalidCapacityException(newCapacity.Value);
+
         if (Capacity == newCapacity) return;
 
         Capacity = newCapacity;
+
         UpdateTimeStamp();
     }
 
