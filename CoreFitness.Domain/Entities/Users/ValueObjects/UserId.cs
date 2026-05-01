@@ -15,5 +15,6 @@ public readonly record struct UserId
     }
 
     public static UserId New() => new(Guid.NewGuid());
+
     public override string ToString() => Value.ToString();
 }

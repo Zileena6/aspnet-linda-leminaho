@@ -7,6 +7,7 @@ public sealed class UserNotFoundException : NotFoundException
     public UserNotFoundException(UserId id) : base($"User with id {id} was not found") { }
     public UserNotFoundException(UserEmail userEmail) : base($"User with email {userEmail.Value} was not found") { }
 }
+
 public sealed class EmailAlreadyExistsException : ConflictException
 {
     public EmailAlreadyExistsException(UserEmail email) : base($"Email {email.Value} is already in use") { }

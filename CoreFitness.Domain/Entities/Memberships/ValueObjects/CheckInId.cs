@@ -15,5 +15,6 @@ public readonly record struct CheckInId
     }
 
     public static CheckInId New() => new(Guid.NewGuid());
+
     public override string ToString() => Value.ToString();
 }

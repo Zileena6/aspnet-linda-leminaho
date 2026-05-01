@@ -15,5 +15,6 @@ public readonly record struct AuthenticationId
     }
 
     public static AuthenticationId Create(string value) => new(value);
+
     public override string ToString() => Value.ToString();
 }

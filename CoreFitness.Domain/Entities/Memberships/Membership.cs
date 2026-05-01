@@ -8,12 +8,11 @@ namespace CoreFitness.Domain.Entities.Memberships;
 
 public class Membership : BaseEntity<MembershipId>, IAggregateRoot
 {
-    private readonly List<CheckIn> _checkIns = [];
-    public IReadOnlyCollection<CheckIn> CheckIns => _checkIns.AsReadOnly();
     public UserId UserId { get; private set; }
     public DateOnly StartDate { get; private set; }
     public DateOnly EndDate { get; private set; }
     public MembershipTypeId TypeId { get; private set; }
+    public decimal PurchasedPrice { get; private set; }
     public bool IsExpired => DateOnly.FromDateTime(DateTime.UtcNow) > EndDate;
     public bool IsActive => !IsExpired && !IsManuallyDeactivated;
     public bool IsManuallyDeactivated { get; private set; }
@@ -21,10 +20,14 @@ public class Membership : BaseEntity<MembershipId>, IAggregateRoot
     public int SessionLimit { get; private set; }
     public bool HasSessionsLeft => SessionsUsed < SessionLimit;
 
+    private readonly List<CheckIn> _checkIns = [];
+    public IReadOnlyCollection<CheckIn> CheckIns => _checkIns.AsReadOnly();
+
     private Membership(
         MembershipId id,
         UserId userId,
         MembershipTypeId type,
+        decimal purchasedPrice,
         DateOnly startDate,
         DateOnly endDate,
         int sessionLimit)
@@ -32,6 +35,7 @@ public class Membership : BaseEntity<MembershipId>, IAggregateRoot
         Id = id;
         UserId = userId;
         TypeId = type;
+        PurchasedPrice = purchasedPrice;
         StartDate = startDate;
         EndDate = endDate;
         SessionLimit = sessionLimit;
@@ -40,17 +44,37 @@ public class Membership : BaseEntity<MembershipId>, IAggregateRoot
     public static Membership Create(
         UserId userId, 
         MembershipTypeId typeId, 
+        decimal purchasedPrice, 
         DateOnly startDate, 
         DateOnly endDate, 
-        int sessionLimit) =>
-            new(MembershipId.New(), userId, typeId, startDate, endDate, sessionLimit);
+        int sessionLimit)
+    {
+
+        if (endDate <= startDate)
+            throw new InvalidMembershipPeriodException("Start date can not be in the past");
+
+        if (sessionLimit < 0)
+            throw new InvalidSessionLimitException(sessionLimit);
+
+        if (purchasedPrice < 0)
+            throw new InvalidPriceException(purchasedPrice);
+
+        return new(
+            MembershipId.New(),
+            userId,
+            typeId,
+            purchasedPrice,
+            startDate,
+            endDate,
+            sessionLimit);
+    }
 
     private Membership() { }
 
     public void Extend(DateOnly newEndDate)
     {
         if (newEndDate <= EndDate)
-            throw new InvalidExtendMembershipException("New date has to later than end date");
+            throw new InvalidExtendMembershipException("End date must be after start date");
 
         EndDate = newEndDate;
     }
@@ -64,8 +88,11 @@ public class Membership : BaseEntity<MembershipId>, IAggregateRoot
             throw new MembershipExpiredException();
 
         var checkIn = CheckIn.Create(UserId, Id);
+
         _checkIns.Add(checkIn);
+
         UpdateTimeStamp();
+
         return checkIn;
     }
 
@@ -78,14 +105,17 @@ public class Membership : BaseEntity<MembershipId>, IAggregateRoot
             throw new NoSessionsLeftException();
 
         SessionsUsed++;
+
         UpdateTimeStamp();
     }
 
     public void RefundSession()
     {
-        if (SessionsUsed <= 0) return;
+        if (SessionsUsed <= 0)
+            throw new InvalidSessionStateException("No sessions to refund");
 
         SessionsUsed--;
+
         UpdateTimeStamp();
     }
 

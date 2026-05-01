@@ -15,5 +15,6 @@ public readonly record struct MembershipId
     }
 
     public static MembershipId New() => new(Guid.NewGuid());
+
     public override string ToString() => Value.ToString();
 }
