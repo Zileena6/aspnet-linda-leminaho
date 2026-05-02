@@ -1,5 +1,5 @@
-﻿using CoreFitness.Application.DTOs.Auth;
-using CoreFitness.Application.Identity;
+﻿using CoreFitness.Application.Authentication;
+using CoreFitness.Application.DTOs.Auth;
 using CoreFitness.Domain.Common;
 using CoreFitness.Domain.Entities.Users;
 using CoreFitness.Domain.Entities.Users.ValueObjects;
