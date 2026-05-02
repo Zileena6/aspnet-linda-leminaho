@@ -2,6 +2,7 @@
 using CoreFitness.Application.Authentication.Abstractions;
 using CoreFitness.Application.Authentication.Services;
 using CoreFitness.Application.Interfaces;
+using CoreFitness.Application.Services;
 using CoreFitness.Domain.Interfaces.Memberships;
 using CoreFitness.Domain.Interfaces.TrainingSessions;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
@@ -71,7 +72,6 @@ public static class DependencyInjection
 
                 options.ClientId = clientId;
                 options.ClientSecret = clientSecret;
-
                 options.CallbackPath = "/signin-google";
                 options.ClaimActions.MapJsonKey("picture", "picture", "url");
                 options.Scope.Add("profile");
@@ -83,7 +83,7 @@ public static class DependencyInjection
 
                 if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
                     throw new InvalidOperationException(
-                        "Github authentication is missing in comfiguration. " +
+                        "Github authentication is missing in configuration. " +
                         "Please set Authentication:GitHub:ClientId and ClientSecret"
                     );
 
@@ -94,6 +94,8 @@ public static class DependencyInjection
             });
 
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IMembershipService, MembershipService>();
+        services.AddScoped<IMembershipTypeService, MembershipTypeService>();
         services.AddScoped<IPasswordProvider, PasswordProvider>();
         services.AddScoped<IExternalAuthProvider, ExternalAuthProvider>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();

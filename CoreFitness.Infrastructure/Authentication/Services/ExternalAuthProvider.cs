@@ -8,7 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace CoreFitness.Infrastructure.Authentication.Services;
 
-public class ExternalAuthProvider(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<ExternalAuthProvider> logger) : IExternalAuthProvider
+public class ExternalAuthProvider(
+    SignInManager<ApplicationUser> signInManager, 
+    UserManager<ApplicationUser> userManager, 
+    ILogger<ExternalAuthProvider> logger) : IExternalAuthProvider
 {
     public AuthenticationProperties ConfigureExternalLogin(string provider, string redirectUrl) =>
         signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
@@ -16,6 +19,7 @@ public class ExternalAuthProvider(SignInManager<ApplicationUser> signInManager, 
     public async Task<IReadOnlyList<string>> GetExternalProvidersAsync(CancellationToken ct = default)
     {
         var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
+
         return [.. schemes.Select(x => x.Name)];
     }
 

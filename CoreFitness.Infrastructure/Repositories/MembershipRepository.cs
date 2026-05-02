@@ -13,4 +13,9 @@ public class MembershipRepository(CoreFitnessDbContext context) : BaseRepository
         await _context.Memberships
             .Include(m => m.CheckIns)
             .FirstOrDefaultAsync(m => m.UserId.Equals(userId), ct);
+
+    public async Task<bool> HasActiveMembershipsByTypeAsync(MembershipTypeId typeId, CancellationToken ct = default)
+    {
+        return await _context.Memberships.AnyAsync(m => m.TypeId == typeId && !m.IsManuallyDeactivated && m.EndDate >= DateOnly.FromDateTime(DateTime.UtcNow), ct);
+    }
 }

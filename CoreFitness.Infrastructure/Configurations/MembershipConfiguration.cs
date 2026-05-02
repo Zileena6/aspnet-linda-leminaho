@@ -1,5 +1,6 @@
 ﻿using CoreFitness.Domain.Entities.Memberships;
 using CoreFitness.Domain.Entities.Memberships.ValueObjects;
+using CoreFitness.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -35,6 +36,13 @@ public class MembershipConfiguration : BaseEntityConfiguration<Membership, Membe
         builder.Navigation(m => m.CheckIns)
             .HasField("_checkIns")
             .UsePropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.HasOne<User>()
+            .WithMany()
+            .HasForeignKey(m => m.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(m => m.UserId).IsUnique();
 
         builder.Ignore(m => m.IsActive);
 
