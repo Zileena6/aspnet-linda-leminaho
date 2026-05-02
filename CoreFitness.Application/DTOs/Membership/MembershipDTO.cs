@@ -4,7 +4,7 @@ public record MembershipDTO
 {
     public Guid Id { get; init; }
     public string MembershipTypeName { get; init; } = string.Empty;
-    public decimal Price { get; init; }
+    public decimal PurchasedPrice { get; init; }
     public DateOnly StartDate { get; init; }
     public DateOnly EndDate { get; init; }
     public bool IsActive { get; init; }

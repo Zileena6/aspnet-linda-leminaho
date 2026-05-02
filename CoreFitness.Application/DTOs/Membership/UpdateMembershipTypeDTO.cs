@@ -1,6 +1,6 @@
 ﻿namespace CoreFitness.Application.DTOs.Membership;
 
-public record MembershipTypeDTO
+public record UpdateMembershipTypeDTO
 {
     public Guid Id { get; init; }
     public string Name { get; init; } = string.Empty;
@@ -8,5 +8,4 @@ public record MembershipTypeDTO
     public decimal Price { get; init; }
     public int DurationInDays { get; init; }
     public int SessionLimit { get; init; }
-    public IReadOnlyList<string> Benefits { get; init; } = [];
 }

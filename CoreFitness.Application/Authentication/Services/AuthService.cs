@@ -6,16 +6,12 @@ using CoreFitness.Domain.Entities.Users.ValueObjects;
 using CoreFitness.Domain.Enums;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
 using CoreFitness.Domain.Interfaces.Users;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 
 namespace CoreFitness.Application.Authentication.Services;
 
 public class AuthService(IUserRepository userRepository, IPasswordProvider passwordProvider, IExternalAuthProvider externalAuthProvider, IUnitOfWork unitOfWork, ILogger<AuthService> logger) : IAuthService
 {
-    public AuthenticationProperties ConfigureExternalLogin(string provider, string redirectUrl) =>
-        externalAuthProvider.ConfigureExternalLogin(provider, redirectUrl);
-
     public async Task<IReadOnlyList<string>> GetExternalProvidersAsync(CancellationToken ct = default) => await externalAuthProvider.GetExternalProvidersAsync(ct);
 
     public async Task<AuthenticationResult> LoginAsync(LoginDTO dto, CancellationToken ct = default)
@@ -180,4 +176,5 @@ public class AuthService(IUserRepository userRepository, IPasswordProvider passw
 
     public async Task SignOutAsync(CancellationToken ct = default) =>
         await passwordProvider.SignOutAsync(ct);
+
 }
