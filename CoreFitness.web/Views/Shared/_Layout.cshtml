@@ -1,63 +1,50 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var isHome = ViewData["IsHome"] as bool? == true;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CoreFitness</title>
     <script type="importmap"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
-    <header>
-        <nav class="">
-            <div class="">
-                <a class="text-8xl text-amber-800 font-bold" asp-area="" asp-controller="Home" asp-action="Index">CoreFitness to lazy</a>
-                <button class="" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class=""></span>
-                </button>
-                <div class="">
-                    <ul class="">
-                        <li class="">
-                            <a class="text-violet-400" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="">
-                            <a class="" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Auth" asp-action="SignIn">Sign In</a>
-                        </li>
-                    </ul>
-                </div>
+
+<body class="bg-primary min-h-screen flex flex-col">
+
+    @if (isHome)
+    {
+        <div class="bg-[url('/images/nav-hero.png')] bg-cover bg-top mx-4 my-1 rounded-3xl">
+            @await Html.PartialAsync("Components/Layout/_Navbar")
+            <div class='flex justify-center'>
+
+                @await Html.PartialAsync("Components/Home/_Hero")
             </div>
-        </nav>
-    </header>
-    <div class="">
-        <main role="main" class="pb-3">
+        </div>
+        @await Html.PartialAsync("Components/Home/_Equipmentbar")
+    }
+    else
+    {
+        <div class="bg-[url('/images/nav-hero.png')] bg-cover bg-top m-4 rounded-2xl">
+            @await Html.PartialAsync("Components/Layout/_Navbar")
+        </div>
+
+    }
+
+    <main role="main" class="flex-1 pb-3 ">
+        <div class='max-w-7xl mx-auto px-6'>
             @RenderBody()
-        </main>
+        </div>
+    </main>
+
+    <div class='flex justify-center'>
+        @await Html.PartialAsync("Components/Layout/_Footer")
     </div>
 
-    <div>
-        <h1 class="text-5xl">TEST DEL</h1>
-        <div>
-            @if (User.Identity?.IsAuthenticated == true)
-            {
-                <span>Inloggad som: @User.Identity.Name</span>
-                <a asp-controller="Auth" asp-action="SignOut">Logga ut</a>
-            }
-            else
-            {
-                <a asp-controller="Auth" asp-action="SignIn">Logga in</a>
-            }
-        </div>
-    </div>
-
-    <footer class="">
-        <div class="">
-            &copy; 2026 - CoreFitness.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

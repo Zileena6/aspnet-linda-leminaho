@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Shared\Components\Account\" />
+    <Folder Include="Views\Shared\Components\CustomerService\" />
+    <Folder Include="Views\Shared\Components\Home\" />
+    <Folder Include="Views\Shared\Components\Layout\" />
+    <Folder Include="Views\Shared\Components\Membership\" />
+    <Folder Include="Views\Shared\Components\Shared\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

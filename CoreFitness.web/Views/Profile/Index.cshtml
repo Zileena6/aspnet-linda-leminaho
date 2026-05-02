@@ -1,0 +1,14 @@
+﻿@model ProfilePageViewModel
+
+<div class='flex items-center'>
+    <h1>My Account</h1>
+</div>
+<div class='grid grid-cols-2'>
+    <div>
+        @await Html.PartialAsync("Components/Account/_ProfileSidebar", Model)
+    </div>
+    <div>
+        @await Html.PartialAsync("Components/Account/_AboutMeForm", Model)
+        @await Html.PartialAsync("Components/Account/_MyStatistics", Model.Statistics)
+    </div>
+</div>
