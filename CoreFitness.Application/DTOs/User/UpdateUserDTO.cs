@@ -8,5 +8,6 @@ public record UpdateUserDTO
     public string? LastName { get; init; }
     public string? PhoneNumber { get; init; }
     public string? PhotoUrl { get; init; }
+
     public byte[] RowVersion { get; init; } = default!;
 }

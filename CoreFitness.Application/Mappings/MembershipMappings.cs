@@ -5,11 +5,14 @@ namespace CoreFitness.Application.Mappings;
 
 public static class MembershipMappings
 {
-    public static MembershipDTO ToDTO(this Membership membership, string membershipTypeName, decimal price) => new()
+    public static MembershipDTO ToDTO(
+        this Membership membership, 
+        string membershipTypeName, 
+        decimal price) => new()
     {
         Id = membership.Id.Value,
         MembershipTypeName = membershipTypeName,
-        Price = price,
+        PurchasedPrice = membership.PurchasedPrice,
         StartDate = membership.StartDate,
         EndDate = membership.EndDate,
         IsActive = membership.IsActive,
@@ -28,7 +31,6 @@ public static class MembershipMappings
         Price = type.Price.Value,
         DurationInDays = type.Duration.Value,
         SessionLimit = type.SessionLimit,
-        Type = type.Type.ToString(),
         Benefits = [.. type.Benefits.Select(b => b.Description.Value)]
     };
 

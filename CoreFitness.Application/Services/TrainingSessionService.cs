@@ -12,7 +12,10 @@ using CoreFitness.Domain.Interfaces.UnitOfWork;
 
 namespace CoreFitness.Application.Services;
 
-public class TrainingSessionService(ITrainingSessionRepository repository, IMembershipRepository membershipRepository, IUnitOfWork unitOfWork) : ITrainingSessionService
+public class TrainingSessionService(
+    ITrainingSessionRepository repository, 
+    IMembershipRepository membershipRepository, 
+    IUnitOfWork unitOfWork) : ITrainingSessionService
 {
     public async Task<Result<TrainingSessionDTO>> GetByIdAsync(Guid sessionId, CancellationToken ct = default)
     {
@@ -31,15 +34,25 @@ public class TrainingSessionService(ITrainingSessionRepository repository, IMemb
         if (session is null)
             return Result.NotFound("TrainingSession", sessionId);
 
-        var membership = await membershipRepository.GetByUserIdAsync(new UserId(userId), ct);
+        var uId = new UserId(userId);
+
+        var membership = await membershipRepository.GetByUserIdAsync(uId, ct);
 
         if (membership is null || !membership.IsActive)
-            return Result.Failure(Error.Failure("User does not have an active membership"));
+            return Result.Conflict("User does not have an active membership");
 
-        session.Book(new UserId(userId));
+        if (!membership.HasSessionsLeft)
+            return Result.Conflict("So sessions left");
+
+        var bookingResult = session.Book(uId);
+
+        if (bookingResult.IsFailure)
+            return Result.Failure(bookingResult.Error!);
+
         membership.UseSession();
 
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 
@@ -50,14 +63,20 @@ public class TrainingSessionService(ITrainingSessionRepository repository, IMemb
         if (session is null)
             return Result.NotFound("TrainingSession", sessionId);
 
-        var membership = await membershipRepository.GetByUserIdAsync(new UserId(userId), ct);
+        var uId = new UserId(userId);
 
-        session.CancelBooking(new UserId(userId));
+        var membership = await membershipRepository.GetByUserIdAsync(uId, ct);
+
+        var cancelResult = session.CancelBooking(uId);
+
+        if (cancelResult.IsFailure)
+            return cancelResult;
 
         if (membership is not null && membership.IsActive)
             membership.RefundSession();
 
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 
@@ -71,9 +90,11 @@ public class TrainingSessionService(ITrainingSessionRepository repository, IMemb
             TrainingSessionDuration.FromMinutes(dto.DurationInMinutes));
 
         await repository.AddAsync(session, ct);
+
         await unitOfWork.SaveChangesAsync(ct);
 
         return Result<TrainingSessionDTO>.Success(session.ToDTO());
+
     }
 
     public async Task<Result> DeleteAsync(Guid sessionId, CancellationToken ct = default)
@@ -84,6 +105,7 @@ public class TrainingSessionService(ITrainingSessionRepository repository, IMemb
             return Result.NotFound("TrainingSession", sessionId);
 
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 
@@ -108,6 +130,7 @@ public class TrainingSessionService(ITrainingSessionRepository repository, IMemb
 
     public async Task<Result> UpdateAsync(UpdateTrainingSessionDTO dto, CancellationToken ct = default)
     {
+
         var session = await repository.GetByIdAsync(new TrainingSessionId(dto.Id), ct);
 
         if (session is null)
@@ -121,6 +144,7 @@ public class TrainingSessionService(ITrainingSessionRepository repository, IMemb
             TrainingSessionCapacity.Create(dto.Capacity));
 
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 }

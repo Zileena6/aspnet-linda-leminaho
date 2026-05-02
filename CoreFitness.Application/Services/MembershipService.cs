@@ -10,30 +10,31 @@ using CoreFitness.Domain.Interfaces.UnitOfWork;
 
 namespace CoreFitness.Application.Services;
 
-public class MembershipService(IMembershipRepository repository, IMembershipTypeRepository membershipTypeRepository, IUnitOfWork unitOfWork) : IMembershipService
+public class MembershipService(
+    IMembershipRepository repository, 
+    IMembershipTypeRepository membershipTypeRepository, 
+    IUnitOfWork unitOfWork) : IMembershipService
 {
     public async Task<Result> ActivateAsync(Guid userId, CancellationToken ct = default)
     {
         var membership = await repository.GetByUserIdAsync(new UserId(userId), ct);
-
         if (membership is null)
             return Result.NotFound("Membership", userId);
 
         membership.ActivateMembership();
 
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 
     public async Task<Result> CreateAsync(Guid userId, CreateMembershipDTO dto, CancellationToken ct = default)
     {
         var membershipType = await membershipTypeRepository.GetByIdAsync(new MembershipTypeId(dto.MembershipTypeId), ct);
-
         if (membershipType is null)
             return Result.NotFound("MembershipType", dto.MembershipTypeId);
 
         var existing = await repository.GetByUserIdAsync(new UserId(userId), ct);
-
         if (existing is not null && existing.IsActive)
             return Result.Conflict("User already has an active membership");
 
@@ -43,6 +44,7 @@ public class MembershipService(IMembershipRepository repository, IMembershipType
         var membership = Membership.Create(
             new UserId(userId),
             membershipType.Id,
+            membershipType.Price.Value,
             startDate,
             endDate,
             membershipType.SessionLimit
@@ -50,31 +52,30 @@ public class MembershipService(IMembershipRepository repository, IMembershipType
 
         await repository.AddAsync(membership, ct);
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 
     public async Task<Result> DeactivateAsync(Guid userId, CancellationToken ct = default)
     {
         var membership = await repository.GetByUserIdAsync(new UserId(userId), ct);
-
         if (membership is null)
             return Result.NotFound("Membership", userId);
 
         membership.DeactivateMembership();
 
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 
     public async Task<Result<MembershipDTO>> GetByUserIdAsync(Guid userId, CancellationToken ct = default)
     {
         var membership = await repository.GetByUserIdAsync(new UserId(userId), ct);
-
         if (membership is null)
             return Result<MembershipDTO>.NotFound("Membership", userId);
 
         var membershipType = await membershipTypeRepository.GetByIdAsync(membership.TypeId, ct);
-
         if (membershipType is null)
             return Result<MembershipDTO>.NotFound("MembershipType", membership.TypeId);
 
@@ -98,6 +99,7 @@ public class MembershipService(IMembershipRepository repository, IMembershipType
         membership.RegisterCheckIn();
 
         await unitOfWork.SaveChangesAsync(ct);
+
         return Result.Success();
     }
 }

@@ -11,11 +11,13 @@ public class AuthenticationResult
         Type = AuthenticationResultType.Failed,
         ReturnUrl = returnUrl
     };
+
     public static AuthenticationResult SignedIn(string? returnUrl) => new()
     {
         Type = AuthenticationResultType.SignedIn,
         ReturnUrl = returnUrl
     };
+
     public static AuthenticationResult RequiresVerification(string email,
     string? returnUrl) => new()
     {
@@ -23,11 +25,13 @@ public class AuthenticationResult
         ReturnUrl = returnUrl,
         Email = email
     };
+
     public static AuthenticationResult InvalidCode(string? returnUrl) => new()
     {
         Type = AuthenticationResultType.InvalidCode,
         ReturnUrl = returnUrl
     };
+
     public static AuthenticationResult RequiresAccountCreation(string email, string? returnUrl) => new()
     {
         Type = AuthenticationResultType.RequiresAccountCreation,
