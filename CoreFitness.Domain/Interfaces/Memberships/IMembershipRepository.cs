@@ -7,4 +7,5 @@ namespace CoreFitness.Domain.Interfaces.Memberships;
 public interface IMembershipRepository : IBaseRepository<Membership, MembershipId>
 {
     Task<Membership?> GetByUserIdAsync(UserId userId, CancellationToken ct = default);
+    Task<bool> HasActiveMembershipsByTypeAsync(MembershipTypeId typeId, CancellationToken ct = default);
 }

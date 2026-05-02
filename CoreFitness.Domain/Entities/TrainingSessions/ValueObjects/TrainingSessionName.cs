@@ -5,7 +5,6 @@ namespace CoreFitness.Domain.Entities.TrainingSessions.ValueObjects;
 public readonly partial record struct TrainingSessionName
 {
     public const int MaxLength = 100;
-
     public string Value { get; }
 
     private TrainingSessionName(string value)

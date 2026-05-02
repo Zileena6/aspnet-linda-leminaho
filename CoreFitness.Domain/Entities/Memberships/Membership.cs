@@ -51,7 +51,7 @@ public class Membership : BaseEntity<MembershipId>, IAggregateRoot
     {
 
         if (endDate <= startDate)
-            throw new InvalidMembershipPeriodException("Start date can not be in the past");
+            throw new InvalidMembershipPeriodException("Start date cannot be in the past");
 
         if (sessionLimit < 0)
             throw new InvalidSessionLimitException(sessionLimit);
@@ -139,6 +139,7 @@ public class Membership : BaseEntity<MembershipId>, IAggregateRoot
         if (!IsManuallyDeactivated) return;
 
         IsManuallyDeactivated = false;
+
         UpdateTimeStamp();
     }
 }

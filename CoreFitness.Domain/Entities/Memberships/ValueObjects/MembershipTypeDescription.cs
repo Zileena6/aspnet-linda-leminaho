@@ -6,7 +6,6 @@ namespace CoreFitness.Domain.Entities.Memberships.ValueObjects;
 public readonly record struct MembershipTypeDescription
 {
     public string Value { get; }
-
     public const int MaxLength = 1000;
 
     private MembershipTypeDescription(string value)
