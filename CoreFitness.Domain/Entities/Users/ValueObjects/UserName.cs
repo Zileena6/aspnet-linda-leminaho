@@ -22,7 +22,7 @@ public readonly partial record struct UserName
         var cleanLastName = lastName.NormalizeName();
 
         if (cleanFirstName.Length > MaxLength || cleanLastName.Length > MaxLength)
-            throw new InvalidNameException($"Name can not exceed {MaxLength} characters");
+            throw new InvalidNameException($"Name cannot exceed {MaxLength} characters");
 
         if (!string.IsNullOrEmpty(cleanFirstName) && !NameRegex().IsMatch(cleanFirstName) ||
             !string.IsNullOrEmpty(cleanLastName) && !NameRegex().IsMatch(cleanLastName))

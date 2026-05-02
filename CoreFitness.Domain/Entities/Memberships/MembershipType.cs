@@ -1,6 +1,5 @@
 ﻿using CoreFitness.Domain.Entities.Common;
 using CoreFitness.Domain.Entities.Memberships.ValueObjects;
-using CoreFitness.Domain.Enums;
 using CoreFitness.Domain.Exceptions;
 using CoreFitness.Domain.Interfaces;
 
@@ -13,19 +12,16 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
     public MembershipTypePrice Price { get; private set; }
     public MembershipTypeDuration Duration { get; private set; }
     public int SessionLimit { get; private set; }
-    public MembershipTypeEnums Type { get; private set; }
 
     private readonly List<MembershipTypeBenefit> _benefits = [];
     public IReadOnlyCollection<MembershipTypeBenefit> Benefits => _benefits.AsReadOnly();
-
 
     public static MembershipType Create(
         MembershipTypeName name, 
         MembershipTypeDescription description, 
         MembershipTypePrice price, 
         MembershipTypeDuration duration, 
-        int sessionLimit, 
-        MembershipTypeEnums type)
+        int sessionLimit)
     {
         if (sessionLimit <= 0)
             throw new InvalidSessionLimitException(sessionLimit);
@@ -39,8 +35,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         MembershipTypeDescription description, 
         MembershipTypePrice price, 
         MembershipTypeDuration duration, 
-        int sessionLimit, 
-        MembershipTypeEnums type)
+        int sessionLimit)
     {
         Id = id;
         Name = name;
@@ -48,7 +43,6 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         Price = price;
         Duration = duration;
         SessionLimit = sessionLimit;
-        Type = type;
     }
 
     protected MembershipType() { }
@@ -58,12 +52,14 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         if (newPrice == Price) return;
 
         Price = newPrice;
+
         UpdateTimeStamp();
     }
 
     public void UpdateDuration(MembershipTypeDuration days)
     {
         Duration = days;
+
         UpdateTimeStamp();
     }
 
@@ -73,6 +69,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
             throw new InvalidSessionLimitException(newLimit);
 
         SessionLimit = newLimit;
+
         UpdateTimeStamp();
     }
 
@@ -81,6 +78,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         if (Name == newName) return;
 
         Name = newName;
+
         UpdateTimeStamp();
     }
 
@@ -89,6 +87,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         if (Description == newDescription) return;
 
         Description = newDescription;
+
         UpdateTimeStamp();
     }
 
@@ -97,6 +96,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         var benefit = MembershipTypeBenefit.Create(Id, description);
 
         _benefits.Add(benefit);
+
         UpdateTimeStamp();
     }
 
@@ -106,6 +106,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
             throw new BenefitNotFoundException(benfitId);
 
         _benefits.Remove(benefit);
+
         UpdateTimeStamp();
     }
 }
