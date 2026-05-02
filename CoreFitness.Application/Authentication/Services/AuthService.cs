@@ -180,5 +180,4 @@ public class AuthService(IUserRepository userRepository, IPasswordProvider passw
 
     public async Task SignOutAsync(CancellationToken ct = default) =>
         await passwordProvider.SignOutAsync(ct);
-
 }

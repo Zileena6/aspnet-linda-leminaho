@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using CoreFitness.Application.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CoreFitness.Infrastructure.FileStorage;
 
