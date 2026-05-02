@@ -25,11 +25,6 @@ public class MembershipTypeConfiguration : BaseEntityConfiguration<MembershipTyp
 
         builder.Property(t => t.Duration);
 
-        builder.Property(t => t.Type)
-            .HasConversion<string>()
-            .HasMaxLength(TypeConstants.MaxLength)
-            .IsRequired();
-
         builder.Property(t => t.SessionLimit).IsRequired();
 
         builder.HasMany(t => t.Benefits)

@@ -7,9 +7,16 @@ using Microsoft.Extensions.Logging;
 
 namespace CoreFitness.Infrastructure.Authentication.Services;
 
-public class PasswordProvider(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<PasswordProvider> logger) : IPasswordProvider
+public class PasswordProvider(
+    UserManager<ApplicationUser> userManager, 
+    SignInManager<ApplicationUser> signInManager, 
+    ILogger<PasswordProvider> logger) : IPasswordProvider
 {
-    public async Task<PasswordSignInResult> PasswordSignInAsync(string email, string password, bool rememberMe, CancellationToken ct = default)
+    public async Task<PasswordSignInResult> PasswordSignInAsync(
+        string email, 
+        string password, 
+        bool rememberMe, 
+        CancellationToken ct = default)
     {
         var result = await signInManager.PasswordSignInAsync(email, password, rememberMe, lockoutOnFailure: true);
 
@@ -21,13 +28,18 @@ public class PasswordProvider(UserManager<ApplicationUser> userManager, SignInMa
             _ => PasswordSignInResult.Failed
         };
     }
-    public async Task<CreateUserResult> CreateUserWithPasswordAsync(string email, string? password = null, CancellationToken ct = default)
+
+    public async Task<CreateUserResult> CreateUserWithPasswordAsync(
+        string email, 
+        string? password = null, 
+        CancellationToken ct = default)
     {
         var existing = await userManager.FindByEmailAsync(email);
 
         if (existing is not null)
         {
             logger.LogWarning("User already exists for {Email}", email);
+
             return CreateUserResult.Failed();
         }
 
@@ -51,7 +63,6 @@ public class PasswordProvider(UserManager<ApplicationUser> userManager, SignInMa
         return CreateUserResult.Success(user.Id.ToString());
     }
 
-
     public async Task<PasswordSignInResult> SignInWithEmailAsync(string email, CancellationToken ct = default)
     {
         var user = await userManager.FindByEmailAsync(email);
@@ -66,7 +77,6 @@ public class PasswordProvider(UserManager<ApplicationUser> userManager, SignInMa
 
         return PasswordSignInResult.Succeeded;
     }
-
 
     public async Task SignInAsync(string userId, CancellationToken ct = default)
     {

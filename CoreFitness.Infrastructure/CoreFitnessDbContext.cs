@@ -58,6 +58,18 @@ public class CoreFitnessDbContext(DbContextOptions<CoreFitnessDbContext> options
         {
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
+                foreach (var property in entity.GetProperties())
+                {
+                    var isDateTimeOffset =
+                    property.ClrType == typeof(DateTimeOffset) ||
+                    property.ClrType == typeof(DateTimeOffset?);
+
+                    if (isDateTimeOffset && property.GetValueConverter() is null)
+                    {
+                        property.SetValueConverter(new DateTimeOffsetConverter());
+                    }
+                }
+
                 var rowVersion = entity.FindProperty("RowVersion");
                 rowVersion?.SetDefaultValueSql("randomblob(8)");
             }
