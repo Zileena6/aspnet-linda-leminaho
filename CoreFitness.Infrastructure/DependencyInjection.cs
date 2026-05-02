@@ -1,4 +1,4 @@
-﻿using CoreFitness.Application.Identity;
+﻿using CoreFitness.Application.Authentication;
 using CoreFitness.Domain.Interfaces.Memberships;
 using CoreFitness.Domain.Interfaces.TrainingSessions;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
