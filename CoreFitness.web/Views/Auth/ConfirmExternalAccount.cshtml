@@ -1,0 +1,12 @@
+﻿@model ConfirmExternalAccountViewModel
+
+<h2>Create account</h2>
+<p>Do you want to create an account with @Model.Email ?</p>
+
+<form method="post" asp-action="ConfirmExternalAccount">
+    <input type="hidden" asp-for="Email" />
+    <input type="hidden" asp-for="ReturnUrl" />
+
+    <button type="submit">Yes, create account!</button>
+    <a asp-controller="Account" asp-action="SignIn">Cancel</a>
+</form>

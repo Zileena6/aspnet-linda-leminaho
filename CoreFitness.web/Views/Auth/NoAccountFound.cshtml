@@ -1,0 +1,20 @@
+﻿@model NoAccountFoundViewModel
+
+<section>
+    <div>
+
+        <div>
+            <h2>No account found</h2>
+            <p>No account was found fopr <strong>@Model.Email</strong>. Would you like to create an account?</p>
+        </div>
+
+        <form asp-controller="Auth" asp-action="CreateFromExternal" method="post">
+            <input type="hidden" asp-for="Email">
+            <input type="hidden" asp-for="ReturnUrl">
+            <button type="submit">Create Account</button>
+        </form>
+
+        <a asp-controller="Account" asp-action="SignIn">Cancel</a>
+
+    </div>
+</section>
