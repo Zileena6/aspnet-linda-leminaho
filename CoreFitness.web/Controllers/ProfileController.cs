@@ -9,13 +9,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoreFitness.web.Controllers;
 
 [Authorize]
-public class ProfileController(IUserService userService, IAuthService authService, ILogger<ProfileController> logger) : Controller
+public class ProfileController(
+    IUserService userService, 
+    IAuthService authService, 
+    ILogger<ProfileController> logger) : Controller
 {
     public async Task<IActionResult> Index()
     {
         var authId = User.GetAuthenticationId();
 
         var userResult = await userService.GetByAuthenticationId(authId);
+
         if (!userResult.IsSuccess)
         {
             await authService.SignOutAsync();
@@ -44,7 +48,7 @@ public class ProfileController(IUserService userService, IAuthService authServic
         return View(vm);
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> Update(ProfilePageViewModel vm, CancellationToken ct = default)
     {
         if (!ModelState.IsValid)
@@ -72,10 +76,11 @@ public class ProfileController(IUserService userService, IAuthService authServic
         }
 
         TempData["Success"] = "Profile updated successfully";
+
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> Delete(CancellationToken ct = default)
     {
         var authId = User.GetAuthenticationId();
@@ -94,7 +99,7 @@ public class ProfileController(IUserService userService, IAuthService authServic
         return RedirectToAction("Index", "Home");
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> UploadPhoto(IFormFile photo, CancellationToken ct = default)
     {
         if (photo is null || photo.Length == 0)

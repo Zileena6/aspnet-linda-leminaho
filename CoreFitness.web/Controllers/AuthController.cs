@@ -2,16 +2,22 @@
 using CoreFitness.Application.Authentication.Models;
 using CoreFitness.web.ViewModels.Auth;
 using CoreFitness.web.ViewModels.Profile;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreFitness.web.Controllers;
 
 public class AuthController(IAuthService authService) : Controller
 {
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public IActionResult ExternalLogin(string provider, string returnUrl)
     {
-        var properties = authService.ConfigureExternalLogin(provider, Url.Action("ExternalLoginCallBack", "Auth")!);
+        var redirectUrl = Url.Action("ExternalLoginCallBack", "Auth");
+
+        var properties = new AuthenticationProperties
+        {
+            RedirectUri = redirectUrl
+        };
 
         return Challenge(properties, provider);
     }
@@ -50,7 +56,7 @@ public class AuthController(IAuthService authService) : Controller
     }
 #endif
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> VerifyEmailLogIn(VerifyEmailViewModel vm)
     {
         if (!ModelState.IsValid)
@@ -72,7 +78,7 @@ public class AuthController(IAuthService authService) : Controller
         };
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> StartExternalVerification(NoAccountFoundViewModel vm)
     {
         return View("VerifyExternalLogin", new VerifyExternalLogInViewModel
@@ -82,7 +88,7 @@ public class AuthController(IAuthService authService) : Controller
         });
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> ConfirmExternalAccount(ConfirmExternalAccountViewModel vm, CancellationToken ct = default)
     {
         var result = await authService.HandleExternalCallbackAsync(vm.ReturnUrl, null, confirmed: true, ct);
@@ -109,7 +115,7 @@ public class AuthController(IAuthService authService) : Controller
         return RedirectToAction("Index", "Home");
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public new async Task<IActionResult> SignOut()
     {
         await authService.SignOutAsync();
