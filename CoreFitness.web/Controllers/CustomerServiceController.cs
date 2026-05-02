@@ -10,7 +10,7 @@ public class CustomerServiceController : Controller
         return View(new ContactUsViewModel());
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
     public IActionResult ContactUs(ContactUsViewModel vm)
     {
         if (!ModelState.IsValid)
