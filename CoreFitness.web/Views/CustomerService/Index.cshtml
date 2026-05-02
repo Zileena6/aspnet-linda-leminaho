@@ -1,0 +1,9 @@
+﻿@model ContactUsViewModel
+
+@{
+    ViewData["Title"] = "Customer service page";
+}
+
+<div>
+    @await Html.PartialAsync("Components/CustomerService/_ContactUs", Model)
+</div>

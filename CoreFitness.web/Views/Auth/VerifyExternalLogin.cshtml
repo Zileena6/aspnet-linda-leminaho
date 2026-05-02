@@ -17,7 +17,7 @@
 
             <div>
                 <label asp-for="Code">Verification code: </label>
-                <input asp-for="Code" class="border border-gray-light rounded-[10px] p-2" />
+                <input asp-for="Code" class="border border-gray-light rounded-[10px] p-2" value='123456' />
                 <span asp-validation-for="Code" class="text-red-500 text-sm"></span>
             </div>
 
@@ -27,7 +27,7 @@
                 <a href="/privacy" class="underline">privacy policy</a>
             </p>
 
-            <button type="submit" class="cta w.full justify-center">
+            <button type="submit" class="w-full justify-center">
                 Verify
             </button>
         </form>

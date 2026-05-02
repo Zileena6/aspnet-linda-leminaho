@@ -1,0 +1,34 @@
+﻿@model VerifyEmailViewModel
+
+<section>
+    <div>
+
+        <div>
+            <h2>Verify your email</h2>
+            <p>A verification code has been sent to <strong>@Model.Email</strong>. Enter the code below to continue.</p>
+            <p>Demo code: <strong>123456</strong></p>
+        </div>
+
+        <hr />
+
+        <form asp-controller="Account" asp-action="VerifyEmail" method="post">
+            <input asp-for="Email" type="hidden" />
+            <input asp-for="ReturnUrl" type="hidden" />
+
+            <div>
+                <label asp-for="Code">Verification Code</label>
+                <input asp-for="Code" placeholder='Enter verification code' />
+                <span asp-validation-for="Code"></span>
+            </div>
+
+            <button type="submit">Continue</button>
+        </form>
+
+        <p>
+            By verifying you agree to our
+            <a href="/terms">terms of service</a> and
+            <a href="/privacy">privacy policy</a>
+        </p>
+
+    </div>
+</section>

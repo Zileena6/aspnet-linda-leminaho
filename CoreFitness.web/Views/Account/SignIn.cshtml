@@ -1,0 +1,72 @@
+﻿@model SignInViewModel
+
+<section class="">
+    <div class="max-w-215 mx-auto bg-white rounded-[20px] shadow-sm p-16 flex flex-col gap-8">
+        @if (TempData["Error"] is string error)
+        {
+            <div>
+                <p class="text-red-400">@error</p>
+            </div>
+        }
+
+        <div class="space-y-2">
+            <h2 class='font-medium text-[3.5rem] font-header'>Welcome Back!</h2>
+            <p class='font-paragraph'>
+                Log in to continue your fitness journey with full access to your customized program, training history, and progress tracking. Stay consistent, monitor your development, and keep moving forward with the structure and support built into your account.
+            </p>
+        </div>
+        
+        <div class="flex flex-col gap-15">
+            <hr class='flex-1 border-t border-gray-400' />
+
+            @if (Model.ExternalProviders.Any())
+            {
+                <form asp-controller="Auth" asp-action="ExternalLogIn" method="post" class='self-center'>
+                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+                    @foreach (var provider in Model.ExternalProviders)
+                    {
+                        <partial name="@($"ExternalProviders/_{provider}Button")" />
+                    }
+                </form>
+            }
+            <div class='flex items-center gap-4'>
+                <hr class='flex-1 border-t border-gray-400' />
+                <span class='uppercase'>Or continue with</span>
+                <hr class='flex-1 border-t border-gray-400' />
+            </div>
+        </div>
+
+        <form asp-controller="Account" asp-action="SignIn" method="post" class='flex flex-col gap-6'>
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class='flex flex-col gap-3'>
+                <label asp-for="Email" class='font-semibold'>Email Address <span class=''>*</span></label>
+                <input asp-for="Email" type="email" placeholder='Enter email address' class='bg-gray-100 p-4 rounded-lg' />
+                <span asp-validation-for="Email"></span>
+            </div>
+
+            <div class='flex flex-col gap-3'>
+                <div class='flex justify-between'>
+                    <label asp-for="Password" class='font-semibold'>Password <span class=''>*</span></label>
+                    <a class='text-tertiary-text cursor-pointer text-sm'>Forgot your password?</a>
+                </div>
+                        
+                <input asp-for="Password" type="password" placeholder='Enter password' class='bg-gray-100 p-4 rounded-lg' />
+                <span asp-validation-for="Password"></span>
+            </div>
+
+            <span asp-validation-summary="ModelOnly"></span>
+
+            <button type="submit" class='relative w-fit text-center self-center px-60 py-2 rounded-full cursor-pointer bg-tertiary font-semibold font-paragraph'>Continue <span><i class='fa-solid fa-chevron-right absolute right-3 top-1/2 -translate-1/2'></i></span></button>
+        </form>
+
+        @* This is not in Figma design, but added it for convenience for UX *@
+        <p>
+            Don't have an account?
+            <a asp-controller="Account" asp-action="SignUp" class='underline cursor-pointer'>Become a Member</a>
+        </p>
+
+        @* In Figma design there was an Accept terms and conditions here, removed it because it is not necesary when account have been created.  *@
+    </div>
+</section>
