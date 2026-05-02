@@ -1,8 +1,13 @@
 ﻿using CoreFitness.Application.Authentication;
+using CoreFitness.Application.Authentication.Abstractions;
+using CoreFitness.Application.Authentication.Services;
+using CoreFitness.Application.Interfaces;
 using CoreFitness.Domain.Interfaces.Memberships;
 using CoreFitness.Domain.Interfaces.TrainingSessions;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
 using CoreFitness.Domain.Interfaces.Users;
+using CoreFitness.Infrastructure.Authentication.Services;
+using CoreFitness.Infrastructure.FileStorage;
 using CoreFitness.Infrastructure.Identity;
 using CoreFitness.Infrastructure.Persistence;
 using CoreFitness.Infrastructure.Repositories;

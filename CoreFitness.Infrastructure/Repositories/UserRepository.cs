@@ -11,6 +11,9 @@ public class UserRepository(CoreFitnessDbContext context) : BaseRepository<User,
     public async Task<bool> ExistsByEmailAsync(UserEmail email, CancellationToken ct = default) =>
         await _context.Users.AnyAsync(e => e.EmailUnique == email.UniqueValue, ct);
 
+    public async Task<User?> GetByAuthenticationIdAsync(AuthenticationId id, CancellationToken ct = default) =>
+        await _context.Users.FirstOrDefaultAsync(u => u.AuthenticationId == id, ct);
+
     public async Task<User?> GetByEmailAsync(UserEmail email, CancellationToken ct = default) =>
         await _context.Users.FirstOrDefaultAsync(u => u.EmailUnique == email.UniqueValue);
 }
