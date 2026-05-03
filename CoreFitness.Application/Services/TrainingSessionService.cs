@@ -9,12 +9,14 @@ using CoreFitness.Domain.Entities.Users.ValueObjects;
 using CoreFitness.Domain.Interfaces.Memberships;
 using CoreFitness.Domain.Interfaces.TrainingSessions;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
+using CoreFitness.Domain.Interfaces.Users;
 
 namespace CoreFitness.Application.Services;
 
 public class TrainingSessionService(
     ITrainingSessionRepository repository, 
-    IMembershipRepository membershipRepository, 
+    IMembershipRepository membershipRepository,
+    IUserRepository userRepository,
     IUnitOfWork unitOfWork) : ITrainingSessionService
 {
     public async Task<Result<TrainingSessionDTO>> GetByIdAsync(Guid sessionId, CancellationToken ct = default)
@@ -27,14 +29,19 @@ public class TrainingSessionService(
         return Result<TrainingSessionDTO>.Success(session.ToDTO());
     }
 
-    public async Task<Result> BookAsync(Guid sessionId, Guid userId, CancellationToken ct = default)
+    public async Task<Result> BookAsync(Guid sessionId, AuthenticationId authId, CancellationToken ct = default)
     {
         var session = await repository.GetByIdAsync(new TrainingSessionId(sessionId), ct);
 
         if (session is null)
             return Result.NotFound("TrainingSession", sessionId);
 
-        var uId = new UserId(userId);
+        var user = await userRepository.GetByAuthenticationIdAsync(authId, ct);
+
+        if (user is null)
+            return Result.NotFound("User", authId);
+
+        var uId = user.Id;
 
         var membership = await membershipRepository.GetByUserIdAsync(uId, ct);
 
@@ -56,14 +63,19 @@ public class TrainingSessionService(
         return Result.Success();
     }
 
-    public async Task<Result> CancelBookingAsync(Guid sessionId, Guid userId, CancellationToken ct = default)
+    public async Task<Result> CancelBookingAsync(Guid sessionId, AuthenticationId authId, CancellationToken ct = default)
     {
         var session = await repository.GetByIdAsync(new TrainingSessionId(sessionId), ct);
 
         if (session is null)
             return Result.NotFound("TrainingSession", sessionId);
 
-        var uId = new UserId(userId);
+        var user = await userRepository.GetByAuthenticationIdAsync(authId, ct);
+
+        if (user is null)
+            return Result.NotFound("User", authId);
+
+        var uId = user.Id;
 
         var membership = await membershipRepository.GetByUserIdAsync(uId, ct);
 
