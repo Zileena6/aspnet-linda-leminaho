@@ -74,6 +74,12 @@ obj/Debug/net10.0/
  CoreFitness.Web.GlobalUsings.g.cs
  CoreFitness.Web.RazorAssemblyInfo.cs
 Program.cs
+TagHelpers/
+ CardTagHelper.cs
+ EyebrowTagHelper.cs
+ NavLinkTagHelper.cs
+ SectionTagHelper.cs
+ TagHelperExtensions.cs
 ViewModels/Admin/Memberships/
  AdminMembershipsViewModel.cs
  CreateMembershipTypeViewModel.cs
