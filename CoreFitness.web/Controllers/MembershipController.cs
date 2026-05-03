@@ -1,8 +1,8 @@
 ﻿using CoreFitness.Application.Interfaces;
-using CoreFitness.web.ViewModels.Membership;
+using CoreFitness.Web.ViewModels.Membership;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.web.Controllers;
+namespace CoreFitness.Web.Controllers;
 
 [Route("memberships")]
 public class MembershipController(IMembershipService membershipService, IFaqService faqService) : Controller

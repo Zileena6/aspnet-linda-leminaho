@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CoreFitness.web.ViewModels.CustomerService;
+namespace CoreFitness.Web.ViewModels.CustomerService;
 
 public class ContactUsViewModel
 {

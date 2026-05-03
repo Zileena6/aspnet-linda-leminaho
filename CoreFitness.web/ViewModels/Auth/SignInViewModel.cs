@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CoreFitness.web.ViewModels.Auth;
+namespace CoreFitness.Web.ViewModels.Auth;
 
 public class SignInViewModel
 {

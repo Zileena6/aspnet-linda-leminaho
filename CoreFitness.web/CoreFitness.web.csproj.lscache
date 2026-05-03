@@ -44,8 +44,8 @@ TemporaryDependencyNodeTargetIdentifier=net10.0
 /debug:portable
 /filealign:512
 /optimize-
-/out:obj\Debug\net10.0\CoreFitness.web.dll
-/refout:obj\Debug\net10.0\refint\CoreFitness.web.dll
+/out:obj\Debug\net10.0\CoreFitness.Web.dll
+/refout:obj\Debug\net10.0\refint\CoreFitness.Web.dll
 /target:exe
 /warnaserror-
 /utf8output
@@ -70,9 +70,9 @@ Extensions/ClaimsPrincipalExtensions.cs
 Models/ErrorViewModel.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
- CoreFitness.web.AssemblyInfo.cs
- CoreFitness.web.GlobalUsings.g.cs
- CoreFitness.web.RazorAssemblyInfo.cs
+ CoreFitness.Web.AssemblyInfo.cs
+ CoreFitness.Web.GlobalUsings.g.cs
+ CoreFitness.Web.RazorAssemblyInfo.cs
 Program.cs
 ViewModels/Admin/Memberships/
  AdminMembershipsViewModel.cs
@@ -481,7 +481,7 @@ ViewModels/
 
 [analyzerConfigFiles]
 <DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
-obj/Debug/net10.0/CoreFitness.web.GeneratedMSBuildEditorConfig.editorconfig
+obj/Debug/net10.0/CoreFitness.Web.GeneratedMSBuildEditorConfig.editorconfig
 
 [additionalFiles]
 Views/Account/

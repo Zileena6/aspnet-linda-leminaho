@@ -1,4 +1,4 @@
-﻿namespace CoreFitness.web.ViewModels.Admin.Memberships;
+﻿namespace CoreFitness.Web.ViewModels.Admin.Memberships;
 
 public class MembershipTypeFormViewModel
 {

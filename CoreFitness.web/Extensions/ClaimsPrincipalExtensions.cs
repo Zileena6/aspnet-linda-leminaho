@@ -1,7 +1,7 @@
 ﻿using CoreFitness.Domain.Entities.Users.ValueObjects;
 using System.Security.Claims;
 
-namespace CoreFitness.web.Extensions;
+namespace CoreFitness.Web.Extensions;
 
 public static class ClaimsPrincipalExtensions
 {

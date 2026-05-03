@@ -1,12 +1,12 @@
 ﻿using CoreFitness.Application.Authentication;
 using CoreFitness.Application.DTOs.User;
 using CoreFitness.Application.Interfaces;
-using CoreFitness.web.Extensions;
-using CoreFitness.web.ViewModels.Profile;
+using CoreFitness.Web.Extensions;
+using CoreFitness.Web.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.web.Controllers;
+namespace CoreFitness.Web.Controllers;
 
 [Authorize]
 public class ProfileController(

@@ -1,10 +1,10 @@
 ﻿using CoreFitness.Application.Authentication;
 using CoreFitness.Application.Authentication.Models;
 using CoreFitness.Application.DTOs.Auth;
-using CoreFitness.web.ViewModels.Auth;
+using CoreFitness.Web.ViewModels.Auth;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.web.Controllers;
+namespace CoreFitness.Web.Controllers;
 
 public class AccountController(IAuthService authService) : Controller
 {

@@ -1,4 +1,4 @@
-namespace CoreFitness.web.Models;
+namespace CoreFitness.Web.Models;
 
 public class ErrorViewModel
 {

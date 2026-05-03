@@ -1,10 +1,10 @@
 ﻿using CoreFitness.Application.DTOs.Membership;
 using CoreFitness.Application.Interfaces;
-using CoreFitness.web.ViewModels.Admin.Memberships;
+using CoreFitness.Web.ViewModels.Admin.Memberships;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.web.Controllers.Admin;
+namespace CoreFitness.Web.Controllers.Admin;
 
 [Authorize(Roles = "Admin")]
 [Route("Admin/Memberships")]

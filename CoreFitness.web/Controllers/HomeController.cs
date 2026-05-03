@@ -1,9 +1,9 @@
 using CoreFitness.Application.Interfaces;
-using CoreFitness.web.Models;
+using CoreFitness.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace CoreFitness.web.Controllers;
+namespace CoreFitness.Web.Controllers;
 
 public class HomeController(IQuoteService quoteService) : Controller
 {

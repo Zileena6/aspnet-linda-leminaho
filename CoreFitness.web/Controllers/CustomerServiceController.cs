@@ -1,7 +1,7 @@
-﻿using CoreFitness.web.ViewModels.CustomerService;
+﻿using CoreFitness.Web.ViewModels.CustomerService;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.web.Controllers;
+namespace CoreFitness.Web.Controllers;
 
 public class CustomerServiceController : Controller
 {

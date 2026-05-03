@@ -1,4 +1,4 @@
-﻿namespace CoreFitness.web.ViewModels.Admin.Sessions;
+﻿namespace CoreFitness.Web.ViewModels.Admin.Sessions;
 
 public class CreateSessionViewModel
 {

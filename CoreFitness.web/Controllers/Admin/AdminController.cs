@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.web.Controllers.Admin;
+namespace CoreFitness.Web.Controllers.Admin;
 
 [Authorize(Roles = "Admin")]
 [Route("Admin")]

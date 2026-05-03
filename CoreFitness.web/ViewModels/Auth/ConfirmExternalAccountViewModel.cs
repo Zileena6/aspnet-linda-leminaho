@@ -1,4 +1,4 @@
-﻿namespace CoreFitness.web.ViewModels.Auth;
+﻿namespace CoreFitness.Web.ViewModels.Auth;
 
 public class ConfirmExternalAccountViewModel
 {

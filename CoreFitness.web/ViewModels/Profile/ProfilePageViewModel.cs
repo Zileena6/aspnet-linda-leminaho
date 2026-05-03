@@ -1,6 +1,6 @@
 ﻿using CoreFitness.Application.DTOs.User;
 
-namespace CoreFitness.web.ViewModels.Profile;
+namespace CoreFitness.Web.ViewModels.Profile;
 
 public class ProfilePageViewModel
 {

@@ -1,10 +1,10 @@
 ﻿using CoreFitness.Application.DTOs.TrainingSession;
 using CoreFitness.Application.Interfaces;
-using CoreFitness.web.ViewModels.Admin.Sessions;
+using CoreFitness.Web.ViewModels.Admin.Sessions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.web.Controllers.Admin;
+namespace CoreFitness.Web.Controllers.Admin;
 
 [Authorize(Roles = "Admin")]
 [Route("Admin/Sessions")]
