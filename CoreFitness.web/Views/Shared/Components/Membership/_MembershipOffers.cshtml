@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MembershipTypeDTO>
+
+<cf-section>
+    <div class='flex flex-col items-center gap-8'>
+        <h1>Our Membership Offers</h1>
+
+        <div class='flex'>
+            @foreach (var type in Model)
+            {
+                @await Html.PartialAsync("Components/Membership/_MembershipCard", type)
+            }
+        </div>
+        <div class='flex'>
+            <div class='flex items-center gap-2'>
+                <i class="fa-regular fa-calendar-check text-tertiary"></i>
+                <p>Get 30 day free trial</p>
+            </div>
+            <div class='flex items-center gap-2'>
+                <i class="fa-regular fa-credit-card text-tertiary"></i>
+                <p>No any hidden fees pay</p>
+            </div>
+            <div class='flex items-center gap-2'>
+                <i class="fa-regular fa-clock text-tertiary"></i>
+                <p>You can cancel anytime</p>
+            </div>
+        </div>
+    </div>
+
+</cf-section>

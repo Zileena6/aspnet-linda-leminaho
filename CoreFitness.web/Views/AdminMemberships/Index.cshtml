@@ -1,0 +1,13 @@
+﻿@using CoreFitness.web.ViewModels.Admin.Memberships
+@model AdminMembershipsViewModel
+
+@{
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<h1>Memberships</h1>
+
+@await Html.PartialAsync("Partials/_MembershipTypeTable", Model.MembershipTypes)
+
+@await Html.PartialAsync("Partials/_MembershipTypeForm", Model.UpdateMembershipType ?? new MembershipTypeFormViewModel())
+

@@ -13,18 +13,18 @@ primary
 lastDtbSucceeded
 
 [properties]
-AssemblyName=CoreFitness.web
+AssemblyName=CoreFitness.Application
 CommandLineArgsForDesignTimeEvaluation=-langversion:14.0 -define:TRACE
 CompilerGeneratedFilesOutputPath=
 MaxSupportedLangVersion=14.0
 ProjectAssetsFile=<PATH>obj/project.assets.json
-RootNamespace=CoreFitness.web
+RootNamespace=CoreFitness.Application
 RunAnalyzers=
 RunAnalyzersDuringLiveAnalysis=
 SolutionPath=<PATH>../CoreFitness.slnx
 TargetFrameworkIdentifier=.NETCoreApp
-TargetPath=<PATH>bin/Debug/net10.0/CoreFitness.web.dll
-TargetRefPath=<PATH>obj/Debug/net10.0/ref/CoreFitness.web.dll
+TargetPath=<PATH>bin/Debug/net10.0/CoreFitness.Application.dll
+TargetRefPath=<PATH>obj/Debug/net10.0/ref/CoreFitness.Application.dll
 TemporaryDependencyNodeTargetIdentifier=net10.0
 
 [commandLineArguments]
@@ -44,64 +44,85 @@ TemporaryDependencyNodeTargetIdentifier=net10.0
 /debug:portable
 /filealign:512
 /optimize-
-/out:obj\Debug\net10.0\CoreFitness.web.dll
-/refout:obj\Debug\net10.0\refint\CoreFitness.web.dll
-/target:exe
+/out:obj\Debug\net10.0\CoreFitness.Application.dll
+/refout:obj\Debug\net10.0\refint\CoreFitness.Application.dll
+/target:library
 /warnaserror-
 /utf8output
 /deterministic+
 /langversion:14.0
-/features:use-roslyn-tokenizer=true
 /warnaserror+:NU1605,SYSLIB0011
 
 [sourceFiles]
-Controllers/
- AccountController.cs
- Admin/
-  AdminController.cs
-  AdminMembershipsController.cs
-  AdminSessionsController.cs
- AuthController.cs
- CustomerServiceController.cs
- HomeController.cs
- MembershipController.cs
- ProfileController.cs
-Extensions/ClaimsPrincipalExtensions.cs
-Models/ErrorViewModel.cs
+Authentication/Abstractions/
+ IExternalAuthProvider.cs
+ IPasswordProvider.cs
+Authentication/
+ IAuthService.cs
+ Models/
+  AuthenticationResult.cs
+  AuthenticationResultType.cs
+  CreateUserResult.cs
+  ExternalSignInResult.cs
+  ExternalUserInfo.cs
+  LinkResult.cs
+  PasswordSignInResult.cs
+ Services/AuthService.cs
+DependencyInjection.cs
+DTOs/Auth/
+ LoginDTO.cs
+ RegisterDTO.cs
+DTOs/
+ Booking/BookingDTO.cs
+ FaqItem/FaqItemDTO.cs
+ Membership/
+  CheckInDTO.cs
+  CreateMembershipDTO.cs
+  CreateMembershipTypeDTO.cs
+  MembershipDTO.cs
+  MembershipTypeDTO.cs
+  UpdateMembershipTypeDTO.cs
+ Quotes/QuoteDTO.cs
+ TrainingSession/
+  CreateTrainingSessionDTO.cs
+  TrainingSessionDTO.cs
+  UpdateTrainingSessionDTO.cs
+ User/
+  AdminCreateUserDTO.cs
+  AdminUserDTO.cs
+  CompleteProfileDTO.cs
+  UpdateProfileDTO.cs
+  UpdateUserDTO.cs
+  UserDTO.cs
+  UserStatisticsDTO.cs
+Interfaces/
+ IAdminService.cs
+ IFaqService.cs
+ IFileStorage.cs
+ IMembershipService.cs
+ IMembershipTypeService.cs
+ IQuoteService.cs
+ ITrainingSessionService.cs
+ IUserService.cs
+Mappings/
+ MembershipMappings.cs
+ TrainingSessionMappings.cs
+ UserMappings.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
- CoreFitness.web.AssemblyInfo.cs
- CoreFitness.web.GlobalUsings.g.cs
- CoreFitness.web.RazorAssemblyInfo.cs
-Program.cs
-ViewModels/Admin/Memberships/
- AdminMembershipsViewModel.cs
- CreateMembershipTypeViewModel.cs
- MembershipTypeFormViewModel.cs
- UpdateMembershipTypeViewModel.cs
-ViewModels/Admin/Sessions/
- AdminSessionsViewModel.cs
- CreateSessionViewModel.cs
- UpdateSessionViewModel.cs
-ViewModels/Auth/
- ConfirmExternalAccountViewModel.cs
- SetUpPasswordViewModel.cs
- SignInViewModel.cs
- SignUpViewModel.cs
- VerifyEmailViewModel.cs
- VerifyExternalLogInViewModel.cs
-ViewModels/
- CustomerService/ContactUsViewModel.cs
- Membership/MembershipPageViewModel.cs
- Profile/
-  NoAccountFoundViewModel.cs
-  ProfilePageViewModel.cs
+ CoreFitness.Application.AssemblyInfo.cs
+ CoreFitness.Application.GlobalUsings.g.cs
+Services/
+ AdminService.cs
+ FaqService.cs
+ MembershipService.cs
+ MembershipTypeService.cs
+ QuoteService.cs
+ TrainingSessionService.cs
+ UserService.cs
 
 [metadataReferences]
-../
- CoreFitness.Application/obj/Debug/net10.0/ref/CoreFitness.Application.dll
- CoreFitness.Domain/obj/Debug/net10.0/ref/CoreFitness.Domain.dll
- CoreFitness.Infrastructure/obj/Debug/net10.0/ref/CoreFitness.Infrastructure.dll
+../CoreFitness.Domain/obj/Debug/net10.0/ref/CoreFitness.Domain.dll
 <DOTNET>/packs/Microsoft.AspNetCore.App.Ref/10.0.7/ref/net10.0/
  Microsoft.AspNetCore.Antiforgery.dll
  Microsoft.AspNetCore.Authentication.Abstractions.dll
@@ -411,40 +432,6 @@ ViewModels/
  System.Xml.XPath.dll
  System.Xml.XPath.XDocument.dll
  WindowsBase.dll
-<NUGET>/
- aspnet.security.oauth.github/10.0.0/lib/net10.0/AspNet.Security.OAuth.GitHub.dll
- azure.core/1.47.1/lib/net8.0/Azure.Core.dll
- azure.identity/1.14.2/lib/net8.0/Azure.Identity.dll
- microsoft.aspnetcore.authentication.google/10.0.7/lib/net10.0/Microsoft.AspNetCore.Authentication.Google.dll
- microsoft.aspnetcore.identity.entityframeworkcore/10.0.7/lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
- microsoft.bcl.asyncinterfaces/8.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll
- microsoft.bcl.cryptography/9.0.4/lib/net9.0/Microsoft.Bcl.Cryptography.dll
- microsoft.data.sqlclient/6.1.1/ref/net9.0/Microsoft.Data.SqlClient.dll
- microsoft.data.sqlite.core/10.0.7/lib/net8.0/Microsoft.Data.Sqlite.dll
- microsoft.entityframeworkcore.abstractions/10.0.7/lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll
- microsoft.entityframeworkcore.inmemory/10.0.7/lib/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll
- microsoft.entityframeworkcore.relational/10.0.7/lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll
- microsoft.entityframeworkcore.sqlite.core/10.0.7/lib/net10.0/Microsoft.EntityFrameworkCore.Sqlite.dll
- microsoft.entityframeworkcore.sqlserver/10.0.7/lib/net10.0/Microsoft.EntityFrameworkCore.SqlServer.dll
- microsoft.entityframeworkcore/10.0.7/lib/net10.0/Microsoft.EntityFrameworkCore.dll
- microsoft.extensions.dependencymodel/10.0.7/lib/net10.0/Microsoft.Extensions.DependencyModel.dll
- microsoft.identity.client.extensions.msal/4.73.1/lib/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll
- microsoft.identity.client/4.73.1/lib/net8.0/Microsoft.Identity.Client.dll
- microsoft.identitymodel.abstractions/7.7.1/lib/net8.0/Microsoft.IdentityModel.Abstractions.dll
- microsoft.identitymodel.jsonwebtokens/7.7.1/lib/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
- microsoft.identitymodel.logging/7.7.1/lib/net8.0/Microsoft.IdentityModel.Logging.dll
- microsoft.identitymodel.protocols.openidconnect/7.7.1/lib/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
- microsoft.identitymodel.protocols/7.7.1/lib/net8.0/Microsoft.IdentityModel.Protocols.dll
- microsoft.identitymodel.tokens/7.7.1/lib/net8.0/Microsoft.IdentityModel.Tokens.dll
- microsoft.sqlserver.server/1.0.0/lib/netstandard2.0/Microsoft.SqlServer.Server.dll
- sqlitepclraw.bundle_e_sqlite3/2.1.11/lib/netstandard2.0/SQLitePCLRaw.batteries_v2.dll
- sqlitepclraw.core/2.1.11/lib/netstandard2.0/SQLitePCLRaw.core.dll
- sqlitepclraw.provider.e_sqlite3/2.1.11/lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll
- system.clientmodel/1.5.1/lib/net8.0/System.ClientModel.dll
- system.identitymodel.tokens.jwt/7.7.1/lib/net8.0/System.IdentityModel.Tokens.Jwt.dll
- system.memory.data/8.0.1/lib/net8.0/System.Memory.Data.dll
- system.security.cryptography.pkcs/9.0.4/lib/net9.0/System.Security.Cryptography.Pkcs.dll
- system.security.cryptography.protecteddata/9.0.4/lib/net9.0/System.Security.Cryptography.ProtectedData.dll
 
 [analyzerReferences]
 <DOTNET>/packs/Microsoft.AspNetCore.App.Ref/10.0.7/analyzers/dotnet/cs/
@@ -462,151 +449,10 @@ ViewModels/
  Microsoft.Interop.SourceGeneration.dll
  System.Text.Json.SourceGeneration.dll
  System.Text.RegularExpressions.Generator.dll
-<DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk.Razor/source-generators/
- Microsoft.AspNetCore.Razor.Utilities.Shared.dll
- Microsoft.CodeAnalysis.Razor.Compiler.dll
- Microsoft.Extensions.ObjectPool.dll
-<DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk.Web/analyzers/cs/
- Microsoft.AspNetCore.Analyzers.dll
- Microsoft.AspNetCore.Mvc.Analyzers.dll
 <DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/
  Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
  Microsoft.CodeAnalysis.NetAnalyzers.dll
-<NUGET>/microsoft.codeanalysis.analyzers/3.11.0/analyzers/dotnet/cs/
- Microsoft.CodeAnalysis.Analyzers.dll
- Microsoft.CodeAnalysis.CSharp.Analyzers.dll
-<NUGET>/
- microsoft.entityframeworkcore.analyzers/10.0.7/analyzers/dotnet/cs/Microsoft.EntityFrameworkCore.Analyzers.dll
- system.clientmodel/1.5.1/analyzers/dotnet/cs/System.ClientModel.SourceGeneration.dll
 
 [analyzerConfigFiles]
 <DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
-obj/Debug/net10.0/CoreFitness.web.GeneratedMSBuildEditorConfig.editorconfig
-
-[additionalFiles]
-Views/Account/
- SetPassword.cshtml
- SignIn.cshtml
- SignUp.cshtml
- VerifyEmail.cshtml
-Views/Admin/
- Index.cshtml
- _AdminLayout.cshtml
-Views/AdminMemberships/
- Index.cshtml
- Partials/
-  _MembershipTypeForm.cshtml
-  _MembershipTypeTable.cshtml
-Views/AdminSessions/
- Edit.cshtml
- Index.cshtml
- Partials/
-  _SessionForm.cshtml
-  _SessionTable.cshtml
-Views/Auth/
- ConfirmExternalAccount.cshtml
- NoAccountFound.cshtml
- VerifyExternalLogin.cshtml
-Views/
- CustomerService/Index.cshtml
- Home/
-  Error404.cshtml
-  Index.cshtml
-  Privacy.cshtml
- Membership/Index.cshtml
- Profile/Index.cshtml
- Shared/Components/Account/
-  _AboutMeForm.cshtml
-  _MyStatistics.cshtml
-  _ProfileSidebar.cshtml
- Shared/Components/CustomerService/
-  _ContactUs.cshtml
-  _ContactUsForm.cshtml
- Shared/Components/Home/
-  _AboutUs.cshtml
-  _EquipmentBar.cshtml
-  _Hero.cshtml
-  _OurPrograms.cshtml
-  _OurStore.cshtml
- Shared/Components/Layout/
-  _Footer.cshtml
-  _Navbar.cshtml
- Shared/Components/Membership/
-  _MembershipCard.cshtml
-  _MembershipOffers.cshtml
- Shared/Components/Shared/
-  _Faq.cshtml
-  _FaqItem.cshtml
- Shared/
-  Error.cshtml
-  ExternalProviders/
-   _GitHubButton.cshtml
-   _GoogleButton.cshtml
-  Partials/_Aside.cshtml
-  _Layout.cshtml
- _ViewImports.cshtml
- _ViewStart.cshtml
-
-[dynamicFiles]
-Views/Account/
- SetPassword.cshtml
- SignIn.cshtml
- SignUp.cshtml
- VerifyEmail.cshtml
-Views/Admin/
- Index.cshtml
- _AdminLayout.cshtml
-Views/AdminMemberships/
- Index.cshtml
- Partials/
-  _MembershipTypeForm.cshtml
-  _MembershipTypeTable.cshtml
-Views/AdminSessions/
- Edit.cshtml
- Index.cshtml
- Partials/
-  _SessionForm.cshtml
-  _SessionTable.cshtml
-Views/Auth/
- ConfirmExternalAccount.cshtml
- NoAccountFound.cshtml
- VerifyExternalLogin.cshtml
-Views/
- CustomerService/Index.cshtml
- Home/
-  Error404.cshtml
-  Index.cshtml
-  Privacy.cshtml
- Membership/Index.cshtml
- Profile/Index.cshtml
- Shared/Components/Account/
-  _AboutMeForm.cshtml
-  _MyStatistics.cshtml
-  _ProfileSidebar.cshtml
- Shared/Components/CustomerService/
-  _ContactUs.cshtml
-  _ContactUsForm.cshtml
- Shared/Components/Home/
-  _AboutUs.cshtml
-  _EquipmentBar.cshtml
-  _Hero.cshtml
-  _OurPrograms.cshtml
-  _OurStore.cshtml
- Shared/Components/Layout/
-  _Footer.cshtml
-  _Navbar.cshtml
- Shared/Components/Membership/
-  _MembershipCard.cshtml
-  _MembershipOffers.cshtml
- Shared/Components/Shared/
-  _Faq.cshtml
-  _FaqItem.cshtml
- Shared/
-  Error.cshtml
-  ExternalProviders/
-   _GitHubButton.cshtml
-   _GoogleButton.cshtml
-  Partials/_Aside.cshtml
-  _Layout.cshtml
- _ViewImports.cshtml
- _ViewStart.cshtml
+obj/Debug/net10.0/CoreFitness.Application.GeneratedMSBuildEditorConfig.editorconfig

@@ -13,18 +13,18 @@ primary
 lastDtbSucceeded
 
 [properties]
-AssemblyName=CoreFitness.web
+AssemblyName=CoreFitness.Infrastructure
 CommandLineArgsForDesignTimeEvaluation=-langversion:14.0 -define:TRACE
 CompilerGeneratedFilesOutputPath=
 MaxSupportedLangVersion=14.0
 ProjectAssetsFile=<PATH>obj/project.assets.json
-RootNamespace=CoreFitness.web
+RootNamespace=CoreFitness.Infrastructure
 RunAnalyzers=
 RunAnalyzersDuringLiveAnalysis=
 SolutionPath=<PATH>../CoreFitness.slnx
 TargetFrameworkIdentifier=.NETCoreApp
-TargetPath=<PATH>bin/Debug/net10.0/CoreFitness.web.dll
-TargetRefPath=<PATH>obj/Debug/net10.0/ref/CoreFitness.web.dll
+TargetPath=<PATH>bin/Debug/net10.0/CoreFitness.Infrastructure.dll
+TargetRefPath=<PATH>obj/Debug/net10.0/ref/CoreFitness.Infrastructure.dll
 TemporaryDependencyNodeTargetIdentifier=net10.0
 
 [commandLineArguments]
@@ -44,64 +44,58 @@ TemporaryDependencyNodeTargetIdentifier=net10.0
 /debug:portable
 /filealign:512
 /optimize-
-/out:obj\Debug\net10.0\CoreFitness.web.dll
-/refout:obj\Debug\net10.0\refint\CoreFitness.web.dll
-/target:exe
+/out:obj\Debug\net10.0\CoreFitness.Infrastructure.dll
+/refout:obj\Debug\net10.0\refint\CoreFitness.Infrastructure.dll
+/target:library
 /warnaserror-
 /utf8output
 /deterministic+
 /langversion:14.0
-/features:use-roslyn-tokenizer=true
 /warnaserror+:NU1605,SYSLIB0011
 
 [sourceFiles]
-Controllers/
- AccountController.cs
- Admin/
-  AdminController.cs
-  AdminMembershipsController.cs
-  AdminSessionsController.cs
- AuthController.cs
- CustomerServiceController.cs
- HomeController.cs
- MembershipController.cs
- ProfileController.cs
-Extensions/ClaimsPrincipalExtensions.cs
-Models/ErrorViewModel.cs
+AuthDbContext.cs
+AuthDbContextFactory.cs
+Authentication/Services/
+ ExternalAuthProvider.cs
+ PasswordProvider.cs
+Configurations/
+ BaseEntityConfiguration.cs
+ BookingConfiguration.cs
+ CheckInConfiguration.cs
+ MembershipConfiguration.cs
+ MembershipTypeBenefitConfiguration.cs
+ MembershipTypeConfiguration.cs
+ TrainingSessionConfiguration.cs
+ UserConfiguration.cs
+Converters/
+ IdValueConverters.cs
+ ValueObjectConverters.cs
+CoreFitnessDbContext.cs
+CoreFitnessDbContextFactory.cs
+DependencyInjection.cs
+FileStorage/LocalFileStorage.cs
+Identity/ApplicationUser.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
- CoreFitness.web.AssemblyInfo.cs
- CoreFitness.web.GlobalUsings.g.cs
- CoreFitness.web.RazorAssemblyInfo.cs
-Program.cs
-ViewModels/Admin/Memberships/
- AdminMembershipsViewModel.cs
- CreateMembershipTypeViewModel.cs
- MembershipTypeFormViewModel.cs
- UpdateMembershipTypeViewModel.cs
-ViewModels/Admin/Sessions/
- AdminSessionsViewModel.cs
- CreateSessionViewModel.cs
- UpdateSessionViewModel.cs
-ViewModels/Auth/
- ConfirmExternalAccountViewModel.cs
- SetUpPasswordViewModel.cs
- SignInViewModel.cs
- SignUpViewModel.cs
- VerifyEmailViewModel.cs
- VerifyExternalLogInViewModel.cs
-ViewModels/
- CustomerService/ContactUsViewModel.cs
- Membership/MembershipPageViewModel.cs
- Profile/
-  NoAccountFoundViewModel.cs
-  ProfilePageViewModel.cs
+ CoreFitness.Infrastructure.AssemblyInfo.cs
+ CoreFitness.Infrastructure.GlobalUsings.g.cs
+Persistence/
+ EfTransaction.cs
+ EfUnitOfWork.cs
+Primitives/IntResult.cs
+Repositories/
+ BaseRepository.cs
+ MembershipRepository.cs
+ MembershipTypeRepository.cs
+ TrainingSessionRepository.cs
+ UserRepository.cs
+Seeders/DbSeeder.cs
 
 [metadataReferences]
 ../
  CoreFitness.Application/obj/Debug/net10.0/ref/CoreFitness.Application.dll
  CoreFitness.Domain/obj/Debug/net10.0/ref/CoreFitness.Domain.dll
- CoreFitness.Infrastructure/obj/Debug/net10.0/ref/CoreFitness.Infrastructure.dll
 <DOTNET>/packs/Microsoft.AspNetCore.App.Ref/10.0.7/ref/net10.0/
  Microsoft.AspNetCore.Antiforgery.dll
  Microsoft.AspNetCore.Authentication.Abstractions.dll
@@ -462,13 +456,6 @@ ViewModels/
  Microsoft.Interop.SourceGeneration.dll
  System.Text.Json.SourceGeneration.dll
  System.Text.RegularExpressions.Generator.dll
-<DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk.Razor/source-generators/
- Microsoft.AspNetCore.Razor.Utilities.Shared.dll
- Microsoft.CodeAnalysis.Razor.Compiler.dll
- Microsoft.Extensions.ObjectPool.dll
-<DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk.Web/analyzers/cs/
- Microsoft.AspNetCore.Analyzers.dll
- Microsoft.AspNetCore.Mvc.Analyzers.dll
 <DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/
  Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
  Microsoft.CodeAnalysis.NetAnalyzers.dll
@@ -481,132 +468,4 @@ ViewModels/
 
 [analyzerConfigFiles]
 <DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
-obj/Debug/net10.0/CoreFitness.web.GeneratedMSBuildEditorConfig.editorconfig
-
-[additionalFiles]
-Views/Account/
- SetPassword.cshtml
- SignIn.cshtml
- SignUp.cshtml
- VerifyEmail.cshtml
-Views/Admin/
- Index.cshtml
- _AdminLayout.cshtml
-Views/AdminMemberships/
- Index.cshtml
- Partials/
-  _MembershipTypeForm.cshtml
-  _MembershipTypeTable.cshtml
-Views/AdminSessions/
- Edit.cshtml
- Index.cshtml
- Partials/
-  _SessionForm.cshtml
-  _SessionTable.cshtml
-Views/Auth/
- ConfirmExternalAccount.cshtml
- NoAccountFound.cshtml
- VerifyExternalLogin.cshtml
-Views/
- CustomerService/Index.cshtml
- Home/
-  Error404.cshtml
-  Index.cshtml
-  Privacy.cshtml
- Membership/Index.cshtml
- Profile/Index.cshtml
- Shared/Components/Account/
-  _AboutMeForm.cshtml
-  _MyStatistics.cshtml
-  _ProfileSidebar.cshtml
- Shared/Components/CustomerService/
-  _ContactUs.cshtml
-  _ContactUsForm.cshtml
- Shared/Components/Home/
-  _AboutUs.cshtml
-  _EquipmentBar.cshtml
-  _Hero.cshtml
-  _OurPrograms.cshtml
-  _OurStore.cshtml
- Shared/Components/Layout/
-  _Footer.cshtml
-  _Navbar.cshtml
- Shared/Components/Membership/
-  _MembershipCard.cshtml
-  _MembershipOffers.cshtml
- Shared/Components/Shared/
-  _Faq.cshtml
-  _FaqItem.cshtml
- Shared/
-  Error.cshtml
-  ExternalProviders/
-   _GitHubButton.cshtml
-   _GoogleButton.cshtml
-  Partials/_Aside.cshtml
-  _Layout.cshtml
- _ViewImports.cshtml
- _ViewStart.cshtml
-
-[dynamicFiles]
-Views/Account/
- SetPassword.cshtml
- SignIn.cshtml
- SignUp.cshtml
- VerifyEmail.cshtml
-Views/Admin/
- Index.cshtml
- _AdminLayout.cshtml
-Views/AdminMemberships/
- Index.cshtml
- Partials/
-  _MembershipTypeForm.cshtml
-  _MembershipTypeTable.cshtml
-Views/AdminSessions/
- Edit.cshtml
- Index.cshtml
- Partials/
-  _SessionForm.cshtml
-  _SessionTable.cshtml
-Views/Auth/
- ConfirmExternalAccount.cshtml
- NoAccountFound.cshtml
- VerifyExternalLogin.cshtml
-Views/
- CustomerService/Index.cshtml
- Home/
-  Error404.cshtml
-  Index.cshtml
-  Privacy.cshtml
- Membership/Index.cshtml
- Profile/Index.cshtml
- Shared/Components/Account/
-  _AboutMeForm.cshtml
-  _MyStatistics.cshtml
-  _ProfileSidebar.cshtml
- Shared/Components/CustomerService/
-  _ContactUs.cshtml
-  _ContactUsForm.cshtml
- Shared/Components/Home/
-  _AboutUs.cshtml
-  _EquipmentBar.cshtml
-  _Hero.cshtml
-  _OurPrograms.cshtml
-  _OurStore.cshtml
- Shared/Components/Layout/
-  _Footer.cshtml
-  _Navbar.cshtml
- Shared/Components/Membership/
-  _MembershipCard.cshtml
-  _MembershipOffers.cshtml
- Shared/Components/Shared/
-  _Faq.cshtml
-  _FaqItem.cshtml
- Shared/
-  Error.cshtml
-  ExternalProviders/
-   _GitHubButton.cshtml
-   _GoogleButton.cshtml
-  Partials/_Aside.cshtml
-  _Layout.cshtml
- _ViewImports.cshtml
- _ViewStart.cshtml
+obj/Debug/net10.0/CoreFitness.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig

@@ -1,0 +1,28 @@
+﻿@using CoreFitness.Application.DTOs.User
+@model UserStatisticsDTO
+
+<div>
+    <h2>My Statistics</h2>
+
+    @if (Model is null)
+    {
+        <p>No statistics available yet.</p>
+    }
+    else
+    {
+        <div>
+            <p>Current Weight</p>
+            <p>@(Model.CurrentWeight?.ToString() ?? "-") kg</p>
+        </div>
+
+        <div>
+            <p>Target Weight</p>
+            <p>@(Model.TargetWeight?.ToString() ?? "-") kg</p>
+        </div>
+
+        <div>
+            <p>BMI</p>
+            <p>@(Model.BMI?.ToString() ?? "-")</p>
+        </div>
+    }
+</div>

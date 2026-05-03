@@ -1,0 +1,17 @@
+﻿@model ContactUsViewModel
+
+<cf-section>
+    <div class='flex'>
+        <div>
+            <img src="~/images/customer-woman.png" alt="">
+        </div>
+        <div>
+            <h2>Contact Us today</h2>
+            <p>
+                Ready to begin your fitness journey? Contact GymPro today and let our
+                expert trainers guide you with the right program and support.
+            </p>
+            @await Html.PartialAsync("Components/CustomerService/_ContactUsForm", Model)
+        </div>
+    </div>
+</cf-section>

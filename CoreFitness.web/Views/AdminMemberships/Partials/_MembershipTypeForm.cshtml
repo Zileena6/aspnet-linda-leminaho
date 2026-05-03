@@ -1,0 +1,20 @@
+﻿@using CoreFitness.web.ViewModels.Admin.Memberships
+@model MembershipTypeFormViewModel
+
+<form asp-action="@(Model.IsEdit ? "Update" : "Create")" method="post">
+    @if (Model.IsEdit)
+    {
+        <input type="hidden" asp-for="Id">
+    }
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" placeholder='Name' />
+    </div>
+
+    <div>
+        <label asp-for="SessionLimit"></label>
+        <input asp-for="SessionLimit" placeholder='SessionLimit' />
+    </div>
+
+    <button type="submit">@(Model.IsEdit ? "Update" : "Create")</button>
+</form>

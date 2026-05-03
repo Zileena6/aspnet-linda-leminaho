@@ -1,0 +1,37 @@
+﻿@using CoreFitness.web.ViewModels.Admin.Sessions
+@model CreateSessionViewModel
+
+@{
+    var date = Model?.StartDate > DateTime.MinValue
+        ? Model.StartDate.ToLocalTime().ToString("yyyy-MM-ddTHH:mm")
+        : DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+}
+
+<form asp-action="Create" method="post">
+    <div class='flex flex-col border'>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" placeholder='Name' />
+    </div>
+
+    <div class='flex flex-col'>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" placeholder='Description' />
+    </div>
+
+    <div class='flex flex-col'>
+        <label asp-for="StartDate">Start date</label>
+        <input name="StartDate" type="datetime-local" value="@date" />
+    </div>
+
+    <div class='flex flex-col'>
+        <label asp-for="Capacity">Capacity</label>
+        <input asp-for="Capacity" type="number" />
+    </div>
+    
+    <div class='flex flex-col'>
+        <label asp-for="DurationInMinutes"> Duration</label>
+        <input asp-for="DurationInMinutes" type="number" />
+    </div>
+
+    <button type="submit">Create</button>
+</form>

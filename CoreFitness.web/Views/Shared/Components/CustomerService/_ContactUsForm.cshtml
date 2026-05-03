@@ -1,0 +1,37 @@
+﻿@model ContactUsViewModel
+
+<div>
+    <form asp-controller="CustomerService" asp-action="ContactUs" method="post">
+
+        <div>
+            <div>
+                <label asp-for="FirstName">First Name</label>
+                <input asp-for="FirstName" placeholder='Enter First Name' />
+                <span asp-validation-for="FirstName"></span>
+            </div>
+
+            <div>
+                <label asp-for="LastName">Last Name</label>
+                <input asp-for="LastName" placeholder='Enter Last Name' />
+                <span asp-validation-for="LastName"></span>
+            </div>
+
+            <div>
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" placeholder='Enter Email Address' />
+                <span asp-validation-for="Email"></span>
+            </div>
+
+            <div>
+            </div>
+
+            <div>
+                <label asp-for="Message">Message</label>
+                <textarea asp-for="Message" placeholder='Message...' rows="5"></textarea>
+                <span asp-validation-for="Message"></span>
+            </div>
+        </div>
+
+        <button type="submit">Submit Message</button>
+    </form>
+</div>
