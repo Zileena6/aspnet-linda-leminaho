@@ -1,0 +1,45 @@
+[
+  {
+    "question": "Do I need prior gym experience to join CoreFitness?",
+    "answer": "No, CoreFitness is designed for all fitness levels. Our trainers guide beginners with proper techniques and structured workout plans to help them start safely and confidently.",
+    "bullets": [
+      "Every new member receives a personalized introduction to equipment",
+      "Workouts are designed to grow with you, ensuring beginners can start safely"
+    ]
+  },
+  {
+    "question": "What facilities are included with the membership?",
+    "answer": "All memberships include access to our full range of gym equipment, locker rooms, and group fitness classes. Premium members also enjoy priority booking and a dedicated locker.",
+    "bullets": [
+      "Full access to cardio and strength equipment",
+      "Group fitness classes included",
+      "Modern locker rooms and showers"
+    ]
+  },
+  {
+    "question": "Can I try the gym before taking a membership?",
+    "answer": "Yes! We offer a free 7-day trial membership so you can experience everything CoreFitness has to offer before committing.",
+    "bullets": [
+      "No credit card required for the trial",
+      "Full access to all facilities during your trial period"
+    ]
+  },
+  {
+    "question": "Are there group workout programs available?",
+    "answer": "Absolutely. We offer a wide range of group classes including HIIT, yoga, spinning, and strength training — suitable for all fitness levels.",
+    "bullets": [
+      "Over 20 different group classes per week",
+      "Classes led by certified instructors",
+      "Suitable for beginners and advanced members alike"
+    ]
+  },
+  {
+    "question": "Is nutrition guidance included in the plans?",
+    "answer": "Our Premium membership includes access to personalized nutrition guidance from our certified nutritionists to complement your training program.",
+    "bullets": [
+      "Personalized meal plans available for Premium members",
+      "Nutrition workshops held monthly",
+      "Access to our online nutrition resource library"
+    ]
+  }
+]
