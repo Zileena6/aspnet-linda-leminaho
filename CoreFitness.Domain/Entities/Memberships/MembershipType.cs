@@ -26,7 +26,7 @@ public class MembershipType : BaseEntity<MembershipTypeId>, IAggregateRoot
         if (sessionLimit <= 0)
             throw new InvalidSessionLimitException(sessionLimit);
 
-        return new(MembershipTypeId.New(), name, description, price, duration, sessionLimit, type);
+        return new(MembershipTypeId.New(), name, description, price, duration, sessionLimit);
     }
 
     private MembershipType(
