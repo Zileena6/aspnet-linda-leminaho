@@ -76,6 +76,14 @@ CoreFitnessDbContextFactory.cs
 DependencyInjection.cs
 FileStorage/LocalFileStorage.cs
 Identity/ApplicationUser.cs
+Migrations/Auth/
+ 20260503122018_InitialAuth.cs
+ 20260503122018_InitialAuth.Designer.cs
+ AuthDbContextModelSnapshot.cs
+Migrations/Core/
+ 20260503121905_InitialCoreFitness.cs
+ 20260503121905_InitialCoreFitness.Designer.cs
+ CoreFitnessDbContextModelSnapshot.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
  CoreFitness.Infrastructure.AssemblyInfo.cs
