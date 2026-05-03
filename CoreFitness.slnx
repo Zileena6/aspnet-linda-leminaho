@@ -3,5 +3,5 @@
   <Project Path="CoreFitness.Domain/CoreFitness.Domain.csproj" />
   <Project Path="CoreFitness.Infrastructure/CoreFitness.Infrastructure.csproj" />
   <Project Path="CoreFitness.Tests/CoreFitness.Tests.csproj" />
-  <Project Path="CoreFitness.web/CoreFitness.web.csproj" DisplayName="CoreFitness.Web" />
+  <Project Path="CoreFitness.Web/CoreFitness.Web.csproj" DisplayName="CoreFitness.Web" />
 </Solution>
