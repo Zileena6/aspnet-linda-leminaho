@@ -1,0 +1,15 @@
+﻿@model IEnumerable<FaqItemDTO>
+
+<cf-section>
+    <div class='flex'>
+        <img src="~/images/non-green-hulk.png" alt="">
+        <div>
+            <cf-eyebrow text="Frequently Asked Questions" />
+            <h2>Common questions about gym and training</h2>
+            @foreach (var item in Model)
+            {
+                @await Html.PartialAsync("Components/Shared/_FaqItem", item)
+            }
+        </div>
+    </div>
+</cf-section>

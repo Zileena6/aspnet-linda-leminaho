@@ -13,18 +13,18 @@ primary
 lastDtbSucceeded
 
 [properties]
-AssemblyName=CoreFitness.Tests
+AssemblyName=CoreFitness.Domain
 CommandLineArgsForDesignTimeEvaluation=-langversion:14.0 -define:TRACE
 CompilerGeneratedFilesOutputPath=
 MaxSupportedLangVersion=14.0
 ProjectAssetsFile=<PATH>obj/project.assets.json
-RootNamespace=CoreFitness.Tests
+RootNamespace=CoreFitness.Domain
 RunAnalyzers=
 RunAnalyzersDuringLiveAnalysis=
 SolutionPath=<PATH>../CoreFitness.slnx
 TargetFrameworkIdentifier=.NETCoreApp
-TargetPath=<PATH>bin/Debug/net10.0/CoreFitness.Tests.dll
-TargetRefPath=<PATH>obj/Debug/net10.0/ref/CoreFitness.Tests.dll
+TargetPath=<PATH>bin/Debug/net10.0/CoreFitness.Domain.dll
+TargetRefPath=<PATH>obj/Debug/net10.0/ref/CoreFitness.Domain.dll
 TemporaryDependencyNodeTargetIdentifier=net10.0
 
 [commandLineArguments]
@@ -44,9 +44,9 @@ TemporaryDependencyNodeTargetIdentifier=net10.0
 /debug:portable
 /filealign:512
 /optimize-
-/out:obj\Debug\net10.0\CoreFitness.Tests.dll
-/refout:obj\Debug\net10.0\refint\CoreFitness.Tests.dll
-/target:exe
+/out:obj\Debug\net10.0\CoreFitness.Domain.dll
+/refout:obj\Debug\net10.0\refint\CoreFitness.Domain.dll
+/target:library
 /warnaserror-
 /utf8output
 /deterministic+
@@ -54,12 +54,75 @@ TemporaryDependencyNodeTargetIdentifier=net10.0
 /warnaserror+:NU1605,SYSLIB0011
 
 [sourceFiles]
-<NUGET>/microsoft.net.test.sdk/17.14.1/build/net8.0/Microsoft.NET.Test.Sdk.Program.cs
+Common/
+ Error.cs
+ Result.cs
+ ResultT.cs
+Entities/Bookings/
+ Booking.cs
+ ValueObjects/BookingId.cs
+Entities/
+ Common/BaseEntity.cs
+ Memberships/
+  CheckIn.cs
+  Membership.cs
+  MembershipType.cs
+  MembershipTypeBenefit.cs
+  ValueObjects/
+   CheckInId.cs
+   MembershipId.cs
+   MembershipTypeBenefitDescription.cs
+   MembershipTypeBenefitId.cs
+   MembershipTypeDescription.cs
+   MembershipTypeDuration.cs
+   MembershipTypeId.cs
+   MembershipTypeName.cs
+   MembershipTypePrice.cs
+ TrainingSessions/
+  TrainingSession.cs
+  ValueObjects/
+   TrainingSessionCapacity.cs
+   TrainingSessionDescription.cs
+   TrainingSessionDuration.cs
+   TrainingSessionId.cs
+   TrainingSessionName.cs
+ Users/
+  User.cs
+  ValueObjects/
+   AuthenticationId.cs
+   UserEmail.cs
+   UserId.cs
+   UserName.cs
+   UserPhoneNumber.cs
+Enums/
+ MembershipTypeEnums.cs
+ UserRole.cs
+Exceptions/
+ ConcurrencyException.cs
+ DomainException.cs
+ MembershipExceptions.cs
+ MembershipTypeExceptions.cs
+ PersistenceException.cs
+ RowVersionException.cs
+ SharedExceptions.cs
+ TrainingSessionExceptions.cs
+ UserException.cs
+Interfaces/
+ IAggregateRoot.cs
+ IBaseRepository.cs
+ Memberships/
+  IMembershipRepository.cs
+  IMembershipTypeRepository.cs
+ TrainingSessions/ITrainingSessionRepository.cs
+ UnitOfWork/
+  ITransaction.cs
+  IUnitOfWork.cs
+ Users/IUserRepository.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
- CoreFitness.Tests.AssemblyInfo.cs
- CoreFitness.Tests.GlobalUsings.g.cs
-UnitTest1.cs
+ CoreFitness.Domain.AssemblyInfo.cs
+ CoreFitness.Domain.GlobalUsings.g.cs
+Primitives/StringExtensions.cs
 
 [metadataReferences]
 <DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.7/ref/net10.0/
@@ -230,22 +293,6 @@ UnitTest1.cs
  System.Xml.XPath.dll
  System.Xml.XPath.XDocument.dll
  WindowsBase.dll
-<NUGET>/
- microsoft.codecoverage/17.14.1/lib/net8.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll
- microsoft.testplatform.testhost/17.14.1/lib/net8.0/
-  Microsoft.TestPlatform.CommunicationUtilities.dll
-  Microsoft.TestPlatform.CoreUtilities.dll
-  Microsoft.TestPlatform.CrossPlatEngine.dll
-  Microsoft.TestPlatform.PlatformAbstractions.dll
-  Microsoft.TestPlatform.Utilities.dll
-  Microsoft.VisualStudio.TestPlatform.Common.dll
-  Microsoft.VisualStudio.TestPlatform.ObjectModel.dll
-  testhost.dll
- newtonsoft.json/13.0.3/lib/net6.0/Newtonsoft.Json.dll
- xunit.abstractions/2.0.3/lib/netstandard2.0/xunit.abstractions.dll
- xunit.assert/2.9.3/lib/net6.0/xunit.assert.dll
- xunit.extensibility.core/2.9.3/lib/netstandard1.1/xunit.core.dll
- xunit.extensibility.execution/2.9.3/lib/netstandard1.1/xunit.execution.dotnet.dll
 
 [analyzerReferences]
 <DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.7/analyzers/dotnet/cs/
@@ -258,10 +305,7 @@ UnitTest1.cs
 <DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/
  Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
  Microsoft.CodeAnalysis.NetAnalyzers.dll
-<NUGET>/xunit.analyzers/1.18.0/analyzers/dotnet/cs/
- xunit.analyzers.dll
- xunit.analyzers.fixes.dll
 
 [analyzerConfigFiles]
 <DOTNET>/sdk/10.0.203/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
-obj/Debug/net10.0/CoreFitness.Tests.GeneratedMSBuildEditorConfig.editorconfig
+obj/Debug/net10.0/CoreFitness.Domain.GeneratedMSBuildEditorConfig.editorconfig

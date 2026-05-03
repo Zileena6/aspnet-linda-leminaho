@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class='flex'>
+    <aside class='w-64 p-4 border-r'>
+        @await Html.PartialAsync("Partials/_Sidebar")
+    </aside>
+
+    <main class='flex-1 p-6'>
+        @RenderBody()
+    </main>
+</div>

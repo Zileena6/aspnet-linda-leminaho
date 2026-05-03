@@ -1,0 +1,33 @@
+﻿@model MembershipTypeDTO
+
+<cf-card>
+    <img src="~/images/dumbell.svg" alt="">
+
+    <h2 class='font-header font-semibold mt-4'>@Model.Name Membership</h2>
+
+    <hr />
+
+    <p>@Model.Description</p>
+    
+    @foreach (var benefit in Model.Benefits)
+    {
+        <div class='flex items-center gap-2'>
+            <i class="fa-solid fa-circle-check text-tertiary"></i>
+            <p>@benefit</p>
+        </div>
+    }
+
+    <div class='bg-gray-900 text-white rounded-md inline-flex flex-col p-6'>
+        <div class='flex'>
+            <div>
+                <p class='text-2xl font-bold'>@Model.Price<span class='text-sm font-normal'>/monthly</span></p>
+                <p><span>*</span> Monthly @Model.DurationInDays Classes</p>
+            </div>
+            <cf-navlink variant="primary">
+                Join Now
+            </cf-navlink>
+        </div>
+        <div class='h-1 bg-tertiary/20'></div>
+        <p>Try Any Membership Fre for 1 Week</p>
+    </div>
+</cf-card>

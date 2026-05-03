@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Panel";
+}
+
+<h1 class='font-header text-5xl font-semibold'>Admin Panel</h1>
+
+<div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
+    <cf-card>
+        <div>
+            <h2 class='text-3xl'>Sessions</h2>
+            <p>Manage Training Sessions</p>
+
+            <cf-navlink asp-action="Sessions" variant="primary">Go to Sessions</cf-navlink>
+        </div>
+    </cf-card>
+
+    <cf-card>
+        <div>
+            <h2 class='text-3xl'>Memberships</h2>
+            <p>Manage Memberships</p>
+
+            <cf-navlink asp-action="Memberships" variant="primary">Go to Memberships</cf-navlink>
+        </div>
+    </cf-card>
+
+    <cf-card>
+        <div>
+            <h2 class='text-3xl'>Users</h2>
+            <p>Manage Users</p>
+
+            <cf-navlink asp-action="Users" variant="primary">Go to Users</cf-navlink>
+        </div>
+    </cf-card>
+</div>

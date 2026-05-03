@@ -1,0 +1,47 @@
+﻿@model ProfilePageViewModel
+
+<div class='flex flex-col'>
+    <h2 class='text-2xl font-semibold'>About Me</h2>
+    <form asp-controller="Profile" asp-action="Update" method="post" class='flex flex-col gap-2'>
+        <input type="hidden" asp-for="Id" />
+
+        <label>First Name</label>
+        <input asp-for="FirstName" placeholder='Enter First Name' class='border rounded-sm p-1' />
+
+        <label>Last Name</label>
+        <input asp-for="LastName" placeholder='Enter Last Name' class='border rounded-sm p-1' />
+
+        <label>Email Address</label>
+        <input asp-for="Email" placeholder='Enter Email' class='border rounded-sm p-1' />
+
+        <label>Phone Number</label>
+        <input asp-for="PhoneNumber" placeholder='Enter Phone Number' class='border rounded-sm p-1' />
+
+        <div class='flex gap-3'>
+            <div>
+                <label>Weight</label>
+                <input asp-for="Weight" placeholder='Enter Weight' class='border rounded-sm p-1' />
+            </div>
+
+            <div>
+                <label>Target Weight</label>
+                <input asp-for="TargetWeight" placeholder='Enter Weight' class='border rounded-sm p-1' />
+            </div>
+    
+            <div>
+                <label>Height</label>
+                <input asp-for="Height" placeholder='Enter Height' class='border rounded-sm p-1' />
+            </div>
+        </div>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <form asp-controller="Profile" asp-action="UploadPhoto" method='post' enctype='multipart/form-data'>
+        <label for="">Profile Image</label>
+
+        <input type="file" name='photo' accept='image/**' />
+
+        <button type="submit">Upload Photo</button>
+    </form>
+</div>

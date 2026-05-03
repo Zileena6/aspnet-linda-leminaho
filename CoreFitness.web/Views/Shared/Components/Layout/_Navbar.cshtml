@@ -1,0 +1,111 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+
+@* TODO: Fix width and rounded top *@
+<nav class=" text-white px-6 py-4 flex items-center justify-between">
+    <a asp-controller="Home" asp-action="Index" class='flex items-center'>
+        <img src="~/images/logotype.svg" alt='CoreFitness logo' class='h-8' />
+    </a>
+
+    <ul class='hidden md:flex items-center gap-8 text-sm font-medium'>
+        <li>
+            <cf-navlink asp-controller="Home" asp-action="Index">
+                Fitness Centers
+            </cf-navlink>
+        </li>
+        <li>
+            <cf-navlink asp-controller="Memberships" asp-action="Index">
+                Memberships
+            </cf-navlink>
+        </li>
+        @* TODO: Fix dropdown *@
+        <li class='relative group'>
+            <button class="flex items-center gap-1 hover:text-tertiary transition-colors">
+                Training
+            </button>
+            <div class='absolute top-full left-0 mt-2 w-48 bg-white text-gray900 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'>
+                <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-gray-500'>Group Training</a>
+                <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-gray-500'>Personal Training</a>
+                <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-gray-500'>Padel</a>
+            </div>
+        </li>
+        <li>
+            <cf-navlink asp-controller="CustomerService" asp-action="Index">
+                Customer Service
+            </cf-navlink>
+        </li>
+        <li>
+            <cf-navlink asp-controller="Store" asp-action="Index">
+                Store
+            </cf-navlink>
+        </li>
+    </ul>
+    <div class='hidden md:flex items-center gap-4'>
+        @* TODO: Add dropdown with SignOut and My Account choices *@
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <cf-navlink asp-controller="Memberships" asp-action="Index">
+                Our Classes
+            </cf-navlink>
+
+            <cf-navlink asp-controller="Profile" asp-action="Index" variant="primary">
+                My Account
+            </cf-navlink>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <cf-navlink asp-controller="Admin" asp-action="Index">
+                    Admin Panel
+                </cf-navlink>
+            }
+        }
+        else
+        {
+            <cf-navlink asp-controller="Profile" asp-action="AboutMe">
+                Our Classes
+            </cf-navlink>
+
+            <cf-navlink asp-controller="Account" asp-action="SignIn" variant="primary">
+                Sign In
+            </cf-navlink>
+        }
+    </div>
+
+    <button id='mobile-menu-btn' class='md:hidden p-2 hover:cursor-pointer' aria-label='Toggle menu'>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+
+    <div id="mobile-menu" class='hidden'>
+        <div>
+            <a asp-controller="Home" asp-action="Index">
+                Home
+            </a>
+            <a asp-controller="Membership" asp-action="Index">
+                Memberships
+            </a>
+            <a asp-controller="Training" asp-action="Index">
+                Training
+            </a>
+            <a asp-controller="CustomerService" asp-action="Index">
+                Customer servcie
+            </a>
+            <a asp-controller="Store" asp-action="Index">
+                Store
+            </a>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a asp-controller="Profile" asp-action="Index">
+                    My Account
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="SignUp">Become Member</a>
+                <a asp-controller="Account" asp-action="Index">Sign In</a>
+            }
+        </div>
+    </div>
+</nav>

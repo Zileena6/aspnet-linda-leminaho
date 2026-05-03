@@ -1,0 +1,23 @@
+﻿@model ProfilePageViewModel
+
+<div>
+    @if (Model.PhotoUrl is not null)
+    {
+        <img src="@Model.PhotoUrl" class='h-32 w-32 rounded-2xl object-cover' alt='Profile photo' />
+    }
+    else
+    {
+        <div class='h-32 w-32 bg-gray-400'>AVATARIMAGE</div>
+    }
+    <div>
+        <p>@Model.FirstName @Model.LastName</p>
+    </div>
+
+    <form asp-controller="Auth" asp-action="SignOut" method="post">
+        <button type="submit">Sign Out</button>
+    </form>
+
+    <form asp-controller="Profile" asp-action="Delete" method="post">
+        <button type="submit" onclick='return confirm("Are tou sure you want to delete your account?")'>Remove Account</button>
+    </form>
+</div>

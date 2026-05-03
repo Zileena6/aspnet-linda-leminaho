@@ -1,0 +1,12 @@
+﻿@using CoreFitness.web.ViewModels.Admin.Sessions
+@model AdminSessionsViewModel
+
+@{
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<h1>Sessions</h1>
+
+@await Html.PartialAsync("Partials/_SessionTable", Model.Sessions)
+
+@await Html.PartialAsync("Partials/_SessionForm", new CreateSessionViewModel())

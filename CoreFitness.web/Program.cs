@@ -1,10 +1,20 @@
+using CoreFitness.Application;
 using CoreFitness.Infrastructure;
 using CoreFitness.Infrastructure.Seeders;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+});
 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
@@ -19,7 +29,10 @@ if (app.Environment.IsDevelopment())
     await authDb.Database.EnsureCreatedAsync();
     await coreDb.Database.EnsureCreatedAsync();
 
-    await DbSeeder.SeedRolesAsync(app.Services.CreateScope().ServiceProvider);
+    await DbSeeder.SeedRolesAsync(services);
+    await DbSeeder.SeedMembershipTypesAsync(services);
+    await DbSeeder.SeedAdminAsync(services);
+    await DbSeeder.SeedTrainingSessions(services);
 }
 
 if (!app.Environment.IsDevelopment())
@@ -30,6 +43,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseStatusCodePagesWithReExecute("/Home/Error404");
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -40,6 +54,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();
