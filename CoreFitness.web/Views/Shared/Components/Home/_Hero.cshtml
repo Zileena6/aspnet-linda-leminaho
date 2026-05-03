@@ -1,14 +1,19 @@
-﻿<cf-section>
-    <div class='grid md:grid-cols-2 rounded-2xl text-white'>
-        <div class='flex flex-col p-8 gap-8'>
-            <div class='md:w-2/3'>
+﻿<div class="bg-[#131020] bg-[url('/images/hero-bg.png')] bg-cover bg-center rounded-b-xl w-full flex justify-center">
+<cf-section>
+    <div class='grid md:grid-cols-2 md:grid-rows-[auto_1fr] rounded-2xl text-white'>
+
+            <div class='md:col-span-2 lg:col-span-1 ml-8'>
                 <cf-eyebrow text="Strong Body. Strong Mind" />
+
                 <h2 class='font-header font-bold text-[2rem] md:text-[3.375rem] md:leading-16'>Build Strength Boost Confidence Today!</h2>
+            </div>
+        <div class='flex flex-col p-8 gap-8 md:col-start-1 md:row-start-2 lg:row-auto'>
+
                 <p class='font-paragraph font-semibold'>
                     Begin your fitness journey with expert trainers, modern equipment, and a
                     supportive environment designed to help you build streangth and confidence.
                 </p>
-            </div>
+
             <div class='grid grid-cols-2 gap-4 font-paragraph'>
                 <div class='flex items-center gap-2'>
                     <i class="fa-regular fa-circle-check text-tertiary"></i>
@@ -35,6 +40,7 @@
                 Get Started
             </cf-navlink>
         </div>
-        <img src="~/images/hero-image.png" alt="" class='hidden md:block'>
+        <img src="~/images/hero-img.png" alt="" class='hidden md:block md:col-start-2 md:row-start-2 self-end lg:row-auto'>
     </div>
 </cf-section>
+</div>

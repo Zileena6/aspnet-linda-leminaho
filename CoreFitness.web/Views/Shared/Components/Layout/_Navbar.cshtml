@@ -2,10 +2,10 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 
-@* TODO: Fix navbar design width and rounded top *@
-    <nav class=" text-white px-6 py-4 flex items-center justify-between">
+@* TODO: Fix width and rounded top *@
+    <nav class=" text-white px-6 py-4 flex items-center justify-between rounded-t-xl bg-[#131020] bg-[url('/images/header-bg.png')] bg-cover bg-center">
             <a asp-controller="Home" asp-action="Index" class='flex items-center'>
-                <img src="~/images/logotype.svg" alt='CoreFitness logo' class='h-8'/>
+                <img src="~/images/CoreFitnessLogo.png" alt='CoreFitness logo' class='h-8'/>
             </a>
 
             <ul class='hidden md:flex items-center gap-8 text-sm font-medium'>
@@ -19,7 +19,7 @@
                         Memberships
                     </cf-navlink>
                 </li>
-                @* TODO: Proper dropdown *@
+                @* TODO: Fix dropdown *@
                 <li class='relative group'>
                     <button class="flex items-center gap-1 hover:text-tertiary transition-colors">
                         Training
@@ -42,7 +42,7 @@
                 </li>
             </ul>
             <div class='hidden md:flex items-center gap-4'>
-                @* TODO: Add dropdown with SignOut and My Account choises *@
+                @* TODO: Add dropdown with SignOut and My Account choices *@
                 @if(SignInManager.IsSignedIn(User))
                 {
                     <cf-navlink asp-controller="Memberships" asp-action="Index">
@@ -108,5 +108,4 @@
                     }
                 </div>
             </div>
-        @* </div> *@
     </nav>

@@ -1,26 +1,38 @@
 ﻿using CoreFitness.Application.Authentication;
 using CoreFitness.Application.Authentication.Models;
+using CoreFitness.Infrastructure.Identity;
 using CoreFitness.Web.ViewModels.Auth;
 using CoreFitness.Web.ViewModels.Profile;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreFitness.Web.Controllers;
 
-public class AuthController(IAuthService authService) : Controller
+public class AuthController(IAuthService authService, SignInManager<ApplicationUser> signInManager) : Controller
 {
+    // [HttpPost]
+    // public IActionResult ExternalLogin(string provider, string returnUrl)
+    // {
+    //     var redirectUrl = Url.Action("ExternalLogInCallback", "Auth", new { returnUrl });
+
+    //     var properties = new AuthenticationProperties
+    //     {
+    //         RedirectUri = redirectUrl
+    //     };
+
+    //     return Challenge(properties, provider);
+    // }
+
     [HttpPost]
-    public IActionResult ExternalLogin(string provider, string returnUrl)
-    {
-        var redirectUrl = Url.Action("ExternalLoginCallBack", "Auth");
-
-        var properties = new AuthenticationProperties
+        public IActionResult ExternalLogin(string provider, string? returnUrl)
         {
-            RedirectUri = redirectUrl
-        };
+            var redirectUrl = Url.Action("ExternalLogInCallback", "Auth", null, Request.Scheme);
 
-        return Challenge(properties, provider);
-    }
+            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+
+           return Challenge(properties, provider);
+        }
 
     [HttpGet]
     public async Task<IActionResult> ExternalLogInCallback(string? returnUrl = null, string? remoteError = null, CancellationToken ct = default)
