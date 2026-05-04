@@ -1,15 +1,14 @@
 using CoreFitness.Web.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreFitness.Web.Controllers;
 
-// [Route("Error")]
 [AllowAnonymous]
+[Route("error")]
 public class ErrorController : Controller
 {
-    [HttpGet]
+    [HttpGet("")]
     public IActionResult Index(int statusCode)
     {
         var message = statusCode switch

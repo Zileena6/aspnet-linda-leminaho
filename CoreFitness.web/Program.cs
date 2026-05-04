@@ -1,6 +1,7 @@
 using CoreFitness.Application;
 using CoreFitness.Infrastructure;
 using CoreFitness.Infrastructure.Seeders;
+using CoreFitness.Web;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,9 @@ builder.Services.AddRouting(options =>
 });
 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
 builder.Services.AddApplication();
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -37,13 +41,13 @@ if (app.Environment.IsDevelopment())
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseStatusCodePagesWithReExecute("/Home/Error404");
+app.UseExceptionHandler();
+app.UseStatusCodePagesWithReExecute("/error", "?statusCode={0}");
 
 app.UseAuthentication();
 app.UseAuthorization();

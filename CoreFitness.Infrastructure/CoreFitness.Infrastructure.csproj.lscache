@@ -92,6 +92,7 @@ Persistence/
  EfTransaction.cs
  EfUnitOfWork.cs
 Primitives/IntResult.cs
+Queries/AdminQueries.cs
 Repositories/
  BaseRepository.cs
  MembershipRepository.cs
