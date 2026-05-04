@@ -378,4 +378,4 @@ CoreFitness.Web/appsettings.Development.json
 # *.Designer.cs
 
 # Tailwind generated CSS
-**/css/output.css
+**/output.css
