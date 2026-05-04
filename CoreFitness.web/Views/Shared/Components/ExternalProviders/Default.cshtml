@@ -1,0 +1,13 @@
+﻿@model ExternalProvidersViewModel
+
+@if (Model.Providers.Any())
+{
+    <form asp-controller="Auth" asp-action="ExternalLogin" method='post' class='self-center'>
+        <input type="hidden" name="returnUrl" value='@Model.ReturnUrl' />
+
+        @foreach (var provider in Model.Providers)
+        {
+            <partial name="@($"ExternalProviders/_{provider}Button")" />
+        }
+    </form>
+}

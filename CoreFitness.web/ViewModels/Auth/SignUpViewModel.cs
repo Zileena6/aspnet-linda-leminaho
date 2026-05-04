@@ -8,5 +8,5 @@ public class SignUpViewModel
     [EmailAddress(ErrorMessage = "Invalid email address")]
     public string Email { get; set; } = string.Empty;
 
-    public IReadOnlyList<string> ExternalProviders { get; set; } = [];
+    public string? ReturnUrl { get; set; }
 }
