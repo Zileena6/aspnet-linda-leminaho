@@ -25,13 +25,4 @@ public class HomeController(IQuoteService quoteService) : Controller
 
         return Json(quote);
     }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
-
-    [Route("Home/Error404")]
-    public IActionResult Error404() => View();
 }

@@ -11,45 +11,74 @@ namespace CoreFitness.Web.Controllers;
 [Authorize]
 public class ProfileController(
     IUserService userService, 
-    IAuthService authService, 
+    IAuthService authService,
+    ITrainingSessionService trainingSessionService,
+    IMembershipService membershipService,
     ILogger<ProfileController> logger) : Controller
 {
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(ProfileTabs tab = ProfileTabs.About, CancellationToken ct = default)
     {
         var authId = User.GetAuthenticationId();
 
-        var userResult = await userService.GetByAuthenticationId(authId);
+        var userResult = await userService.GetByAuthenticationId(authId, ct);
 
-        if (!userResult.IsSuccess)
+        if(!userResult.IsSuccess)
         {
-            await authService.SignOutAsync();
+            await authService.SignOutAsync(ct);
 
             TempData["Error"] = "Your account was not found. Please sign in again or create a new account";
-
+            
             return RedirectToAction("SignIn", "Account");
         }
 
-        var statsResult = await userService.GetStatisticsAsync(userResult.Value!.Id);
+        var user = userResult.Value!;
+
+        var statsResult = await userService.GetStatisticsAsync(userResult.Value!.Id, ct);
+        var membershipResult = await membershipService.GetByUserIdAsync(authId, ct);
 
         var vm = new ProfilePageViewModel
         {
-            Id = userResult.Value.Id,
-            FirstName = userResult.Value.FirstName,
-            LastName = userResult.Value.LastName,
-            Email = userResult.Value.Email,
-            PhoneNumber = userResult.Value.PhoneNumber,
-            PhotoUrl = userResult.Value.PhotoUrl,
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            PhotoUrl = user.PhotoUrl,
             Statistics = statsResult.IsSuccess ? statsResult.Value : null,
             Weight = statsResult.IsSuccess ? statsResult.Value?.CurrentWeight : null,
             Height = statsResult.IsSuccess ? statsResult.Value?.Height : null,
-            TargetWeight = statsResult.IsSuccess ? statsResult.Value?.TargetWeight : null
+            TargetWeight = statsResult.IsSuccess ? statsResult.Value?.TargetWeight : null,
+
+            Membership = membershipResult.IsSuccess ? membershipResult.Value : null,
+            
+            ActiveTab = tab,
+
+            UpdateForm = new UpdateProfileViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Weight = statsResult.IsSuccess ? statsResult.Value?.CurrentWeight : null,
+                Height = statsResult.IsSuccess ? statsResult.Value?.Height : null,
+                TargetWeight = statsResult.IsSuccess ? statsResult.Value?.TargetWeight : null,
+                RowVersion = user.RowVersion
+            }
         };
+
+        if(tab == ProfileTabs.Bookings)
+        {            
+            var bookingsResult = await trainingSessionService.GetUserBookingsAsync(user.Id, ct);
+
+            vm.Bookings = bookingsResult.IsSuccess ? bookingsResult.Value : [];
+        }
 
         return View(vm);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Update(ProfilePageViewModel vm, CancellationToken ct = default)
+    public async Task<IActionResult> Update(UpdateProfileViewModel vm, CancellationToken ct = default)
     {
         if (!ModelState.IsValid)
             return View("Index", vm);
@@ -64,6 +93,7 @@ public class ProfileController(
             Weight = vm.Weight,
             Height = vm.Height,
             TargetWeight = vm.TargetWeight,
+            RowVersion = vm.RowVersion
         };
 
         var result = await userService.UpdateProfileAsync(dto, ct);
@@ -72,7 +102,7 @@ public class ProfileController(
         {
             ModelState.AddModelError(string.Empty, result?.Error?.Message ?? "Update failed");
 
-            return View("Index", vm);
+            return RedirectToAction(nameof(Index));
         }
 
         TempData["Success"] = "Profile updated successfully";

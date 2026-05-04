@@ -9,15 +9,8 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace CoreFitness.Web.TagHelpers;
 
 [HtmlTargetElement("cf-navlink")]
-public class NavLinkTagHelper : TagHelper
+public class NavLinkTagHelper(IUrlHelperFactory urlHelperFactory) : TagHelper
 {
-
-    private readonly IUrlHelperFactory _urlHelperFactory;
-
-    public NavLinkTagHelper(IUrlHelperFactory urlHelperFactory)
-    {
-        _urlHelperFactory = urlHelperFactory;
-    }
 
     [ViewContext]
     public ViewContext ViewContext { get; set; } = default!;
@@ -26,12 +19,15 @@ public class NavLinkTagHelper : TagHelper
     public string? Variant { get; set; }
     public string? CssClass { get; set; }
 
+    [HtmlAttributeName(DictionaryAttributePrefix = "asp-route-")]
+    public Dictionary<string, object>? RouteValues { get; set; } = [];
+
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         var childContent = await output.GetChildContentAsync();
 
-        var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
-        var url = urlHelper.Action(AspAction, AspController) ?? "#";
+        var urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
+        var url = urlHelper.Action(AspAction, AspController, RouteValues);
 
         output.TagName = "a";
         output.TagMode = TagMode.StartTagAndEndTag;

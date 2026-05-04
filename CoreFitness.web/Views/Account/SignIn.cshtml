@@ -19,17 +19,8 @@
         <div class="flex flex-col gap-15">
             <hr class='flex-1 border-t border-gray-400' />
 
-            @if (Model.ExternalProviders.Any())
-            {
-                <form asp-controller="Auth" asp-action="ExternalLogIn" method="post" class='self-center'>
-                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+            @await Component.InvokeAsync("ExternalProviders", new { returnUrl = Model.ReturnUrl })
 
-                    @foreach (var provider in Model.ExternalProviders)
-                    {
-                        <partial name="@($"ExternalProviders/_{provider}Button")" />
-                    }
-                </form>
-            }
             <div class='flex items-center gap-4'>
                 <hr class='flex-1 border-t border-gray-400' />
                 <span class='uppercase'>Or continue with</span>

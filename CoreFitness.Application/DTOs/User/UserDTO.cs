@@ -11,4 +11,5 @@ public record UserDTO
     public string? PhoneNumber { get; init; }
     public string? PhotoUrl { get; init; }
     public UserRole Role { get; init; }
+    public byte[] RowVersion { get; set; } = default!;
 }

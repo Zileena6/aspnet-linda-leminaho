@@ -1,0 +1,8 @@
+@using CoreFitness.Web.ViewModels.Admin.Users
+@model AdminUsersViewModel
+
+@{
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+@await Html.PartialAsync("Partials/_UserTable", Model.Users)

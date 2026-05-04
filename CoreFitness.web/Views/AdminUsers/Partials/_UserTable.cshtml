@@ -1,0 +1,25 @@
+@model IEnumerable<AdminUserDTO>
+
+
+<table class=''>
+    <thead class='gap-4'>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Membership</th>
+        <th>Membership Type</th>
+    </thead>
+    <tbody>
+    @foreach(var u in Model)
+        {
+            <tr>
+                <td>@u.FirstName</td>
+                <td>@u.LastName</td>
+                <td>@u.Email</td>
+                <td>@(u.Membership != null ? "Yes" : "No")</td>
+                <td>@u.Membership?.MembershipTypeName</td>
+            </tr>
+            
+        }
+    </tbody>
+</table>

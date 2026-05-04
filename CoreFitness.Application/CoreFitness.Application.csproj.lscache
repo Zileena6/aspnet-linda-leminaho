@@ -96,6 +96,7 @@ DTOs/
   UserDTO.cs
   UserStatisticsDTO.cs
 Interfaces/
+ IAdminQueries.cs
  IAdminService.cs
  IFaqService.cs
  IFileStorage.cs
