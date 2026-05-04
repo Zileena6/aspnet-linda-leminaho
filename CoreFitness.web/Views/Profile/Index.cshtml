@@ -1,14 +1,43 @@
 ﻿@model ProfilePageViewModel
 
-<div class='flex items-center'>
+@* <div class='flex items-center'>
     <h1>My Account</h1>
 </div>
 <div class='grid grid-cols-2'>
     <div>
-        @await Html.PartialAsync("Components/Account/_ProfileSidebar", Model)
+        @await Html.PartialAsync("Partials/_ProfileSidebar", Model.ActiveTab)
     </div>
     <div>
-        @await Html.PartialAsync("Components/Account/_AboutMeForm", Model)
-        @await Html.PartialAsync("Components/Account/_MyStatistics", Model.Statistics)
+        @await Html.PartialAsync("Partials/_AboutMeForm", Model)
+        @await Html.PartialAsync("Partials/_MyStatistics", Model.Statistics)
+    </div>
+</div> *@
+
+<div class='flex items-center'>
+    <h1>My Account</h1>
+</div>
+<div class='grid grid-cols-2'>
+
+    <aside>
+        <partial name="Partials/_ProfileSidebar" model="Model.ActiveTab" />
+    </aside>
+    @* <div>
+        @await Html.PartialAsync("Partials/_ProfileSidebar", Model)
+    </div> *@
+    <div>
+        @if(Model.ActiveTab == ProfileTabs.About)
+        {
+            @* @await Html.PartialAsync("Partials/_AboutMeForm", Model) *@
+            <partial name="Partials/_AboutMeForm" model="Model.UpdateForm" />
+        }
+        else if(Model.ActiveTab == ProfileTabs.Membership)
+        {
+            @* @await Html.PartialAsync("Partials/_MyStatistics", Model.Statistics) *@
+            <partial name="Partials/_MyMembership" model="Model"/>
+        }
+        else if(Model.ActiveTab == ProfileTabs.Bookings)
+        {
+            <partial name="Partials/_MyBookings" model="Model.Bookings"/>
+        }
     </div>
 </div>

@@ -1,4 +1,6 @@
-﻿using CoreFitness.Application.DTOs.User;
+﻿using CoreFitness.Application.DTOs.Booking;
+using CoreFitness.Application.DTOs.Membership;
+using CoreFitness.Application.DTOs.User;
 
 namespace CoreFitness.Web.ViewModels.Profile;
 
@@ -14,4 +16,9 @@ public class ProfilePageViewModel
     public decimal? Height { get; set; }
     public decimal? TargetWeight { get; set; }
     public UserStatisticsDTO? Statistics { get; set; }
+    public MembershipDTO? Membership { get; set; }
+    public ProfileTabs ActiveTab { get; set; }
+    public IEnumerable<BookingDTO> Bookings { get; set; } = [];
+
+    public UpdateProfileViewModel UpdateForm { get; set; } = new();
 }

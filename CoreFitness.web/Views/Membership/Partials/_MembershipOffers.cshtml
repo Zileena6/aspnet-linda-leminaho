@@ -7,7 +7,7 @@
         <div class='flex'>
             @foreach (var type in Model)
             {
-                @await Html.PartialAsync("Components/Membership/_MembershipCard", type)
+                @await Html.PartialAsync("Partials/_MembershipCard", type)
             }
         </div>
         <div class='flex'>

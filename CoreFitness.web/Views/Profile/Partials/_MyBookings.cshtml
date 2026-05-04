@@ -1,0 +1,15 @@
+@model IEnumerable<BookingDTO>
+
+<h2>My bookings</h2>
+
+@foreach(var booking in Model)
+{
+    <h1>@booking.SessionName</h1>
+    <p>@booking.Id</p>
+
+    <form asp-controller="Booking" asp-action="Cancel" asp-route-sessionId="@booking.TrainingSessionId" method="post">
+        <button type="submit" class='bg-tertiary px-4 py-2'>
+            Cancel
+        </button>
+    </form>
+}

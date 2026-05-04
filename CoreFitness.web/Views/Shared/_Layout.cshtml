@@ -37,6 +37,18 @@
 
     <main role="main" class="flex-1 pb-3 ">
         <div class='max-w-7xl mx-auto px-6'>
+            
+            <div class='fixed top-4 right-4 z-50'>
+                @if(TempData["Error"] is string error)
+                {
+                    <div class='bg-red-100 text-red-800 px-4 py-2 rounded toast-message'>@error</div>
+                }
+                @if(TempData["Success"] is string success)
+                {
+                    <div class='bg-green-100 px-4 py-2 rounded toast-message'>@success</div>
+                }
+            </div>
+
             @RenderBody()
         </div>
     </main>

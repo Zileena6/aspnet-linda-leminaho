@@ -45,7 +45,7 @@
                 @* TODO: Add dropdown with SignOut and My Account choices *@
                 @if(SignInManager.IsSignedIn(User))
                 {
-                    <cf-navlink asp-controller="Memberships" asp-action="Index">
+                    <cf-navlink asp-controller="TrainingSessions" asp-action="Index">
                         Our Classes
                     </cf-navlink>
 
@@ -62,8 +62,8 @@
                 }
                 else
                 {
-                    <cf-navlink asp-controller="Profile" asp-action="AboutMe">
-                        Our Classes
+                    <cf-navlink asp-controller="Account" asp-action="SignUp">
+                        Become Member
                     </cf-navlink>
 
                     <cf-navlink asp-controller="Account" asp-action="SignIn" variant="primary">

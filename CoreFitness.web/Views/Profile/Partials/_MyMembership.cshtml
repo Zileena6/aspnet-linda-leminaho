@@ -1,0 +1,33 @@
+@model ProfilePageViewModel
+
+<h2>My Memberships</h2>
+
+@if(Model.Membership is null)
+{
+    <p>You do not have an active membership</p>
+    <a asp-controller="Membership" asp-action="Index">View membership options</a>
+}
+else
+{
+    var m = Model.Membership;
+
+    <cf-card>
+        <div>
+            <p class='underline'>Type</p>
+            @m.MembershipTypeName
+        </div>
+        <div>
+            <p class='underline'>Price</p>
+            @m.PurchasedPrice
+        </div>
+        <div>
+            <p class='underline'>Purchase date</p>
+            @m.StartDate.ToString("yyyy-MM-dd")
+        </div>
+        <form asp-controller="Membership" asp-action="Delete" method="post">
+        <button type="submit" class='bg-tertiary px-4 py-2'>
+            Delete membership
+        </button>
+    </form>
+    </cf-card>
+}
