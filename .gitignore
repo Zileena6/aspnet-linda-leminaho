@@ -363,3 +363,19 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+*.csproj.nuget.dgspec.json
+*.csproj.lscache
+
+CoreFitness.Web/appsettings.Development.json
+
+SQLite development databases
+*.db
+*.db-shm
+.db-wal
+
+EF migrations snapshots (optional, some prefer to keep these)
+#.Designer.cs
+
+Tailwind generated CSS
+**/css/output.css
