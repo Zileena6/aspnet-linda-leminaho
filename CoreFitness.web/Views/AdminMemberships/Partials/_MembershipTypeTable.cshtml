@@ -4,10 +4,10 @@
     <table class='w-full border'>
         <thead>
             <tr>
-                <th class='w-[25%] border-r border-b'>Name</th>
-                <th class='w-[25%] border-r border-b'>Duraion in days</th>
-                <th class='w-[25%] border-r border-b'>Price</th>
-                <th class='w-[25%] border-r border-b'></th>
+                <th class='w-[26%] border-r border-b'>Name</th>
+                <th class='w-[26%] border-r border-b'>Duration in days</th>
+                <th class='w-[26%] border-r border-b'>Price</th>
+                <th class='w-[22%] border-r border-b'></th>
             </tr>
         </thead>
         <tbody>
@@ -17,13 +17,13 @@
                     <td class='border-r border-b p-2'>@t.Name</td>
                     <td class='border-r border-b p-2'>@t.DurationInDays</td>
                     <td class='border-r border-b p-2'>@t.Price.00</td>
-                    <td class='border-r border-b p-2'>
+                    <td class='flex gap-6 justify-center p-2'>
                         @* TODO: Change to icons *@
                         <form asp-action="Delete" method='post'>
                             <input type="hidden" name='id' value="@t.Id" />
-                            <button type='submit'>Delete</button>
+                            <button type='submit'><i class="fa-solid fa-trash text-red-600"></i></button>
                         </form>
-                        <a asp-action="Edit" asp-route-id="@t.Id">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@t.Id"><i class="fa-solid fa-edit text-green-600"></i></a>
                     </td>
                     <td>
                     </td>
