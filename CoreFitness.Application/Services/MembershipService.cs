@@ -10,8 +10,8 @@ using CoreFitness.Domain.Interfaces.TrainingSessions;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
 using CoreFitness.Domain.Interfaces.Users;
 
-namespace CoreFitness.Application.Services
-{
+namespace CoreFitness.Application.Services;
+
     public class MembershipService(IMembershipRepository repository, IMembershipTypeRepository membershipTypeRepository, ITrainingSessionRepository trainingSessionRepository, IUserRepository userRepository, IUnitOfWork unitOfWork) : IMembershipService
     {
         public async Task<Result> ActivateAsync(AuthenticationId authenticationId, CancellationToken ct = default)
@@ -157,4 +157,4 @@ namespace CoreFitness.Application.Services
                 session.CancelBooking(userId);
         }
     }
-}
+

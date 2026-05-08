@@ -11,8 +11,8 @@ using CoreFitness.Domain.Interfaces.TrainingSessions;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
 using CoreFitness.Domain.Interfaces.Users;
 
-namespace CoreFitness.Application.Services
-{
+namespace CoreFitness.Application.Services;
+
     public class TrainingSessionService(ITrainingSessionRepository repository, IUserRepository userRepository, IMembershipRepository membershipRepository, IUnitOfWork unitOfWork) : ITrainingSessionService
     {
         public async Task<Result<TrainingSessionDTO>> GetByIdAsync(Guid sessionId, CancellationToken ct = default)
@@ -159,4 +159,3 @@ namespace CoreFitness.Application.Services
             return Result.Success();
         }
     }
-}

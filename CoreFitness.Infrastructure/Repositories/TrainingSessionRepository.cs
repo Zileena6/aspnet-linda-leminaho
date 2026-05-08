@@ -4,8 +4,8 @@ using CoreFitness.Domain.Entities.Users.ValueObjects;
 using CoreFitness.Domain.Interfaces.TrainingSessions;
 using Microsoft.EntityFrameworkCore;
 
-namespace CoreFitness.Infrastructure.Repositories
-{
+namespace CoreFitness.Infrastructure.Repositories;
+
     public class TrainingSessionRepository(CoreFitnessDbContext context) : BaseRepository<TrainingSession, TrainingSessionId>(context),
         ITrainingSessionRepository
     {
@@ -34,4 +34,3 @@ namespace CoreFitness.Infrastructure.Repositories
             .ToListAsync(ct);
         }
     }
-}

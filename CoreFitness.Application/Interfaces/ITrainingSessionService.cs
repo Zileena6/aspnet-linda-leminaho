@@ -3,8 +3,8 @@ using CoreFitness.Application.DTOs.TrainingSession;
 using CoreFitness.Domain.Common;
 using CoreFitness.Domain.Entities.Users.ValueObjects;
 
-namespace CoreFitness.Application.Interfaces
-{
+namespace CoreFitness.Application.Interfaces;
+
     public interface ITrainingSessionService
     {
         Task<Result<IEnumerable<TrainingSessionDTO>>> GetUpcomingAsync(CancellationToken ct = default);
@@ -16,4 +16,4 @@ namespace CoreFitness.Application.Interfaces
         Task<Result> BookAsync(Guid sessionId, AuthenticationId authId, CancellationToken ct = default);
         Task<Result> CancelBookingAsync(Guid sessionId, AuthenticationId authId, CancellationToken ct = default);
     }
-}
+

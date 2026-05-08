@@ -1,5 +1,5 @@
-﻿namespace CoreFitness.Domain.Common
-{
+﻿namespace CoreFitness.Domain.Common;
+
     public sealed class Error
     {
         public string Code { get; }
@@ -26,4 +26,3 @@
         public static Error Failure(string message) =>
             new("Failure", message);
     }
-}

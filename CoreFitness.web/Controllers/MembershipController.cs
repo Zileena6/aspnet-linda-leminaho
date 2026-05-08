@@ -6,8 +6,8 @@ using CoreFitness.Web.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreFitness.Web.Controllers
-{
+namespace CoreFitness.Web.Controllers;
+
     [Route("memberships")]
     public class MembershipController(IMembershipService membershipService,IUserService userService, IFaqService faqService) : Controller
     {
@@ -89,4 +89,3 @@ namespace CoreFitness.Web.Controllers
             return RedirectToAction("Index", "Profile");
         }
     }
-}

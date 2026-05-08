@@ -3,21 +3,23 @@
 
 <table class=''>
     <thead class='gap-4'>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Membership</th>
-        <th>Membership Type</th>
+        <tr>
+            <th class='w-[20%] border-r border-b'>First Name</th>
+            <th class='w-[20%] border-r border-b'>Last Name</th>
+            <th class='w-[25%] border-r border-b'>Email</th>
+            <th class='w-[15%] border-r border-b'>Membership</th>
+            <th class='w-[20%] border-r border-b'>Membership Type</th>
+        </tr>
     </thead>
     <tbody>
     @foreach(var u in Model)
         {
             <tr>
-                <td>@u.FirstName</td>
-                <td>@u.LastName</td>
-                <td>@u.Email</td>
-                <td>@(u.Membership != null ? "Yes" : "No")</td>
-                <td>@u.Membership?.MembershipTypeName</td>
+                <td class='border-r border-b p-2'>@u.FirstName</td>
+                <td class='border-r border-b p-2'>@u.LastName</td>
+                <td class='border-r border-b p-2'>@u.Email</td>
+                <td class='border-r border-b p-2'>@(u.Membership != null ? "Yes" : "No")</td>
+                <td class='border-r border-b p-2'>@u.Membership?.MembershipTypeName</td>
             </tr>
             
         }

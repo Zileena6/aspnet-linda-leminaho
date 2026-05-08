@@ -25,9 +25,9 @@
                     @* TODO: Change to icons *@
                     <form asp-action="Delete" method='post'>
                         <input type="hidden" name='id' value="@s.Id" />
-                        <button type='submit'>Delete</button>
+                        <button type='submit'><i class="fa-solid fa-trash text-red-600"></i></button>
                     </form>
-                    <a asp-action="Edit" asp-route-id="@s.Id">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@s.Id"><i class="fa-solid fa-edit text-green-600"></i></a>
                 </td>
             </tr>
         }
