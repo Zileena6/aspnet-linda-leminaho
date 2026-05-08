@@ -1,14 +1,17 @@
-﻿@model IEnumerable<FaqItemDTO>
+@model IEnumerable<FaqItemDTO>
 
 <cf-section>
-    <div class='flex'>
+    <div class='flex gap-10'>
         <img src="~/images/faq-img.png" alt="">
-        <div>
-            <cf-eyebrow text="Frequently Asked Questions" />
-            <h2>Common questions about gym and training</h2>
-            @foreach (var item in Model)
+        <div class='flex flex-col gap-5'>
+            <cf-eyebrow text="Frequently Asked Questions"/>
+            <h2 class='font-header text-5xl font-medium'>Common questions about gym and training</h2>
+
+            @for(int i = 0; i < Model.Count(); i++)
             {
-                @await Html.PartialAsync("Components/Shared/_FaqItem", item)
+                @await Html.PartialAsync("Components/Shared/_FaqItem", Model.ElementAt(i), new ViewDataDictionary(ViewData){
+                    { "Index", i + 1}
+                })
             }
         </div>
     </div>

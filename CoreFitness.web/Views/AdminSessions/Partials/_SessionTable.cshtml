@@ -1,14 +1,14 @@
-﻿@model IEnumerable<TrainingSessionDTO>
+@model IEnumerable<TrainingSessionDTO>
 
-
+@* TODO: Visa antal bokningar kvar *@
 <table class='w-full border'>
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Capacity</th>
-            <th></th>
-            <th></th>
+            <th class='w-[20%] border-r border-b'>Name</th>
+            <th class='w-[20%] border-r border-b'>Date</th>
+            <th class='w-[20%] border-r border-b'>Capacity</th>
+            <th class='w-[20%] border-r border-b'>Bookings</th>
+            <th class='w-[20%] border-r border-b'>Delete/Edit</th>
         </tr>
     </thead>
     <tbody>
@@ -17,17 +17,16 @@
             var startDate = s.StartDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm");
 
             <tr>
-                <td>@s.Name</td>
-                <td>@startDate</td>
-                <td>@s.Capacity</td>
-                <td>
+                <td class='border-r border-b p-2'>@s.Name</td>
+                <td class='border-r border-b p-2'>@startDate</td>
+                <td class='border-r border-b p-2'>@s.Capacity / available @(s.Capacity - s.CurrentBookings)</td>
+                <td class='border-r border-b p-2'>@s.CurrentBookings</td>
+                <td class='flex gap-6 justify-center p-2'>
                     @* TODO: Change to icons *@
                     <form asp-action="Delete" method='post'>
                         <input type="hidden" name='id' value="@s.Id" />
                         <button type='submit'>Delete</button>
                     </form>
-                </td>
-                <td>
                     <a asp-action="Edit" asp-route-id="@s.Id">Edit</a>
                 </td>
             </tr>

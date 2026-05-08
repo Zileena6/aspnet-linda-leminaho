@@ -1,38 +1,42 @@
-﻿@model MembershipTypeDTO
+@model MembershipTypeDTO
+
+@* TODO: Only show Standard and Premium! Change Model to IEnumerable *@
+
 
 <cf-card>
-    <img src="~/images/dumbell.svg" alt="">
+    <div class='flex flex-col'>
+        <div class='flex flex-col gap-5 p-6'>
+            <img src="~/images/dumbell.svg" alt="" class='w-12'>
 
-    <h2 class='font-header font-semibold mt-4'>@Model.Name Membership</h2>
+            <h3 class='font-header font-semibold mt-4'>@Model.Name Membership</h3>
 
-    <hr />
+            <hr class='bg-[#E6E6E6] self-center h-px border-0 w-full'>
 
-    <p>@Model.Description</p>
-    
-    @foreach (var benefit in Model.Benefits)
-    {
-        <div class='flex items-center gap-2'>
-            <i class="fa-solid fa-circle-check text-tertiary"></i>
-            <p>@benefit</p>
-        </div>
-    }
-
-    <div class='bg-gray-900 text-white rounded-md inline-flex flex-col p-6'>
-        <div class='flex'>
-            <div>
-                <p class='text-2xl font-bold'>@Model.Price<span class='text-sm font-normal'>/monthly</span></p>
-                <p><span>*</span> Monthly @Model.DurationInDays Classes</p>
+            <p>@Model.Description</p>
+            <div class='flex flex-col gap-2'>
+                @foreach (var benefit in Model.Benefits)
+                {
+                    <div class='flex items-center gap-2'>
+                        <i class="fa-solid fa-circle-check text-tertiary"></i>
+                        <p>@benefit</p>
+                    </div>
+                }
             </div>
-
-            <form asp-controller="Membership" asp-action="Join" method="post">
-                <input type="hidden" name="membershipTypeId" value='@Model.Id'/>
-                <button type="submit">
-                    Join now
-                </button>
-            </form>
-            
         </div>
-        <div class='h-1 bg-tertiary/20'></div>
-        <p>Try Any Membership Fre for 1 Week</p>
+
+        <div class='bg-card-footer rounded-md inline-flex flex-col p-2'>
+            <div class='flex text-white py-4 px-2 justify-between'>
+                <div class=''>
+                    <p class='text-2xl font-bold'>@Model.Price.00<span class='text-sm  font-normal'>/monthly</span></p>
+                    <p><span>*</span> Monthly @Model.DurationInDays Classes</p>
+                </div>
+                <form asp-controller="Membership" asp-action="Join" method="post">
+                    <input type="hidden" name="membershipTypeId" value='@Model.Id'/>
+                    <cf-button text="Join now" type="submit"/>
+                </form>
+            </div>
+            <hr class='bg-[#27252F] self-center h-px border-0 w-11/12'>
+            <p class='text-white p-2'>Try Any Membership Fre for 1 Week</p>
+        </div>
     </div>
 </cf-card>

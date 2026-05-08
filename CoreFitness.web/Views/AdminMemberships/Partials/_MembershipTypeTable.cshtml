@@ -1,28 +1,31 @@
-﻿@model IEnumerable<MembershipTypeDTO>
+@model IEnumerable<MembershipTypeDTO>
 
 <div class='border-b'>
-    <table>
+    <table class='w-full border'>
         <thead>
             <tr>
-                <th>Name</th>
-                <th></th>
-                <th></th>
+                <th class='w-[25%] border-r border-b'>Name</th>
+                <th class='w-[25%] border-r border-b'>Duraion in days</th>
+                <th class='w-[25%] border-r border-b'>Price</th>
+                <th class='w-[25%] border-r border-b'></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var t in Model)
             {
-                <tr>
-                    <td>@t.Name</td>
-                    <td>
+                <tr class='font-paragraph'>
+                    <td class='border-r border-b p-2'>@t.Name</td>
+                    <td class='border-r border-b p-2'>@t.DurationInDays</td>
+                    <td class='border-r border-b p-2'>@t.Price.00</td>
+                    <td class='border-r border-b p-2'>
                         @* TODO: Change to icons *@
                         <form asp-action="Delete" method='post'>
                             <input type="hidden" name='id' value="@t.Id" />
                             <button type='submit'>Delete</button>
                         </form>
+                        <a asp-action="Edit" asp-route-id="@t.Id">Edit</a>
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@t.Id">Edit</a>
                     </td>
                 </tr>
             }

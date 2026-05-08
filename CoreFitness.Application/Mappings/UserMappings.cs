@@ -13,6 +13,8 @@ public static class UserMappings
         LastName = user.UserName.LastName,
         PhoneNumber = user.UserPhoneNumber?.Value,
         PhotoUrl = user.PhotoUrl,
-        Role = user.Role
+        Role = user.Role,
+
+        RowVersion = user.RowVersion
     };
 }

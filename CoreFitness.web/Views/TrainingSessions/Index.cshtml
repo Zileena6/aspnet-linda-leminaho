@@ -5,9 +5,11 @@
 
 
 
-@foreach(var session in Model)
+@foreach (var session in Model)
 {
     <h3>@session.Name</h3>
+    <p>@session.Description</p>
+    <p>@session.AvailableSpots</p>
 
     <form asp-controller="Booking" asp-action="Book" method="post">
         <input type="hidden" name='sessionId' value="@session.Id" />

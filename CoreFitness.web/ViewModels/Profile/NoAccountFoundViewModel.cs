@@ -1,4 +1,4 @@
-﻿namespace CoreFitness.Web.ViewModels.Profile;
+namespace CoreFitness.Web.ViewModels.Profile;
 
 public class NoAccountFoundViewModel
 {

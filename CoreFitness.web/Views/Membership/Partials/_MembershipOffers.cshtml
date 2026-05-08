@@ -1,19 +1,37 @@
-﻿@model IEnumerable<MembershipTypeDTO>
+@model IEnumerable<MembershipTypeDTO>
 
 <cf-section>
-    <div class='flex flex-col items-center gap-8'>
-        <h1>Our Membership Offers</h1>
+    <div class='flex flex-col items-center my-10'>
+        <h2 class='font-header font-medium text-5xl'>Our Membership Offers</h2>
 
-        <div class='flex'>
+        <div class='grid grid-cols-3 gap-6 p-10'>
             @foreach (var type in Model)
             {
                 @await Html.PartialAsync("Partials/_MembershipCard", type)
             }
+
+            <div class='bg-card-footer flex flex-col items-center relative overflow-hidden pb-48 rounded-2xl'>
+
+                <div class='flex flex-col items-center'>
+
+                    <div class='text-white text-center flex flex-col gap-3 p-6'>
+
+                        <h2 class='font-header font-semibold text-xl'>Get your Membership</h2>
+                        <p class='font-paragraph'>Our memberships give you access to all equipment, personalized training.</p>
+                        <hr class='bg-[#27252F] h-px border-0 w-full'>
+                    </div>
+                    <h3 class='text-white font-extrabold text-xl mb-6'>Call Us At: +(46) 8 410 521 00</h3>
+                    <cf-button text="Call Us Today!" />
+                </div>
+
+                <img src="~/images/call-us-woman.png" class='absolute bottom-0 right-0 w-1/2 max-w-50 object-contain' />
+            </div>
         </div>
+
         <div class='flex'>
             <div class='flex items-center gap-2'>
                 <i class="fa-regular fa-calendar-check text-tertiary"></i>
-                <p>Get 30 day free trial</p>
+                <p>Get 30 day free trial</p>    
             </div>
             <div class='flex items-center gap-2'>
                 <i class="fa-regular fa-credit-card text-tertiary"></i>

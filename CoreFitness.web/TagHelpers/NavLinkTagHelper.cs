@@ -18,7 +18,7 @@ public class NavLinkTagHelper(IUrlHelperFactory urlHelperFactory) : TagHelper
     public string? AspAction { get; set; }
     public string? Variant { get; set; }
     public string? CssClass { get; set; }
-
+    
     [HtmlAttributeName(DictionaryAttributePrefix = "asp-route-")]
     public Dictionary<string, object>? RouteValues { get; set; } = [];
 
@@ -27,13 +27,11 @@ public class NavLinkTagHelper(IUrlHelperFactory urlHelperFactory) : TagHelper
         var childContent = await output.GetChildContentAsync();
 
         var urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
-        var url = urlHelper.Action(AspAction, AspController, RouteValues);
+
+        var url = urlHelper.Action(AspAction, AspController, RouteValues) ?? "#";
 
         output.TagName = "a";
         output.TagMode = TagMode.StartTagAndEndTag;
-
-        // output.Attributes.SetAttribute("asp-controller", AspController);
-        // output.Attributes.SetAttribute("asp-action", AspAction);
 
         output.Attributes.SetAttribute("href", url);
 

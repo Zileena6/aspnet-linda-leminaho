@@ -1,20 +1,15 @@
-﻿using CoreFitness.Application.Authentication;
 using CoreFitness.Application.DTOs.User;
 using CoreFitness.Application.Interfaces;
-using CoreFitness.Web.Extensions;
 using CoreFitness.Web.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using CoreFitness.Web.Extensions;
+using CoreFitness.Application.Authentication;
 
 namespace CoreFitness.Web.Controllers;
 
 [Authorize]
-public class ProfileController(
-    IUserService userService, 
-    IAuthService authService,
-    ITrainingSessionService trainingSessionService,
-    IMembershipService membershipService,
-    ILogger<ProfileController> logger) : Controller
+public class ProfileController(IUserService userService, IAuthService authService, IMembershipService membershipService, ITrainingSessionService trainingSessionService, ILogger<ProfileController> logger) : Controller
 {
     public async Task<IActionResult> Index(ProfileTabs tab = ProfileTabs.About, CancellationToken ct = default)
     {
@@ -80,8 +75,15 @@ public class ProfileController(
     [HttpPost]
     public async Task<IActionResult> Update(UpdateProfileViewModel vm, CancellationToken ct = default)
     {
-        if (!ModelState.IsValid)
-            return View("Index", vm);
+        if(!ModelState.IsValid)
+        {
+            // TempData["Error"] = "Repair errors";
+             var errors = ModelState
+        .SelectMany(x => x.Value!.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"));
+
+    TempData["Error"] = string.Join(" | ", errors);
+            return RedirectToAction(nameof(Index));
+        }
 
         var dto = new UpdateProfileDTO
         {
@@ -98,15 +100,14 @@ public class ProfileController(
 
         var result = await userService.UpdateProfileAsync(dto, ct);
 
-        if (!result.IsSuccess)
+        if(!result.IsSuccess)
         {
-            ModelState.AddModelError(string.Empty, result?.Error?.Message ?? "Update failed");
+            TempData["Error"] = result?.Error?.Message ?? "Update failed";
 
             return RedirectToAction(nameof(Index));
         }
 
         TempData["Success"] = "Profile updated successfully";
-
         return RedirectToAction(nameof(Index));
     }
 
@@ -117,10 +118,10 @@ public class ProfileController(
 
         var result = await userService.DeleteAccountAsync(authId, ct);
 
-        if (!result.IsSuccess)
+        if(!result.IsSuccess)
         {
             TempData["Error"] = "Your account was not found.";
-
+            
             return RedirectToAction(nameof(Index));
         }
 
@@ -132,7 +133,7 @@ public class ProfileController(
     [HttpPost]
     public async Task<IActionResult> UploadPhoto(IFormFile photo, CancellationToken ct = default)
     {
-        if (photo is null || photo.Length == 0)
+        if(photo is null || photo.Length == 0)
             return RedirectToAction("Index");
 
         var authId = User.GetAuthenticationId();
@@ -146,7 +147,7 @@ public class ProfileController(
             ct
         );
 
-        if (!result.IsSuccess)
+        if(!result.IsSuccess)
             TempData["Error"] = "Failed to upload image";
 
         return RedirectToAction("Index");

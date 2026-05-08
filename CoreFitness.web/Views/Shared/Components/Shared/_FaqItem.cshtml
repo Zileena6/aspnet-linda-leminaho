@@ -1,23 +1,29 @@
-﻿@model FaqItemDTO
+@model FaqItemDTO
 
 <div>
-    <button class="faq-btn">
-        <span>@Model.Question</span>
-        <i class='fa-solid fa-chevron-down'></i>
+    <button class="faq-btn p-1 flex justify-between w-full">
+        <span class='font-header font-semibold'>
+            <span>Q@(ViewData["Index"]).</span>
+            <span>@Model.Question</span>
+        </span>
+        <div class='bg-tertiary flex items-center justify-center w-8 h-8 p-2 rounded-full'>
+            <i class='fa-solid fa-chevron-down'></i>
+        </div>
     </button>
-    <div class='faq-answer hidden'>
-        @if (!string.IsNullOrWhiteSpace(Model.Answer))
+    <div class='faq-answer hidden font-paragraph'>
+        @if(!string.IsNullOrWhiteSpace(Model.Answer))
         {
             <p>@Model.Answer</p>
         }
-        @if (Model.Bullets.Any())
+        @if(Model.Bullets.Any())
         {
             <ul>
-                @foreach (var bullet in Model.Bullets)
+                @foreach(var bullet in Model.Bullets)
                 {
-                    <li class='flex items-center gap-2'><span class='w-1.5 h-1.5 bg-tertiary rounded-full inline-block'></span> @bullet</li>
+                    <li class='flex items-center gap-2 py-4 px-3'><span class='w-1.5 h-1.5 bg-tertiary rounded-full inline-block'></span>@bullet</li>
                 }
             </ul>
         }
     </div>
+    <hr class='w-full'>
 </div>
