@@ -1,7 +1,8 @@
-﻿using CoreFitness.Application.DTOs.Membership;
+using CoreFitness.Application.DTOs.Membership;
 using CoreFitness.Application.Interfaces;
 using CoreFitness.Web.Extensions;
 using CoreFitness.Web.ViewModels.Membership;
+using CoreFitness.Web.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,13 +42,17 @@ namespace CoreFitness.Web.Controllers
 
             if(!result.IsSuccess)
             {
+                TempData["Error"] = result.Error?.Message ?? "Could not join membership.";
+
                 return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction("Index", "Profile");
+            TempData["Success"] = "Activation successful";
+
+            return RedirectToAction("Index", "Profile", new { tab = ProfileTabs.Membership});
         }
 
-        // TODO: Is Allready deactivated!
+// TODO: Is Already deactivated! If active bookings - Cancel!!
         [Authorize]
         [HttpPost("Cancel")]
         public async Task<IActionResult> Cancel(CancellationToken ct = default)
@@ -63,7 +68,7 @@ namespace CoreFitness.Web.Controllers
             }
 
             TempData["Success"] = "Membeship cancelled";
-            return RedirectToAction("Index", "Profile");
+            return RedirectToAction("Index", "Profile", new { tab = ProfileTabs.Bookings});
         }
 
         [Authorize]

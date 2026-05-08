@@ -17,7 +17,7 @@ public class SectionTagHelper : TagHelper
         output.TagName = "div";
         output.TagMode = TagMode.StartTagAndEndTag;
 
-        var baseClass = "max-w-7xl flex flex-col h-fit";
+        var baseClass = "max-w-7xl flex flex-col h-fit rounded-2xl";
 
         var variantClass = Variant switch
         {

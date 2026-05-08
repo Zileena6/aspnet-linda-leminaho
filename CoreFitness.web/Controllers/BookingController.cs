@@ -1,5 +1,6 @@
 using CoreFitness.Application.Interfaces;
 using CoreFitness.Web.Extensions;
+using CoreFitness.Web.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,9 +37,10 @@ public class BookingController(ITrainingSessionService trainingSessionService) :
 
         if(!result.IsSuccess)
         {
-            TempData["Error"] = result.Error;
+            TempData["Error"] = "No sessions left to refund";
+            return RedirectToAction(nameof(Index));
         }
 
-        return RedirectToAction("Index", "Profile");
+        return RedirectToAction("Index", "Profile", new { tab = ProfileTabs.Bookings});
     }
 }

@@ -1,0 +1,16 @@
+@model ContactUsViewModel
+
+<cf-section variant="light">
+    <div class='flex'>
+        <div class='w-7/8'>
+        // TODO: Fix image links 
+            <img src="~/images/contact-us-image.png" alt="">
+        </div>
+        <div class='p-15 flex flex-col gap-5'>
+            <h2 class='font-header font-semibold text-[1.75rem]'>Contact Us today</h2>
+            <p>Ready to begin your fitness journey? Contact GymPro today and let our 
+                expert trainers guide you with the right program and support.</p>
+            @await Html.PartialAsync("Partials/_ContactUsForm", Model)
+        </div>
+    </div>
+</cf-section>

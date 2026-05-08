@@ -1,12 +1,16 @@
 @model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
 
-<div>
+<div class='flex flex-col items-center justify-center'>
+    <img src="~/images/404-error.png" alt="">
+
+    <h1 class='font-header text-6xl font-bold'>@Model.Message</h1>
+
+    <p>The page you are looking for does not exists.</p>
+
     <div>
-        <h1>@Model.StatusCode</h1>
-
-        <h2>@Model.Message</h2>
-    </div>
-    <div>    
-        <cf-navlink variant="primary">Back to Hompage</cf-navlink>
+        <cf-navlink asp-controller="Home" asp-action="Index" variant="primary">Back to Hompage</cf-navlink>
     </div>
 </div>

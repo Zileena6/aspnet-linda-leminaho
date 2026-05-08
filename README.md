@@ -1,4 +1,4 @@
-![CoreFitness GymPortal](CoreFitness.Web/wwwroot/images/CoreFitnessLogo.png)
+<img width="214" height="50" alt="CoreFitnessLogo" src="https://github.com/user-attachments/assets/09d76b98-4d4b-497e-a885-878d449824f1" />
 
 ---
 

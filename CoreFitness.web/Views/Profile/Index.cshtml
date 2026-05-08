@@ -1,43 +1,47 @@
-﻿@model ProfilePageViewModel
+@model ProfilePageViewModel
 
-@* <div class='flex items-center'>
-    <h1>My Account</h1>
-</div>
-<div class='grid grid-cols-2'>
-    <div>
-        @await Html.PartialAsync("Partials/_ProfileSidebar", Model.ActiveTab)
-    </div>
-    <div>
-        @await Html.PartialAsync("Partials/_AboutMeForm", Model)
-        @await Html.PartialAsync("Partials/_MyStatistics", Model.Statistics)
-    </div>
-</div> *@
+@* @{
+    ViewData["Title"] = "Profile page";
+} *@
 
-<div class='flex items-center'>
-    <h1>My Account</h1>
+<div class='text-center'>
+    <h1 class='font-header font-medium text-5xl my-8'>My Account</h1>
 </div>
-<div class='grid grid-cols-2'>
 
-    <aside>
-        <partial name="Partials/_ProfileSidebar" model="Model.ActiveTab" />
-    </aside>
-    @* <div>
-        @await Html.PartialAsync("Partials/_ProfileSidebar", Model)
-    </div> *@
-    <div>
-        @if(Model.ActiveTab == ProfileTabs.About)
-        {
-            @* @await Html.PartialAsync("Partials/_AboutMeForm", Model) *@
-            <partial name="Partials/_AboutMeForm" model="Model.UpdateForm" />
-        }
-        else if(Model.ActiveTab == ProfileTabs.Membership)
-        {
-            @* @await Html.PartialAsync("Partials/_MyStatistics", Model.Statistics) *@
-            <partial name="Partials/_MyMembership" model="Model"/>
-        }
-        else if(Model.ActiveTab == ProfileTabs.Bookings)
-        {
-            <partial name="Partials/_MyBookings" model="Model.Bookings"/>
-        }
+
+<cf-section>
+    <div class='grid grid-cols-[35%_1fr] gap-8 w-full overflow-hidden'>
+        <div class='flex flex-col gap-8'>
+            <div class='rounded-3xl overflow-hidden'>
+                @if (Model.PhotoUrl is not null)
+                {
+                    <img src="@Model.PhotoUrl.Replace("=s96-c", "=s440-c")" class='object-cover w-full'
+                         alt='Profile photo' />
+                }
+                else
+                {
+                    <div class='h-64 w-full bg-gray-400'>AVATARIMAGE</div>
+                }
+            </div>
+
+            <aside>
+                <partial name="Partials/_ProfileSidebar" model="Model.ActiveTab" />
+            </aside>
+        </div>
+
+        <div class='overflow-hidden'>
+            @if (Model.ActiveTab == ProfileTabs.About)
+            {
+                <partial name="Partials/_AboutMeForm" model="Model.UpdateForm" />
+            }
+            else if (Model.ActiveTab == ProfileTabs.Membership)
+            {
+                <partial name="Partials/_MyMembership" model="Model" />
+            }
+            else if (Model.ActiveTab == ProfileTabs.Bookings)
+            {
+                <partial name="Partials/_MyBookings" model="Model.Bookings" />
+            }
+        </div>
     </div>
-</div>
+</cf-section>
