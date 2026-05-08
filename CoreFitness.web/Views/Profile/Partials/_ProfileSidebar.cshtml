@@ -1,17 +1,27 @@
-﻿@* @model ProfilePageViewModel
+@* @model ProfilePageViewModel *@
 
-<div>
-    @if (Model.PhotoUrl is not null)
-    {
-        <img src="@Model.PhotoUrl" class='h-32 w-32 rounded-2xl object-cover' alt='Profile photo' />
-    }
-    else
-    {
-        <div class='h-32 w-32 bg-gray-400'>AVATARIMAGE</div>
-    }
-    <div>
-        <p>@Model.FirstName @Model.LastName</p>
+@* <div class='w-64'>
+    <div class='rounded-3xl h-100 w-100 bg-amber-200 overflow-hidden'>
+        @if(Model.PhotoUrl is not null)
+        {
+            <img src="@Model.PhotoUrl.Replace("=s96-c", "=s440-c")" class='object-cover' alt='Profile photo' />
+        }
+        else
+        {
+            <div class='h-32 w-32 bg-gray-400'>AVATARIMAGE</div>
+        }
     </div>
+
+    <div class='flex flex-col'>
+        <h2 class='bg-tertiary'>Menu Options</h2>
+        <h2>About Me</h2>
+        <h2>My Membership</h2>
+        <h2>My Bookings</h2>
+    </div>
+
+    <cf-navlink>
+        Bookings
+    </cf-navlink>
 
     <form asp-controller="Auth" asp-action="SignOut" method="post">
         <button type="submit">Sign Out</button>
@@ -23,25 +33,45 @@
 </div> *@
 
 @model ProfileTabs
+<div>
+    <div class='flex flex-col gap-2 bg-white font-header font-semibold rounded-2xl overflow-hidden '>
+        <div class='bg-tertiary p-3'>
+            <h2>Menu Options</h2>
+        </div>
+        <div class='flex flex-col p-3'>
+            <div class='py-2'>
+                <cf-navlink asp-controller="Profile" asp-action="Index" asp-route-tab="@ProfileTabs.About"
+                            css-class="@(Model == ProfileTabs.About ? "text-tertiary" : "")">
+                    About Me
+                </cf-navlink>
+            </div>
 
-<div class='flex flex-col gap-2'>
-    <cf-navlink asp-controller="Profile" asp-action="Index" asp-route-tab="@ProfileTabs.About" css-class="@(Model == ProfileTabs.About ? "font-bold" : "")">
-        About Me
-    </cf-navlink>
+            <hr>
 
-    <cf-navlink asp-controller="Profile" asp-action="Index" asp-route-tab="@ProfileTabs.Membership" css-class="@(Model == ProfileTabs.Membership ? "font-bold" : "")">
-        My Membership
-    </cf-navlink>
+            <div class='py-2'>
+                <cf-navlink asp-controller="Profile" asp-action="Index" asp-route-tab="@ProfileTabs.Membership"
+                            css-class="@(Model == ProfileTabs.Membership ? "text-tertiary" : "")">
+                    My Membership
+                </cf-navlink>
+            </div>
+            <hr>
+            <div class='py-2'>
+                <cf-navlink asp-controller="Profile" asp-action="Index" asp-route-tab="@ProfileTabs.Bookings"
+                            css-class="@(Model == ProfileTabs.Bookings ? "text-tertiary" : "")">
+                    My Bookings
+                </cf-navlink>
+            </div>
+            <hr>
+            <div class='py-2'>
+                <form asp-controller="Auth" asp-action="SignOut" method="post">
+                    <button type="submit">Sign Out</button>
+                </form>
+            </div>
 
-    <cf-navlink asp-controller="Profile" asp-action="Index" asp-route-tab="@ProfileTabs.Bookings" css-class="@(Model == ProfileTabs.Bookings ? "font-bold" : "")">
-        My Bookings
-    </cf-navlink>
-
-    <form asp-controller="Auth" asp-action="SignOut" method="post">
-        <button type="submit">Sign Out</button>
-    </form>
-
+        </div>
+    </div>
     <form asp-controller="Profile" asp-action="Delete" method="post">
-        <button type="submit" onclick='return confirm("Are tou sure you want to delete your account?")'>Remove Account</button>
-    </form>
-</div>
+        <button type="submit" onclick='return confirm("Are tou sure you want to delete your account?")'>Remove
+            Account</button>
+        </form>
+    </div>

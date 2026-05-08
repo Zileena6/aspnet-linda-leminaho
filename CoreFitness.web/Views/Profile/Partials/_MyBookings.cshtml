@@ -1,15 +1,27 @@
 @model IEnumerable<BookingDTO>
 
-<h2>My bookings</h2>
+<div class='bg-white p-4'>
+    <h2 class='font-header text-4xl'>My bookings</h2>
 
-@foreach(var booking in Model)
-{
-    <h1>@booking.SessionName</h1>
-    <p>@booking.Id</p>
+    <div class='flex gap-4 flex-wrap'>
+        @foreach (var booking in Model)
+        {
+            <cf-card css-class="w-[35%]">
+                <div>
+                    <h1 class='font-header font-medium'>Session: @booking.SessionName</h1>
 
-    <form asp-controller="Booking" asp-action="Cancel" asp-route-sessionId="@booking.TrainingSessionId" method="post">
-        <button type="submit" class='bg-tertiary px-4 py-2'>
-            Cancel
-        </button>
-    </form>
-}
+                    <div>
+                        <p>Duration: @booking.DurationInMinutes minutes</p>
+                        <p>Starts: @booking.StartDate.ToString("HH:mm, dd MMMM yyyy ")</p>
+                    </div>
+                    <form asp-controller="Booking" asp-action="Cancel" asp-route-sessionId="@booking.TrainingSessionId"
+                          method="post">
+                        <button type="submit" class='bg-tertiary px-4 py-2'>
+                            Cancel
+                        </button>
+                    </form>
+                </div>
+            </cf-card>
+        }
+    </div>
+</div>

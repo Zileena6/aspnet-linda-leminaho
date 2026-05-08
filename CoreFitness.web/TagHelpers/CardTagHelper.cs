@@ -16,7 +16,7 @@ public class CardTagHelper : TagHelper
         output.TagName = "div";
         output.TagMode = TagMode.StartTagAndEndTag;
 
-        output.AddClasses("bg-white rounded-xl shadow-md p-6");
+        output.AddClasses("bg-white rounded-xl shadow-md p-2");
 
         if(!string.IsNullOrWhiteSpace(CssClass))
             output.AddClass(CssClass, HtmlEncoder.Default);

@@ -6,140 +6,155 @@ using CoreFitness.Domain.Entities.Memberships;
 using CoreFitness.Domain.Entities.Memberships.ValueObjects;
 using CoreFitness.Domain.Entities.Users.ValueObjects;
 using CoreFitness.Domain.Interfaces.Memberships;
+using CoreFitness.Domain.Interfaces.TrainingSessions;
 using CoreFitness.Domain.Interfaces.UnitOfWork;
 using CoreFitness.Domain.Interfaces.Users;
 
-namespace CoreFitness.Application.Services;
-
-public class MembershipService(
-    IMembershipRepository repository, 
-    IMembershipTypeRepository membershipTypeRepository,
-    IUserRepository userRepository,
-    IUnitOfWork unitOfWork) : IMembershipService
+namespace CoreFitness.Application.Services
 {
-    public async Task<Result> ActivateAsync(AuthenticationId authenticationId, CancellationToken ct = default)
+    public class MembershipService(IMembershipRepository repository, IMembershipTypeRepository membershipTypeRepository, ITrainingSessionRepository trainingSessionRepository, IUserRepository userRepository, IUnitOfWork unitOfWork) : IMembershipService
     {
-        var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
+        public async Task<Result> ActivateAsync(AuthenticationId authenticationId, CancellationToken ct = default)
+        {
+            var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
 
-        if (user is null)
-            return Result.NotFound("User", authenticationId);
+            if(user is null)
+                return Result.NotFound("User", authenticationId);
 
-        var membership = await repository.GetByUserIdAsync(user.Id, ct);
-        if (membership is null)
-            return Result.NotFound("Membership", user.Id.Value);
+            var membership = await repository.GetByUserIdAsync(user.Id, ct);
 
-        membership.ActivateMembership();
+            if (membership is null)
+                return Result.NotFound("Membership", user.Id.Value);
 
-        await unitOfWork.SaveChangesAsync(ct);
+            membership.ActivateMembership();
 
-        return Result.Success();
-    }
+            await unitOfWork.SaveChangesAsync(ct);
+            
+            return Result.Success();
+        }
 
-    public async Task<Result> CreateAsync(AuthenticationId authenticationId, CreateMembershipDTO dto, CancellationToken ct = default)
-    {
-        var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
+        // TODO: Check if membership is active or expired exception to create a new
+        public async Task<Result> CreateAsync(AuthenticationId authenticationId, CreateMembershipDTO dto, CancellationToken ct = default)
+        {
+            var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
 
-        if (user is null)
-            return Result.NotFound("User", authenticationId);
+            if(user is null)
+                return Result.NotFound("User", authenticationId);
 
-        var membershipType = await membershipTypeRepository.GetByIdAsync(new MembershipTypeId(dto.MembershipTypeId), ct);
-        if (membershipType is null)
-            return Result.NotFound("MembershipType", dto.MembershipTypeId);
+            var membershipType = await membershipTypeRepository.GetByIdAsync(new MembershipTypeId(dto.MembershipTypeId), ct);
 
-        var existing = await repository.GetByUserIdAsync(user.Id, ct);
-        if (existing is not null && existing.IsActive)
-            return Result.Conflict("User already has an active membership");
+            if (membershipType is null)
+                return Result.NotFound("MembershipType", dto.MembershipTypeId);
 
-        var startDate = DateOnly.FromDateTime(DateTime.UtcNow);
-        var endDate = startDate.AddDays(membershipType.Duration.Value);
+            var existing = await repository.GetByUserIdAsync(user.Id, ct);
 
-        var membership = Membership.Create(
-            user.Id,
-            membershipType.Id,
-            membershipType.Price.Value,
-            startDate,
-            endDate,
-            membershipType.SessionLimit
-            );
+            if (existing is not null && existing.IsActive)
+                return Result.Conflict("User already has an active membership");
 
-        await repository.AddAsync(membership, ct);
-        await unitOfWork.SaveChangesAsync(ct);
+            var startDate = DateOnly.FromDateTime(DateTime.UtcNow);
 
-        return Result.Success();
-    }
+            var endDate = startDate.AddDays(membershipType.Duration.Value);
 
-    public async Task<Result> DeactivateAsync(AuthenticationId authenticationId, CancellationToken ct = default)
-    {
-        var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
+            var membership = Membership.Create(
+                user.Id,
+                membershipType.Id,
+                membershipType.Price.Value,
+                startDate,
+                endDate,
+                membershipType.SessionLimit
+                );
 
-        if (user is null)
-            return Result.NotFound("user", authenticationId);
+            await repository.AddAsync(membership, ct);
 
-        var membership = await repository.GetByUserIdAsync(user.Id, ct);
-        if (membership is null)
-            return Result.NotFound("Membership", user.Id.Value);
+            await unitOfWork.SaveChangesAsync(ct);
 
-        membership.DeactivateMembership();
+            return Result.Success();
+        }
 
-        await unitOfWork.SaveChangesAsync(ct);
+        public async Task<Result> DeactivateAsync(AuthenticationId authenticationId, CancellationToken ct = default)
+        {
+            var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
 
-        return Result.Success();
-    }
+            if(user is null)
+                return Result.NotFound("user", authenticationId);
 
-    public async Task<Result<MembershipDTO>> GetByUserIdAsync(AuthenticationId authenticationId, CancellationToken ct = default)
-    {
-        var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
+            var membership = await repository.GetByUserIdAsync(user.Id, ct);
 
-        if (user is null)
-            return Result<MembershipDTO>.NotFound("User", authenticationId);
+            if (membership is null)
+                return Result.NotFound("Membership", user.Id.Value);
 
-        var membership = await repository.GetByUserIdAsync(user.Id, ct);
-        if (membership is null)
-            return Result<MembershipDTO>.NotFound("Membership", user.Id.Value);
+            await CancelAllBookings(user.Id, ct);
 
-        var membershipType = await membershipTypeRepository.GetByIdAsync(membership.TypeId, ct);
-        if (membershipType is null)
-            return Result<MembershipDTO>.NotFound("MembershipType", membership.TypeId);
+            membership.DeactivateMembership();
 
-        return Result<MembershipDTO>.Success(membership.ToDTO(membershipType?.Name.Value ?? "", membershipType?.Price.Value ?? 0));
-    }
+            await unitOfWork.SaveChangesAsync(ct);
+            return Result.Success();
+        }
 
-    public async Task<Result<IEnumerable<MembershipTypeDTO>>> GetMembershipTypesAsync(CancellationToken ct = default)
-    {
-        var types = await membershipTypeRepository.GetAllAsync(ct);
+        public async Task<Result<MembershipDTO>> GetByUserIdAsync(AuthenticationId authenticationId, CancellationToken ct = default)
+        {
+            var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
 
-        return Result<IEnumerable<MembershipTypeDTO>>.Success(types.Select(t => t.ToDTO()));
-    }
+            if(user is null)
+                return Result<MembershipDTO>.NotFound("User", authenticationId);
 
-    public async Task<Result> CheckInAsync(Guid userId, CancellationToken ct = default)
-    {
-        var membership = await repository.GetByUserIdAsync(new UserId(userId), ct);
+            var membership = await repository.GetByUserIdAsync(user.Id, ct);
 
-        if (membership is null)
-            return Result.NotFound("Membership", userId);
+            if(membership is null)
+                return Result<MembershipDTO>.NotFound("Membership", user.Id.Value);
 
-        membership.RegisterCheckIn();
+            var membershipType = await membershipTypeRepository.GetByIdAsync(membership.TypeId, ct);
 
-        await unitOfWork.SaveChangesAsync(ct);
+            return Result<MembershipDTO>.Success(membership.ToDTO(
+                membershipType?.Name.Value ?? "",
+                membershipType?.Price.Value ?? 0
+            ));
+        }
 
-        return Result.Success();
-    }
+        public async Task<Result<IEnumerable<MembershipTypeDTO>>> GetMembershipTypesAsync(CancellationToken ct = default)
+        {
+            var types = await membershipTypeRepository.GetAllAsync(ct);
+            return Result<IEnumerable<MembershipTypeDTO>>.Success(types.Select(t => t.ToDTO()));
+        }
 
-    public async Task<Result> DeleteAsync(AuthenticationId authenticationId, CancellationToken ct = default)
-    {
-        var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
+        public async Task<Result> CheckInAsync(Guid userId, CancellationToken ct = default)
+        {
+            var membership = await repository.GetByUserIdAsync(new UserId(userId), ct);
+            if (membership is null)
+                return Result.NotFound("Membership", userId);
 
-        if (user is null)
-            return Result.NotFound("User", authenticationId);
+            membership.RegisterCheckIn();
 
-        var membership = await repository.GetByUserIdAsync(user.Id, ct);
+            await unitOfWork.SaveChangesAsync(ct);
+            return Result.Success();
+        }
 
-        if (membership is null)
-            return Result.NotFound("Membership", user.Id.Value);
+        public async Task<Result> DeleteAsync(AuthenticationId authenticationId, CancellationToken ct = default)
+        {
+            var user = await userRepository.GetByAuthenticationIdAsync(authenticationId, ct);
 
-        await repository.DeleteAsync(membership.Id, ct);
-        await unitOfWork.SaveChangesAsync(ct);
+            if(user is null)
+                return Result.NotFound("User", authenticationId);
 
-        return Result.Success();
+            var membership = await repository.GetByUserIdAsync(user.Id, ct);
+
+            if(membership is null)
+                return Result.NotFound("Membership", user.Id.Value);
+
+            await CancelAllBookings(user.Id, ct);
+
+            await repository.DeleteAsync(membership.Id, ct);
+            await unitOfWork.SaveChangesAsync(ct);
+
+            return Result.Success();
+        }
+
+        public async Task CancelAllBookings(UserId userId, CancellationToken ct = default)
+        {
+            var bookedSessions = await trainingSessionRepository.GetByUserBookingsAsync(userId, ct);
+
+            foreach(var session in bookedSessions)
+                session.CancelBooking(userId);
+        }
     }
 }

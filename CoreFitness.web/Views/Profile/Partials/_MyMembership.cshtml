@@ -1,33 +1,43 @@
 @model ProfilePageViewModel
 
-<h2>My Memberships</h2>
+<div class='w-full bg-white'>
+    <h2 class='font-header p-4 text-4xl'>My Membership</h2>
 
-@if(Model.Membership is null)
-{
-    <p>You do not have an active membership</p>
-    <a asp-controller="Membership" asp-action="Index">View membership options</a>
-}
-else
-{
-    var m = Model.Membership;
+    @if (Model.Membership is null)
+    {
+        <p>You do not have an active membership</p>
+        <a asp-controller="Membership" asp-action="Index">View membership options</a>
+    }
+    else
+    {
+        var m = Model.Membership;
 
-    <cf-card>
-        <div>
-            <p class='underline'>Type</p>
-            @m.MembershipTypeName
-        </div>
-        <div>
-            <p class='underline'>Price</p>
-            @m.PurchasedPrice
-        </div>
-        <div>
-            <p class='underline'>Purchase date</p>
-            @m.StartDate.ToString("yyyy-MM-dd")
-        </div>
-        <form asp-controller="Membership" asp-action="Delete" method="post">
-        <button type="submit" class='bg-tertiary px-4 py-2'>
-            Delete membership
-        </button>
-    </form>
-    </cf-card>
-}
+        <cf-card css-class="w-[50%]">
+            <div>
+                <p class='font-header font-medium text-2xl'>Type</p>
+                <p class='font-paragraph'>@m.MembershipTypeName</p>
+            </div>
+            <div>
+                <p class='font-header font-medium text-2xl'>Price</p>
+                <p class='font-paragraph'>
+                    @m.PurchasedPrice
+                </p>
+            </div>
+            <div>
+                <p class='font-header font-medium text-2xl'>Purchase date</p>
+                <p class='font-paragraph'>
+                    @m.StartDate.ToString("dd MMMM yyyy")
+                </p>
+            </div>
+            <div>
+                <p class='font-header font-medium text-2xl'>Sessions Remaining</p>
+                <p class='font-paragraph'>@m.SessionsRemaining</p>
+            </div>
+            <form asp-controller="Membership" asp-action="Delete" method="post">
+                <button type="submit" class='bg-tertiary px-4 py-2'>
+                    Delete membership
+                </button>
+            </form>
+        </cf-card>
+    }
+</div>

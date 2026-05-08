@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using CoreFitness.Application.DTOs.FaqItem;
 
 namespace CoreFitness.Web.ViewModels.CustomerService;
 
@@ -20,4 +21,6 @@ public class ContactUsViewModel
     [Required(ErrorMessage = "Message is required")]
     [StringLength(1000, MinimumLength = 10, ErrorMessage = "Message must be between 10 and 1000 characters")]
     public string Message { get; set; } = string.Empty;
+
+    public IEnumerable<FaqItemDTO> FaqItems { get; init; } = [];
 }

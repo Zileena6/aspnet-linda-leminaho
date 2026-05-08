@@ -1,0 +1,44 @@
+@model ContactUsViewModel
+
+<div>
+    <form asp-controller="CustomerService" asp-action="ContactUs" method="post" class='flex flex-col gap-6 mt-6'>
+
+        <div class='flex justify-between'>
+            <div class='flex flex-col w-5/12'>
+                <label asp-for="FirstName">First Name</label>
+                <input asp-for="FirstName" placeholder='Enter First Name' class='border bg-primary p-2 rounded'/>
+                <span asp-validation-for="FirstName"></span>
+            </div>
+
+            <div class='flex flex-col w-5/12'>
+                <label asp-for="LastName">Last Name</label>
+                <input asp-for="LastName" placeholder='Enter Last Name' class='border bg-primary p-2 rounded'/>
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
+
+        <div class='flex justify-between'>
+            <div class='flex flex-col w-5/12'>
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" placeholder='Enter Email Address' class='border bg-primary p-2 rounded'/>
+                <span asp-validation-for="Email"></span>
+            </div>
+
+            <div class='flex flex-col w-5/12'>
+                <label asp-for="PhoneNumber">Phone number</label>
+                <input asp-for="PhoneNumber" placeholder='Enter Phone number' class='border bg-primary p-2 rounded'/>
+                <span asp-validation-for="PhoneNumber"></span>
+            </div>
+        </div>
+
+        <div>
+            <div class='flex flex-col'>
+                <label asp-for="Message">Message</label>
+                <textarea asp-for="Message" placeholder='Message...' rows="5" class='border bg-primary p-2 rounded'></textarea>
+                <span asp-validation-for="Message"></span>
+            </div>
+        </div>
+
+        <cf-button type="submit" text="Submit Message"/>
+    </form>    
+</div>
