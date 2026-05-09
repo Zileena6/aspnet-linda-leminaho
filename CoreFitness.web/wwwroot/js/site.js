@@ -40,14 +40,21 @@ if (quoteBtn) {
 }
 
 // FaqItems
-// TODO: Add IsActive
 document.querySelectorAll('.faq-btn').forEach(function (btn) {
   btn.addEventListener('click', function () {
-    const answer = btn.nextElementSibling;
-    const icon = btn.querySelector('.fa-chevron-down');
+    const isActive = btn.classList.contains('active');
 
-    answer.classList.toggle('hidden');
-    icon.classList.toggle('rotate-180');
+    document.querySelectorAll('.faq-btn').forEach(function (otherBtn) {
+      otherBtn.classList.remove('active');
+      otherBtn.nextElementSibling.classList.add('hidden');
+      otherBtn.querySelector('.fa-chevron-down').classList.remove('rotate-180');
+    });
+
+    if (!isActive) {
+      btn.classList.add('active');
+      btn.nextElementSibling.classList.remove('hidden');
+      btn.querySelector('.fa-chevron-down').classList.add('rotate-180');
+    }
   });
 });
 
@@ -56,3 +63,12 @@ setTimeout(function () {
     el.remove();
   });
 }, 3000);
+
+// Upload photo; disabled button
+
+const photoInput = document.getElementById('photo');
+const uploadBtn = document.getElementById('uploadBtn');
+
+photoInput.addEventListener('change', () => {
+  uploadBtn.disabled = photoInput.files.length === 0;
+});

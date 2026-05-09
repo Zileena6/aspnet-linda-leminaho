@@ -4,53 +4,50 @@
     <div class='flex p-8'>
         <h2 class='text-5xl font-semibold'>About Me</h2>
     </div>
-    <hr>
-    <form asp-controller="Profile" asp-action="Update" method="post" class='flex flex-col gap-2 p-8'>
+    <hr class="border-0 h-0.5 bg-gray-100 mx-8 rounded-full">
+    <form asp-controller="Profile" asp-action="Update" method="post" class='flex flex-col gap-1 p-8'>
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="RowVersion" />
 
         <label class='font-header font-semibold'>First Name</label>
-        <input asp-for="FirstName" placeholder='Enter First Name' class='border rounded-sm p-4 bg-primary ' />
+        <input asp-for="FirstName" placeholder='Enter First Name' class='rounded-md p-3 bg-primary ' />
 
-        <label class='font-header font-semibold'>Last Name</label>
-        <input asp-for="LastName" placeholder='Enter Last Name' class='border rounded-sm  p-4 bg-primary' />
+        <label class='font-header font-semibold pt-4'>Last Name</label>
+        <input asp-for="LastName" placeholder='Enter Last Name' class='rounded-md  p-3 bg-primary' />
 
-        <label class='font-header font-semibold'>Email Address <span>*</span></label>
-        <input asp-for="Email" placeholder='Enter Email' class='border rounded-sm p-4 bg-primary' />
+        <label class='font-header font-semibold pt-4'>Email Address <span>*</span></label>
+        <input asp-for="Email" placeholder='Enter Email' class='rounded-md p-3 bg-primary' />
 
-        <label class='font-header font-semibold'>Phone Number</label>
-        <input asp-for="PhoneNumber" placeholder='Enter Phone Number' class='border rounded-sm p-4 bg-primary' />
+        <label class='font-header font-semibold pt-4'>Phone Number</label>
+        <input asp-for="PhoneNumber" placeholder='Enter Phone Number' class='rounded-md p-3 bg-primary' />
 
-        <div class='flex flex-wrap gap-3'>
+        <div class='flex flex-wrap justify-between py-2'>
             <div class='flex flex-col'>
-                <label class='font-header font-semibold'>Weight</label>
-                <input asp-for="Weight" placeholder='Enter Weight' class='border rounded-sm p-4 bg-primary' />
+                <label class='font-header font-semibold py-2'>Weight</label>
+                <input asp-for="Weight" placeholder='Enter Weight' class='border rounded-md p-3 bg-primary' />
             </div>
 
             <div class='flex flex-col'>
-                <label class='font-header font-semibold'>Target Weight</label>
-                <input asp-for="TargetWeight" placeholder='Enter Weight' class='border rounded-sm p-4 bg-primary' />
+                <label class='font-header font-semibold py-2'>Target Weight</label>
+                <input asp-for="TargetWeight" placeholder='Enter Weight' class='border rounded-md p-3 bg-primary' />
             </div>
 
             <div class='flex flex-col'>
-                <label class='font-header font-semibold'>Height</label>
-                <input asp-for="Height" placeholder='Enter Height' class='border rounded-sm p-4 bg-primary' />
+                <label class='font-header font-semibold py-2'>Height</label>
+                <input asp-for="Height" placeholder='Enter Height' class='border rounded-md p-3 bg-primary' />
             </div>
         </div>
-
-        
-
-        <button type="submit">Save</button>
+        <div class="flex justify-end pt-3">
+            <button type="submit" class="flex gap-2 items-center py-3 px-6 bg-tertiary w-fit rounded-full font-paragraph font-semibold text-black hover:bg-lime-300">Save <i class='fa-solid fa-chevron-right'></i></button>
+        </div>
     </form>
-    <hr>
-    <div>
-        <form asp-controller="Profile" asp-action="UploadPhoto" method='post' enctype='multipart/form-data'
-              class='flex flex-col p-4'>
+    <hr class="border-0 h-0.5 bg-gray-100 mx-8 mb-5 rounded-full">
+
+        <form asp-controller="Profile" asp-action="UploadPhoto" method='post' enctype='multipart/form-data' class='flex flex-col gap-3 mx-8'>
             <label for="photo" class='font-header font-semibold'>Profile Image</label>
-
-            <input type="file" name='photo' accept='image/**' class='border rounded-sm p-4 bg-primary' />
-
-            <cf-button type="submit">Upload Photo</cf-button>
+            <div class="relative w-full pb-8">
+                <input id="photo" type="file" name='photo' accept='image/**' class='w-full rounded-md p-3 pr-36 bg-primary' />
+                <button id="uploadBtn" type="submit" disabled class='absolute right-1.5 top-1.5 rounded-lg bg-[#D9D9D9] py-1.5 px-3 font-semibold hover:text-tertiary-text transition disabled:cursor-not-allowed disabled:opacity-50'>Upload photo</button>
+            </div>
         </form>
-    </div>
 </div>

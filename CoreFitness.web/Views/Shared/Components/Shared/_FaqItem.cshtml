@@ -1,7 +1,7 @@
 @model FaqItemDTO
 
 <div>
-    <button class="faq-btn p-1 flex justify-between w-full">
+    <button class="faq-btn p-1 flex justify-between w-full hover:cursor-pointer">
         <span class='font-header font-semibold'>
             <span>Q@(ViewData["Index"]).</span>
             <span>@Model.Question</span>
@@ -10,20 +10,20 @@
             <i class='fa-solid fa-chevron-down'></i>
         </div>
     </button>
-    <div class='faq-answer hidden font-paragraph'>
+    <div class='faq-answer hidden font-paragraph '>
         @if(!string.IsNullOrWhiteSpace(Model.Answer))
         {
-            <p>@Model.Answer</p>
+            <p class="pt-3">@Model.Answer</p>
         }
         @if(Model.Bullets.Any())
         {
             <ul>
                 @foreach(var bullet in Model.Bullets)
                 {
-                    <li class='flex items-center gap-2 py-4 px-3'><span class='w-1.5 h-1.5 bg-tertiary rounded-full inline-block'></span>@bullet</li>
+                    <li class='flex items-center gap-2 py-4 text-sm'><span class='w-1.5 h-1.5 bg-tertiary rounded-full inline-block'></span>@bullet</li>
                 }
             </ul>
         }
     </div>
-    <hr class='w-full'>
 </div>
+    <hr class='w-full text-[#E6E6E6] py-2'>

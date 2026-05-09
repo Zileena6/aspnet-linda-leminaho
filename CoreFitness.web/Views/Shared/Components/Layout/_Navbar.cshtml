@@ -1,9 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 
+@{
+    var isHomePage =
+    ViewContext.RouteData.Values["Controller"]?.ToString() == "Home"
+    && ViewContext.RouteData.Values["Action"]?.ToString() == "Index";
 
-@* TODO: Fix width and rounded top *@
-    <nav class=" text-white px-6 py-4 flex items-center justify-between rounded-t-xl bg-[#131020] bg-[url('/images/header-bg.png')] bg-cover bg-center">
+    var roundedClass = isHomePage ? "rounded-t-xl" : "rounded-xl";
+}
+
+    <nav class=" text-white px-6 py-4 flex items-center justify-between @roundedClass bg-[#131020] bg-[url('/images/header-bg.png')] bg-cover bg-center">
             <a asp-controller="Home" asp-action="Index" class='flex items-center'>
                 <img src="~/images/CoreFitnessLogo.png" alt='CoreFitness logo' class='h-8'/>
             </a>
@@ -24,10 +30,10 @@
                     <button class="flex items-center gap-1 hover:text-tertiary transition-colors">
                         Training
                     </button>
-                    <div class='absolute top-full left-0 mt-2 w-48 bg-white text-gray900 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'>
-                        <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-gray-500'>Group Training</a>
-                        <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-gray-500'>Personal Training</a>
-                        <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-gray-500'>Padel</a>
+                    <div class='absolute top-full left-0 mt-2 w-48 bg-tertiary text-[#27252F] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'>
+                        <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-[#27252F]'>Group Training</a>
+                        <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-[#27252F]'>Personal Training</a>
+                        <a href="#" class='block px-4 py-3 hover:bg-gray-50 rounded-t-lg text-sm text-[#27252F]'>Padel</a>
                     </div>
                 </li>                
                 <li>
