@@ -1,20 +1,19 @@
 @model IEnumerable<TrainingSessionDTO>
 
-
-<h2>Our Classes</h2>
-
-
+<h2 class="text-2xl font-semibold py-3">Our Classes</h2>
 
 @foreach (var session in Model)
 {
-    <h3>@session.Name</h3>
-    <p>@session.Description</p>
-    <p>@session.AvailableSpots</p>
+    <div class="p-3 border-b-gray-300 border-b-2 w-xs">
+        <h3 class="text-xl">@session.Name</h3>
+        <p class="py-2">@session.Description</p>
+        <p class="pb-2">Available spots: @session.AvailableSpots</p>
 
-    <form asp-controller="Booking" asp-action="Book" method="post">
-        <input type="hidden" name='sessionId' value="@session.Id" />
-        <button type="submit" class='bg-tertiary px-4 py-2'>
-            Book
-        </button>
-    </form>
+        <form asp-controller="Booking" asp-action="Book" method="post" class="py-3">
+            <input type="hidden" name='sessionId' value="@session.Id" />
+            <button type="submit" class='bg-tertiary px-4 py-2 rounded-xl font-semibold cursor-pointer hover:bg-lime-300'>
+                Book
+            </button>
+        </form>
+    </div>
 }

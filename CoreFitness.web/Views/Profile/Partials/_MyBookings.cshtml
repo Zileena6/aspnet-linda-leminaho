@@ -8,15 +8,15 @@
         {
             <cf-card css-class="w-[35%]">
                 <div>
-                    <h1 class='font-header font-medium'>Session: @booking.SessionName</h1>
+                    <h1 class='font-header font-medium py-3'>Session: @booking.SessionName</h1>
 
                     <div>
                         <p>Duration: @booking.DurationInMinutes minutes</p>
                         <p>Starts: @booking.StartDate.ToString("HH:mm, dd MMMM yyyy ")</p>
                     </div>
                     <form asp-controller="Booking" asp-action="Cancel" asp-route-sessionId="@booking.TrainingSessionId"
-                          method="post">
-                        <button type="submit" class='bg-tertiary px-4 py-2'>
+                          method="post" class="pt-5">
+                        <button type="submit" class='bg-tertiary px-4 py-2 rounded-lg cursor-pointer hover:bg-red-200'>
                             Cancel
                         </button>
                     </form>

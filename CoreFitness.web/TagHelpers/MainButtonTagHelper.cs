@@ -23,7 +23,7 @@ public class MainButtonTagHelper : TagHelper
 
         output.Attributes.SetAttribute("type", Type);
 
-        output.Attributes.SetAttribute("class", "flex gap-2 items-center p-3 bg-tertiary w-fit rounded-full font-paragraph font-semibold text-black");
+        output.Attributes.SetAttribute("class", "flex gap-2 items-center p-3 bg-tertiary w-fit rounded-full font-paragraph font-semibold text-black hover:bg-lime-300 hover:cursor-pointer");
 
         output.Content.SetHtmlContent($"{content} <i class='fa-solid fa-chevron-right'></i>");
     }
